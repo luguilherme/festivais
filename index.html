@@ -1175,6 +1175,8 @@ function renderEquipe(){
 
 // ── GRADE MODE SWITCHER ──
 // switchGradeMode defined below near renderGrade
+
+function buildGradeDays(){
   // filter sessions by active event
   var sessFilt=sessoesArr.filter(function(s){return eventoVisible(s.evento);});
   var datesMap={};
