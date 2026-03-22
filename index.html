@@ -72,9 +72,8 @@ header{position:sticky;top:0;z-index:200;background:rgba(10,10,10,0.97);backdrop
 .evento-pill-hdr{font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:0.1em;padding:4px 12px;border:1px solid var(--border);color:var(--text-muted);cursor:pointer;transition:all 0.15s;white-space:nowrap;border-radius:2px;background:transparent;}
 .evento-pill-hdr:hover{opacity:0.85;}
 .evento-pill-hdr.active{opacity:1;}
-.evento-pill-hdr.inactive{opacity:0.3;}
+.evento-pill-hdr.inactive{opacity:0.25;}
 .evento-pill-hdr.solo{cursor:default;opacity:1;}
-/* light mode: add shadow so pills don't disappear into white bg */
 [data-theme="light"] .evento-pill-hdr{box-shadow:0 0 0 1px currentColor;}
 [data-theme="light"] #eventosBar{background:#e8e8e4;}
 .offline-badge{font-family:var(--mono);font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);border:1px solid var(--border);padding:3px 7px;display:flex;align-items:center;gap:4px;white-space:nowrap;flex-shrink:0;}
@@ -438,10 +437,11 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
   .film-table-wrap{overflow:visible!important;}
   /* OUTROS MÓDULOS — portrait */
   body:not([data-print="ficha"]) @page{size:A4 portrait;margin:14mm;}
-  /* grade grid: hide outside header, show inline */
-  #gradeColHeaderOuter{position:static!important;display:block!important;overflow:visible!important;}
-  .grade-wrap{overflow:visible!important;}
-  .grid-body{flex-wrap:wrap!important;}
+  /* grade grid: show col header only in grid mode */
+  #gradeColHeaderOuter{display:none!important;}
+  body[data-grademode="grid"] #gradeColHeaderOuter{display:block!important;overflow:visible!important;}
+  body[data-grademode="grid"] .grade-wrap{overflow:visible!important;}
+  body[data-grademode="grid"] .grid-body{flex-wrap:wrap!important;}
   /* sessoes / cinemas / equipe / acervo / dashboard tables */
   .sessoes-table,.dash-table,.equipe-table,.tabela-list,table.ficha-table{width:100%!important;}
   .cinemas-grid{grid-template-columns:repeat(2,1fr)!important;}
@@ -531,8 +531,6 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
 
 <!-- MODE BARS -->
 <div class="mode-bar hidden" id="barDashboard">
-  <div class="event-filters" id="dashEventFilters"></div>
-  <div class="bar-sep" id="dashFilterSep" style="display:none"></div>
   <select class="bar-select" id="dashCinemaFilter" style="min-width:180px;" onchange="renderDashboard()"><option value="">— todos os cinemas —</option></select>
   <button class="print-btn" onclick="printModule()">⎙ Imprimir</button>
 </div>
@@ -541,7 +539,6 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
     <input type="text" id="searchInput" placeholder="título, código, CPL, idioma…" disabled>
     <button class="search-clear" id="searchClear">×</button>
   </div>
-  <div class="event-filters" id="buscaEventFilters"></div>
   <span class="result-count" id="resultCount"></span>
   <button class="print-btn" onclick="printModule()">⎙ Imprimir</button>
 </div>
@@ -570,7 +567,6 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
   </div>
   <div class="bar-sep"></div>
   <div class="day-tabs" id="dayTabs"></div>
-  <div class="event-filters" id="gradeEventFilters"></div>
   <button class="print-btn" onclick="printModule()" style="margin-left:auto;">⎙ Imprimir</button>
 </div>
 <div class="mode-bar hidden" id="barFicha">
@@ -1178,26 +1174,7 @@ function renderEquipe(){
 }
 
 // ── GRADE MODE SWITCHER ──
-function switchGradeMode(mode){
-  gradeMode=mode;
-  ['grid','tabela','cinema'].forEach(function(m){document.getElementById('gradeTab'+m.charAt(0).toUpperCase()+m.slice(1)).classList.toggle('active',m===mode);});
-  document.getElementById('dayTabs').style.display=mode==='grid'?'flex':'none';
-  document.getElementById('gradeEventFilters').style.display=mode==='grid'?'flex':'none';
-  document.getElementById('gradeWrap').style.display='none';
-  document.getElementById('gradeTabelaWrap').style.display='none';
-  document.getElementById('gradeCinemaWrap').style.display='none';
-  document.getElementById('gradeEmpty').style.display='none';
-  if(mode==='grid')renderGrade();
-  if(mode==='tabela')renderGradeTabela();
-  if(mode==='cinema'){
-    document.getElementById('gradeCinemaWrap').style.display='block';
-    var bar=document.querySelector('.cinema-selector-bar');
-    if(bar)bar.style.top=getGradeStickyTop();
-    renderGradeCinema();
-  }
-}
-
-function buildGradeDays(){
+// switchGradeMode defined below near renderGrade
   // filter sessions by active event
   var sessFilt=sessoesArr.filter(function(s){return eventoVisible(s.evento);});
   var datesMap={};
@@ -1250,7 +1227,7 @@ function getVisibleEvents(){
 }
 function buildGradeFilters(){
   var evts=Object.keys(eventColors);
-  var gf=document.getElementById('gradeEventFilters');gf.innerHTML='';
+  var gf=document.getElementById('gradeEventFilters');if(!gf)return;gf.innerHTML='';
   // hide pills if only one visible event or non-admin
   var vis=getVisibleEvents();
   if(vis.length<2)return;
@@ -1267,7 +1244,7 @@ function buildGradeFilters(){
 }
 function buildBuscaFilters(){
   var vis=getVisibleEvents();
-  var bf=document.getElementById('buscaEventFilters');bf.innerHTML='';
+  var bf=document.getElementById('buscaEventFilters');if(!bf)return;bf.innerHTML='';
   if(vis.length<2)return;
   var lbl=document.createElement('span');lbl.className='filter-label';lbl.textContent='EVENTOS';bf.appendChild(lbl);
   vis.forEach(function(ev){
@@ -1281,8 +1258,8 @@ function buildBuscaFilters(){
 }
 function buildDashEventFilters(){
   var vis=getVisibleEvents();
-  var df=document.getElementById('dashEventFilters');df.innerHTML='';
-  var sep=document.getElementById('dashFilterSep');
+  var df=document.getElementById('dashEventFilters');if(!df)return;df.innerHTML='';
+  var sep=document.getElementById('dashFilterSep');if(!sep)return;
   if(vis.length<2){sep.style.display='none';return;}
   sep.style.display='block';
   var lbl=document.createElement('span');lbl.className='filter-label';lbl.textContent='FILTRAR';df.appendChild(lbl);
@@ -1302,9 +1279,9 @@ function buildDashEventFilters(){
 
 function switchGradeMode(mode){
   gradeMode=mode;
+  document.body.setAttribute('data-grademode',mode);
   ['grid','tabela','cinema'].forEach(function(m){document.getElementById('gradeTab'+m.charAt(0).toUpperCase()+m.slice(1)).classList.toggle('active',m===mode);});
   document.getElementById('dayTabs').style.display=mode==='grid'?'flex':'none';
-  document.getElementById('gradeEventFilters').style.display=mode==='grid'?'flex':'none';
   document.getElementById('gradeWrap').style.display='none';
   document.getElementById('gradeTabelaWrap').style.display='none';
   document.getElementById('gradeCinemaWrap').style.display='none';
@@ -1667,10 +1644,10 @@ function buildEventosPills(){
     pill.className='evento-pill-hdr'+(solo?' solo':' active');
     pill.id='hdrPill-'+ev;
     pill.textContent=ev;
-    // start filled (active by default)
-    pill.style.background=col?col.bg:'var(--accent)';
-    pill.style.borderColor=col?col.bg:'var(--accent)';
-    pill.style.color='#000';
+    var c=col?col.bg:'var(--accent)';
+    pill.style.background='transparent';
+    pill.style.borderColor=c;
+    pill.style.color=c;
     if(!solo){
       pill.onclick=function(){
         if(eventosAtivos.has(ev)){
@@ -1696,24 +1673,15 @@ function refreshEventoPills(){
     var pill=document.getElementById('hdrPill-'+ev);
     if(!pill)return;
     var col=eventColors[ev];
-    var bg=col?col.bg:'var(--accent)';
+    var c=col?col.bg:'var(--accent)';
+    pill.style.background='transparent';
+    pill.style.borderColor=c;
+    pill.style.color=c;
     if(solo){
       pill.className='evento-pill-hdr solo active';
-      pill.style.background=bg;
-      pill.style.borderColor=bg;
-      pill.style.color='#000';
-      return;
-    }
-    var active=eventosAtivos.size===0||eventosAtivos.has(ev);
-    pill.className='evento-pill-hdr '+(active?'active':'inactive');
-    if(active){
-      pill.style.background=bg;
-      pill.style.borderColor=bg;
-      pill.style.color='#000';
     } else {
-      pill.style.background='transparent';
-      pill.style.borderColor=bg;
-      pill.style.color=bg;
+      var active=eventosAtivos.size===0||eventosAtivos.has(ev);
+      pill.className='evento-pill-hdr '+(active?'active':'inactive');
     }
   });
 }
