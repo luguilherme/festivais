@@ -1,1 +1,34 @@
-[]
+[
+  {
+    "evento": "CC2025",
+    "nome": "Beatriz",
+    "funcao": "operadora",
+    "telefone": "21 98142-6764",
+    "email": "beatriznleonardo@gmail.com",
+    "cinema": "Estação Net Botafogo 1"
+  },
+  {
+    "evento": "CC2026",
+    "nome": "Bia",
+    "funcao": "operadora",
+    "telefone": "21 98142-6764",
+    "email": "beatriznleonardo@gmail.com",
+    "cinema": "Estação Net Botafogo 1"
+  },
+  {
+    "evento": "CC2025",
+    "nome": "A",
+    "funcao": "Monitor",
+    "telefone": "21 998351920",
+    "email": "lg.rchrd@gmail.com",
+    "cinema": "Estação Net Botafogo 1"
+  },
+  {
+    "evento": "CC2026",
+    "nome": "B",
+    "funcao": "monitor",
+    "telefone": "21 998351920",
+    "email": "lg.rchrd@gmail.com",
+    "cinema": "Estação Net Botafogo 1"
+  }
+]
