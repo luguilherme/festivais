@@ -1806,6 +1806,7 @@ function renderFichaBlock(nome,s,addBreak){
   }
   var kdmCount=films.filter(function(f){return(f.kdm||'').toLowerCase()==='sim';}).length;
   var kdmAlert=kdmCount>0?' · <span style="color:#ff6055;">⚠ '+kdmCount+' KDM</span>':'';
+  return'<div class="ficha">'
     +'<div class="ficha-header">'
       +'<div class="ficha-session-wrap">'
         +'<div class="ficha-session-name">'+nome+'</div>'
