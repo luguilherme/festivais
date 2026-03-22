@@ -112,9 +112,13 @@ body[data-print-pb] .ficha-header{border-bottom:2px solid #000!important;}
 body[data-print-pb] table.ficha-table thead tr{background:#eee!important;}
 body[data-print-pb] table.ficha-table th{color:#000!important;background:#eee!important;}
 body[data-print-pb] td.cpl-cell{background:#f4f4f4!important;border-left:2px solid #000!important;}
+body[data-print-pb] .cpl-text{color:#000!important;}
+body[data-print-pb] .cpl-ov-ficha{color:#000!important;border-top:1px solid #ccc!important;}
+body[data-print-pb] .cpl-ov-ficha-label{color:#000!important;opacity:1!important;}
+body[data-print-pb] .meta-value.highlight{color:#000!important;}
 body[data-print-pb] .ficha-evento-badge{background:#000!important;color:#fff!important;}
 body[data-print-pb] .session-block{background:#ddd!important;color:#000!important;}
-body[data-print-pb] .event-pill,.badge{background:#eee!important;border:1px solid #000!important;}
+body[data-print-pb] .badge,.badge-flat,.badge-scope,.badge-51,.badge-stereo,.badge-kdm,.badge-kdm-esp,.badge-kdm-nao{color:#000!important;background:#eee!important;border:1px solid #000!important;}
 .search-wrap{flex:1;min-width:200px;max-width:400px;position:relative;}
 .search-wrap input{width:100%;font-family:var(--mono);font-size:11px;background:var(--surface2);color:var(--text);border:1px solid var(--border2);padding:6px 30px 6px 10px;outline:none;transition:border-color 0.15s;}
 .search-wrap input::placeholder{color:var(--text-muted);}
@@ -1537,7 +1541,7 @@ function showTooltip(ev,s){
   t.innerHTML='<div class="tt-name">'+s.nome+(s.nomeSessao?' <span style="font-size:9px;font-weight:400;opacity:0.6;">'+s.nomeSessao+'</span>':'')+'</div>'
     +'<div class="tt-row">Cinema <span>'+s.cinema+'</span></div>'
     +'<div class="tt-row">Dia <span>'+s.dia+'</span></div>'
-    +'<div class="tt-row">Hora <span>'+s.hora+'</span></div>'
+    +'<div class="tt-row">Horário <span>'+s.hora+'</span></div>'
     +(dur?'<div class="tt-row">Duração total <span>'+dur+'</span></div>':'')
     +'<div class="tt-films">'+filmDetails+'</div>';
   t.style.display='block';
@@ -1546,7 +1550,7 @@ function showTooltip(ev,s){
 function posTooltip(ev){
   var t=document.getElementById('tooltip');
   var tw=t.offsetWidth||280,th=t.offsetHeight||160;
-  var margin=14;
+  var margin=2;
   var x=ev.clientX+margin;
   var y=ev.clientY+margin;
   if(x+tw>window.innerWidth-8)x=ev.clientX-tw-margin;
@@ -1592,8 +1596,6 @@ function renderGradeTabela(){
     if(!s)return;
     tr.style.cursor='pointer';
     tr.onclick=function(){goToFicha(nome);};
-    tr.onmouseenter=function(ev){showTooltip(ev,s);};
-    tr.onmouseleave=hideTooltip;
   });
 }
 
@@ -1636,8 +1638,6 @@ function renderGradeCinema(){
     if(!s)return;
     tr.style.cursor='pointer';
     tr.onclick=function(){goToFicha(nome);};
-    tr.onmouseenter=function(ev){showTooltip(ev,s);};
-    tr.onmouseleave=hideTooltip;
   });
 }
 
