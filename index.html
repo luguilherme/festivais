@@ -792,16 +792,20 @@ function doLogout(){
 }
 
 async function refreshData(){
-  var refreshBtn=document.getElementById('refreshBtn');
-  refreshBtn.textContent='…';
-  refreshBtn.disabled=true;
-  try{
-    await loadFromGitHub();
-    refreshBtn.textContent='↻';
-  } catch(e){}
-  refreshBtn.disabled=false;
-  refreshBtn.textContent='↻';
-  if(currentMode)switchMode(currentMode);
+  var btn=document.getElementById('refreshBtn');
+  btn.textContent='⟳';
+  btn.style.animation='spin 1s linear infinite';
+  // run in background — don't await, don't block UI
+  loadFromGitHub().then(function(){
+    btn.style.animation='none';
+    btn.textContent='↻';
+    showToast('✓ Dados atualizados · '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}));
+    if(currentMode)switchMode(currentMode);
+  }).catch(function(){
+    btn.style.animation='none';
+    btn.textContent='↻';
+    showToast('✗ Erro ao atualizar dados');
+  });
 }
 
 // ── GITHUB DATA LOADING ──
@@ -845,18 +849,36 @@ function applyConfig(config){
       ? []
       : matches.map(function(c){return c.evento;}).filter(Boolean);
   }
-  applyRole(currentUser.papel);
+  applyRole(currentUser.papel, true); // true = don't override eventosAtivos
   if(currentUser.papel!=='admin'&&currentUser.eventos.length){
     eventosAtivos=new Set(currentUser.eventos);
   }
+  // if wildcard or admin: eventosAtivos stays empty = show all
 }
 
 async function fetchJSON(filename){
-  // raw.githubusercontent.com bypasses GitHub Pages CDN cache
-  var url='https://raw.githubusercontent.com/'+GH.user+'/'+GH.repo+'/'+GH.branch+'/data/'+filename+'?t='+Date.now();
-  var r=await fetch(url);
+  // GitHub contents API — always returns current version, no CDN cache
+  var url='https://api.github.com/repos/'+GH.user+'/'+GH.repo+'/contents/data/'+filename;
+  var headers={'Accept':'application/vnd.github.v3.raw'};
+  if(currentUser.token)headers['Authorization']='token '+currentUser.token;
+  var r=await fetch(url,{headers:headers});
   if(!r.ok)throw new Error('Erro ao carregar '+filename+' ('+r.status+')');
   return r.json();
+}
+
+// show toast notification after background refresh
+function showToast(msg){
+  var t=document.getElementById('refreshToast');
+  if(!t){
+    t=document.createElement('div');
+    t.id='refreshToast';
+    t.style.cssText='position:fixed;bottom:24px;right:24px;z-index:9999;background:var(--surface);border:1px solid var(--ok);color:var(--ok);font-family:var(--mono);font-size:10px;padding:10px 16px;box-shadow:0 4px 20px rgba(0,0,0,0.4);transition:opacity 0.4s;';
+    document.body.appendChild(t);
+  }
+  t.textContent=msg;
+  t.style.opacity='1';
+  clearTimeout(t._hide);
+  t._hide=setTimeout(function(){t.style.opacity='0';},4000);
 }
 
 function setLandingState(state,label,detail){
@@ -1794,18 +1816,20 @@ function applyEventoFilter(){
 var mostraGlobalAtiva='';
 function applyMostraGlobal(val){applyEventoFilter();}
 
-// ── ROLE (set from config.json in online version) ──
-function applyRole(role){
+// ── ROLE (set from config.json) ──
+function applyRole(role, skipEventosReset){
   currentRole=role;
   document.body.setAttribute('data-role',role);
   var disp=document.getElementById('roleDisplay');
   if(disp)disp.textContent=role;
-  var evts=Object.keys(eventColors);
-  if(role!=='admin'){
-    if(evts.length>1){eventosAtivos=new Set([evts[0]]);}
-    else{eventosAtivos=new Set();}
-  } else {
-    eventosAtivos=new Set();
+  if(!skipEventosReset){
+    var evts=Object.keys(eventColors);
+    if(role!=='admin'){
+      if(evts.length>1){eventosAtivos=new Set([evts[0]]);}
+      else{eventosAtivos=new Set();}
+    } else {
+      eventosAtivos=new Set();
+    }
   }
   buildEventosPills();
   applyEventoFilter();
