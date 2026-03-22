@@ -209,28 +209,45 @@ select.bar-select:disabled{opacity:0.35;cursor:not-allowed;}
 
 /* ── CINEMAS ── */
 #cinemas-panel{padding-bottom:40px;}
-.cinemas-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;margin:20px 24px;background:var(--border);}
-.cinema-card{background:var(--surface);padding:18px 20px;transition:background 0.15s;}
+#cinemesContent{padding:20px 24px;display:flex;flex-direction:column;gap:1px;background:var(--border);}
+.cinema-card{background:var(--surface);padding:18px 22px;cursor:pointer;transition:background 0.15s;position:relative;}
 .cinema-card:hover{background:var(--surface2);}
+.cinema-card-top{display:flex;align-items:flex-start;gap:12px;}
+.cinema-card-main{flex:1;min-width:0;}
 .cinema-complexo{font-family:var(--mono);font-size:8px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px;}
-.cinema-nome{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--text);margin-bottom:10px;}
-.cinema-fields{display:flex;flex-direction:column;gap:5px;}
-.cinema-field{display:flex;gap:8px;font-size:10px;}
-.cinema-field-label{font-family:var(--mono);font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);min-width:70px;flex-shrink:0;}
+.cinema-nome{font-family:var(--mono);font-size:14px;font-weight:600;color:var(--text);margin-bottom:8px;}
+.cinema-meta-row{display:flex;gap:16px;flex-wrap:wrap;align-items:center;}
+.cinema-field{display:flex;gap:6px;align-items:baseline;}
+.cinema-field-label{font-family:var(--mono);font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);white-space:nowrap;}
 .cinema-field-value{font-family:var(--mono);font-size:10px;color:var(--text-dim);}
-.cinema-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px;}
+.cinema-tags{display:flex;gap:5px;flex-wrap:wrap;margin-left:auto;align-self:center;}
 .cinema-tag{font-family:var(--mono);font-size:8px;padding:2px 7px;border:1px solid var(--border);color:var(--text-muted);border-radius:2px;}
 .cinema-tag.ok{border-color:var(--ok-border);color:var(--ok);}
+.cinema-evento-tag{font-family:var(--mono);font-size:8px;font-weight:600;padding:2px 8px;border-radius:2px;}
+.cinema-expand-toggle{font-family:var(--mono);font-size:10px;color:var(--text-muted);background:none;border:none;cursor:pointer;padding:0 4px;flex-shrink:0;transition:transform 0.2s;}
+.cinema-card.expanded .cinema-expand-toggle{transform:rotate(90deg);}
+.cinema-expand{display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);}
+.cinema-card.expanded .cinema-expand{display:block;}
+.cinema-expand-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px 24px;margin-bottom:14px;}
+.cinema-expand-field{display:flex;flex-direction:column;gap:2px;}
+.cinema-expand-label{font-family:var(--mono);font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);}
+.cinema-expand-value{font-family:var(--mono);font-size:11px;color:var(--text-dim);}
+.cinema-sessions-title{font-family:var(--mono);font-size:8px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px;}
+.cinema-session-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.cinema-session-tag{font-family:var(--mono);font-size:9px;padding:3px 9px;border:1px solid var(--border);color:var(--text-dim);cursor:pointer;transition:all 0.15s;border-radius:2px;}
+.cinema-session-tag:hover{border-color:var(--accent);color:var(--accent);}
 
 /* ── EQUIPE ── */
 #equipe-panel{padding-bottom:40px;}
 .equipe-table{width:100%;border-collapse:collapse;margin:0;}
-.equipe-table th{font-family:var(--mono);font-size:8px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);padding:9px 24px;text-align:left;border-bottom:1px solid var(--accent);background:rgba(232,160,32,0.05);}
-.equipe-table td{font-family:var(--sans);font-size:12px;color:var(--text);padding:10px 24px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.equipe-table th{font-family:var(--mono);font-size:8px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);padding:9px 16px;text-align:left;border-bottom:1px solid var(--accent);background:rgba(232,160,32,0.05);white-space:nowrap;}
+.equipe-table td{font-family:var(--sans);font-size:12px;color:var(--text);padding:10px 16px;border-bottom:1px solid var(--border);vertical-align:middle;}
 .equipe-table tr:hover td{background:rgba(255,255,255,0.02);}
 .eq-nome{font-weight:600;}
 .eq-funcao{font-family:var(--mono);font-size:10px;color:var(--text-muted);}
 .eq-contato{font-family:var(--mono);font-size:10px;color:var(--text-dim);}
+.eq-cinema{font-family:var(--mono);font-size:10px;color:var(--text-dim);}
+.eq-evento{font-family:var(--mono);font-size:9px;font-weight:600;padding:2px 7px;border-radius:2px;}
 
 /* ── GRADE ADICIONAL ── */
 .grade-tabela{flex:1;overflow:auto;min-height:0;}
@@ -627,13 +644,16 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
   <button class="print-btn print-btn-pb" onclick="printModulePB()">⎙ PB</button>
 </div>
 <div class="mode-bar hidden" id="barCinemas">
-  <span class="filter-label" style="font-family:var(--mono);font-size:9px;color:var(--text-muted);">SALAS DO EVENTO</span>
+  <select class="bar-select" id="cinemasEventoFilter" style="min-width:140px;" onchange="renderCinemas()"><option value="">— todos eventos —</option></select>
+  <select class="bar-select" id="cinemasComplexoFilter" style="min-width:160px;" onchange="renderCinemas()"><option value="">— todos complexos —</option></select>
   <span class="result-count" id="cinemasCount"></span>
   <button class="print-btn" onclick="printModule()">⎙ Imprimir</button>
   <button class="print-btn print-btn-pb" onclick="printModulePB()">⎙ PB</button>
 </div>
 <div class="mode-bar hidden" id="barEquipe">
-  <span class="filter-label" style="font-family:var(--mono);font-size:9px;color:var(--text-muted);">EQUIPE DO EVENTO</span>
+  <select class="bar-select" id="equipeEventoFilter" style="min-width:140px;" onchange="renderEquipe()"><option value="">— todos eventos —</option></select>
+  <select class="bar-select" id="equipeFuncaoFilter" style="min-width:140px;" onchange="renderEquipe()"><option value="">— todas funções —</option></select>
+  <select class="bar-select" id="equipeCinemaFilter" style="min-width:180px;" onchange="renderEquipe()"><option value="">— todos cinemas —</option></select>
   <span class="result-count" id="equipeCount"></span>
   <button class="print-btn" onclick="printModule()">⎙ Imprimir</button>
   <button class="print-btn print-btn-pb" onclick="printModulePB()">⎙ PB</button>
@@ -1058,6 +1078,8 @@ function applyData(events){
   buildGradeDays();window._gradeYearsOpen=null;buildGradeFilters();buildBuscaFilters();
   buildDashFilters();buildDashEventFilters();buildSessoesFilters();buildFichaFilters();
   populateGradeCinemaSelect();
+  if(document.getElementById('cinemasEventoFilter'))buildCinemasFilters();
+  if(document.getElementById('equipeEventoFilter'))buildEquipeFilters();
   buildEventosPills();
 }
 
@@ -1306,48 +1328,139 @@ function renderSessoes(){
 }
 
 // ── CINEMAS ──
+function buildCinemasFilters(){
+  var evts=uniqueSorted(cinemesArr.filter(function(c){return eventoVisible(c.evento);}).map(function(c){return c.evento;}));
+  var comps=uniqueSorted(cinemesArr.filter(function(c){return eventoVisible(c.evento);}).map(function(c){return c.complexo;}).filter(Boolean));
+  var selEv=document.getElementById('cinemasEventoFilter');
+  var prevEv=selEv.value;
+  selEv.innerHTML='<option value="">— todos eventos —</option>';
+  evts.forEach(function(e){selEv.innerHTML+='<option value="'+e+'">'+e+'</option>';});
+  if(prevEv&&evts.indexOf(prevEv)>=0)selEv.value=prevEv;
+  var selCo=document.getElementById('cinemasComplexoFilter');
+  var prevCo=selCo.value;
+  selCo.innerHTML='<option value="">— todos complexos —</option>';
+  comps.forEach(function(c){selCo.innerHTML+='<option value="'+c+'">'+c+'</option>';});
+  if(prevCo&&comps.indexOf(prevCo)>=0)selCo.value=prevCo;
+}
+
 function renderCinemas(){
-  if(!cinemesArr.length){
-    document.getElementById('cinemesContent').innerHTML='<div class="empty-state"><div class="icon">▣</div><p>Aba "cinemas" não encontrada na planilha.<br>Disponível na versão online.</p></div>';
-    document.getElementById('cinemesCount').textContent='';
+  buildCinemasFilters();
+  var evF=document.getElementById('cinemasEventoFilter').value;
+  var coF=document.getElementById('cinemasComplexoFilter').value;
+  var filtered=cinemesArr.filter(function(c){
+    if(!eventoVisible(c.evento))return false;
+    if(evF&&c.evento!==evF)return false;
+    if(coF&&c.complexo!==coF)return false;
+    return true;
+  });
+  document.getElementById('cinemasCount').textContent=filtered.length+' sala'+(filtered.length!==1?'s':'');
+  if(!filtered.length){
+    document.getElementById('cinemesContent').innerHTML='<div class="empty-state"><div class="icon">▣</div><p>Nenhuma sala encontrada.</p></div>';
     return;
   }
-  document.getElementById('cinemesCount').textContent=cinemesArr.length+' sala'+(cinemesArr.length!==1?'s':'');
-  var html='<div class="cinemas-grid">';
-  cinemesArr.forEach(function(c){
-    html+='<div class="cinema-card">';
+  var html='';
+  filtered.forEach(function(c,idx){
+    var col=eventColors[c.evento]||null;
+    var evBadge=col?'<span class="cinema-evento-tag" style="background:'+col.bg+';color:'+col.text+';">'+c.evento+'</span>':'';
+    // sessions for this cinema+event
+    var sessoes=sessoesArr.filter(function(s){return s.cinema===c.nome&&s.evento===c.evento;})
+      .sort(function(a,b){if(!a.date&&!b.date)return 0;if(!a.date)return 1;if(!b.date)return-1;var dd=a.date-b.date;return dd!==0?dd:(a.time.h*60+a.time.m)-(b.time.h*60+b.time.m);});
+    var sessTagsHtml=sessoes.length
+      ?'<div class="cinema-sessions-title">Sessões ('+sessoes.length+')</div><div class="cinema-session-tags">'+sessoes.map(function(s){return'<span class="cinema-session-tag" onclick="goToFicha(\''+s.nome.replace(/'/g,"\\'")+'\')" title="'+s.dia+' '+s.hora+'">'+s.nome+(s.nomeSessao?' · '+s.nomeSessao:'')+'</span>';}).join('')+'</div>'
+      :'<div style="font-family:var(--mono);font-size:10px;color:var(--text-muted);">Nenhuma sessão cadastrada.</div>';
+    html+='<div class="cinema-card" id="ccard-'+idx+'">';
+    html+='<div class="cinema-card-top">';
+    html+='<div class="cinema-card-main">';
     if(c.complexo)html+='<div class="cinema-complexo">'+c.complexo+'</div>';
     html+='<div class="cinema-nome">'+c.nome+'</div>';
-    html+='<div class="cinema-fields">';
+    html+='<div class="cinema-meta-row">';
     if(c.servidor)html+='<div class="cinema-field"><span class="cinema-field-label">Servidor</span><span class="cinema-field-value">'+c.servidor+'</span></div>';
     if(c.projetor)html+='<div class="cinema-field"><span class="cinema-field-label">Projetor</span><span class="cinema-field-value">'+c.projetor+'</span></div>';
-    if(c.serial)html+='<div class="cinema-field"><span class="cinema-field-label">Serial</span><span class="cinema-field-value">'+c.serial+'</span></div>';
-    if(c.capacidade)html+='<div class="cinema-field"><span class="cinema-field-label">Capacidade</span><span class="cinema-field-value">'+c.capacidade+(c.acessiveis?' · '+c.acessiveis+' acess.':'')+'</span></div>';
-    if(c.horario)html+='<div class="cinema-field"><span class="cinema-field-label">Horário</span><span class="cinema-field-value">'+c.horario+'</span></div>';
-    if(c.datas)html+='<div class="cinema-field"><span class="cinema-field-label">Datas</span><span class="cinema-field-value">'+c.datas+'</span></div>';
-    if(c.monitoresNomes)html+='<div class="cinema-field"><span class="cinema-field-label">Monitor</span><span class="cinema-field-value">'+c.monitoresNomes+'</span></div>';
-    if(c.contatos)html+='<div class="cinema-field"><span class="cinema-field-label">Contato</span><span class="cinema-field-value">'+c.contatos+'</span></div>';
-    html+='</div>';
+    if(c.capacidade)html+='<div class="cinema-field"><span class="cinema-field-label">Cap.</span><span class="cinema-field-value">'+c.capacidade+(c.acessiveis?' · '+c.acessiveis+' acess.':'')+'</span></div>';
+    if(c.somSistema)html+='<div class="cinema-field"><span class="cinema-field-label">Som</span><span class="cinema-field-value">'+c.somSistema+'</span></div>';
+    if(c.proporcao)html+='<div class="cinema-field"><span class="cinema-field-label">Tela</span><span class="cinema-field-value">'+c.proporcao+'</span></div>';
     html+='<div class="cinema-tags">';
+    html+=evBadge;
     if(c.cineassist)html+='<span class="cinema-tag ok">Cineassist</span>';
+    html+='</div>';
+    html+='</div></div>';
+    html+='<button class="cinema-expand-toggle" onclick="toggleCinemaCard('+idx+')">▶</button>';
+    html+='</div>';
+    // expanded section
+    html+='<div class="cinema-expand">';
+    html+='<div class="cinema-expand-grid">';
+    if(c.serial)html+='<div class="cinema-expand-field"><span class="cinema-expand-label">Serial</span><span class="cinema-expand-value">'+c.serial+'</span></div>';
+    if(c.datas)html+='<div class="cinema-expand-field"><span class="cinema-expand-label">Datas de uso</span><span class="cinema-expand-value">'+c.datas+'</span></div>';
+    if(c.horario)html+='<div class="cinema-expand-field"><span class="cinema-expand-label">Horário</span><span class="cinema-expand-value">'+c.horario+'</span></div>';
+    if(c.contatos)html+='<div class="cinema-expand-field"><span class="cinema-expand-label">Contatos</span><span class="cinema-expand-value">'+c.contatos+'</span></div>';
+    if(c.monitoresNomes)html+='<div class="cinema-expand-field"><span class="cinema-expand-label">Monitor</span><span class="cinema-expand-value">'+c.monitoresNomes+(c.monitoresContatos?' · '+c.monitoresContatos:'')+'</span></div>';
+    if(c.obs)html+='<div class="cinema-expand-field" style="grid-column:1/-1"><span class="cinema-expand-label">Obs</span><span class="cinema-expand-value">'+c.obs+'</span></div>';
+    html+='</div>';
+    html+=sessTagsHtml;
     html+='</div>';
     html+='</div>';
   });
-  html+='</div>';
   document.getElementById('cinemesContent').innerHTML=html;
 }
 
+function toggleCinemaCard(idx){
+  var card=document.getElementById('ccard-'+idx);
+  if(card)card.classList.toggle('expanded');
+}
+
 // ── EQUIPE ──
+function buildEquipeFilters(){
+  var evts=uniqueSorted(equipeArr.filter(function(p){return eventoVisible(p.evento);}).map(function(p){return p.evento;}));
+  var funcoes=uniqueSorted(equipeArr.filter(function(p){return eventoVisible(p.evento);}).map(function(p){return p.funcao;}).filter(Boolean));
+  var cinemas=uniqueSorted(equipeArr.filter(function(p){return eventoVisible(p.evento);}).map(function(p){return p.cinema;}).filter(Boolean));
+  var selEv=document.getElementById('equipeEventoFilter');
+  var prevEv=selEv.value;
+  selEv.innerHTML='<option value="">— todos eventos —</option>';
+  evts.forEach(function(e){selEv.innerHTML+='<option value="'+e+'">'+e+'</option>';});
+  if(prevEv&&evts.indexOf(prevEv)>=0)selEv.value=prevEv;
+  var selFu=document.getElementById('equipeFuncaoFilter');
+  var prevFu=selFu.value;
+  selFu.innerHTML='<option value="">— todas funções —</option>';
+  funcoes.forEach(function(f){selFu.innerHTML+='<option value="'+f+'">'+f+'</option>';});
+  if(prevFu&&funcoes.indexOf(prevFu)>=0)selFu.value=prevFu;
+  var selCi=document.getElementById('equipeCinemaFilter');
+  var prevCi=selCi.value;
+  selCi.innerHTML='<option value="">— todos cinemas —</option>';
+  cinemas.forEach(function(c){selCi.innerHTML+='<option value="'+c+'">'+c+'</option>';});
+  if(prevCi&&cinemas.indexOf(prevCi)>=0)selCi.value=prevCi;
+}
+
 function renderEquipe(){
-  if(!equipeArr.length){
-    document.getElementById('equipeContent').innerHTML='<div class="empty-state"><div class="icon">◎</div><p>Aba "equipe" não encontrada na planilha.<br>Disponível na versão online.</p></div>';
-    document.getElementById('equipeCount').textContent='';
+  buildEquipeFilters();
+  var evF=document.getElementById('equipeEventoFilter').value;
+  var fuF=document.getElementById('equipeFuncaoFilter').value;
+  var ciF=document.getElementById('equipeCinemaFilter').value;
+  var filtered=equipeArr.filter(function(p){
+    if(!eventoVisible(p.evento))return false;
+    if(evF&&p.evento!==evF)return false;
+    if(fuF&&p.funcao!==fuF)return false;
+    if(ciF&&p.cinema!==ciF)return false;
+    return true;
+  });
+  document.getElementById('equipeCount').textContent=filtered.length+' membro'+(filtered.length!==1?'s':'');
+  if(!filtered.length){
+    document.getElementById('equipeContent').innerHTML='<div class="empty-state"><div class="icon">◎</div><p>Nenhum membro encontrado.</p></div>';
     return;
   }
-  document.getElementById('equipeCount').textContent=equipeArr.length+' membro'+(equipeArr.length!==1?'s':'');
-  var html='<table class="equipe-table"><thead><tr><th>Nome</th><th>Função</th><th>Telefone</th><th>Email</th></tr></thead><tbody>';
-  equipeArr.forEach(function(p){
-    html+='<tr><td class="eq-nome">'+p.nome+'</td><td class="eq-funcao">'+(p.funcao||'—')+'</td><td class="eq-contato">'+(p.telefone||'—')+'</td><td class="eq-contato">'+(p.email||'—')+'</td></tr>';
+  var html='<table class="equipe-table"><thead><tr>'
+    +'<th>Nome</th><th>Função</th><th>Cinema</th><th>Telefone</th><th>Email</th><th>Evento</th>'
+    +'</tr></thead><tbody>';
+  filtered.forEach(function(p){
+    var col=eventColors[p.evento]||null;
+    var evBadge=col?'<span class="eq-evento" style="background:'+col.bg+';color:'+col.text+';">'+p.evento+'</span>':p.evento||'—';
+    html+='<tr>';
+    html+='<td class="eq-nome">'+p.nome+'</td>';
+    html+='<td class="eq-funcao">'+(p.funcao||'—')+'</td>';
+    html+='<td class="eq-cinema">'+(p.cinema||'—')+'</td>';
+    html+='<td class="eq-contato">'+(p.telefone||'—')+'</td>';
+    html+='<td class="eq-contato">'+(p.email||'—')+'</td>';
+    html+='<td>'+evBadge+'</td>';
+    html+='</tr>';
   });
   html+='</tbody></table>';
   document.getElementById('equipeContent').innerHTML=html;
@@ -1966,6 +2079,8 @@ function applyEventoFilter(){
     buildDashEventFilters();
     populateGradeCinemaSelect();
   }
+  if(currentMode==='cinemas')renderCinemas();
+  if(currentMode==='equipe')renderEquipe();
   if(currentMode==='dashboard')renderDashboard();
   if(currentMode==='sessoes')renderSessoes();
   if(currentMode==='acervo')renderBuscaResults();
