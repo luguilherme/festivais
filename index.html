@@ -413,36 +413,51 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
 
 /* ── PRINT ── */
 @media print{
-  header,#eventosBar,.mode-bar,#landing,#tooltip,
+  header,#eventosBar,.mode-bar,#landing,#tooltip,#loginScreen,
   .zoom-controls,.theme-toggle,.role-zone,.offline-badge,.file-zone,
-  .print-btn,.upload-btn{display:none!important;}
+  .print-btn,.upload-btn,#refreshToast{display:none!important;}
   body,html{background:#fff!important;color:#000!important;}
   #app{display:block!important;}
   .empty-state{display:none!important;}
-  /* hide all panels by default, show only active */
   .mode-panel{display:none!important;}
   .mode-panel.active{display:block!important;}
-  /* FICHA — landscape, one session per page */
-  body[data-print="ficha"] .ficha-table td,
-  body[data-print="ficha"] .ficha-table th{font-size:10px!important;}
-  @page{size:A4 landscape;margin:12mm;}
-  .ficha{background:#fff!important;border:1px solid #ccc!important;margin:0!important;page-break-after:always;page-break-inside:avoid;break-after:page;break-inside:avoid;}
-  .ficha:last-child{page-break-after:auto;break-after:auto;}
-  .ficha-session-name,.meta-value.highlight{color:#000!important;}
-  .cpl-text{color:#1a5c30!important;}
-  .cpl-value{color:#1a5c30!important;}
-  .cpl-cell{background:rgba(0,0,0,0.04)!important;border-left:2px solid #999!important;}
-  .badge-flat,.badge-scope,.badge-51,.badge-stereo{color:#000!important;background:none!important;border:1px solid #999!important;}
-  .footer-stamp{color:#666!important;}
+
+  /* ── FICHA: A4 paisagem, uma sessão por página ── */
+  body[data-print="ficha"] *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  body[data-print="ficha"] #ficha-container{padding:0!important;}
+  @page{size:A4 landscape;margin:10mm;}
+  .ficha{
+    background:#fff!important;
+    border:1px solid #ccc!important;
+    margin:0 0 0 0!important;
+    page-break-after:always;
+    page-break-inside:avoid;
+    break-after:page;
+    break-inside:avoid;
+    max-width:100%!important;
+  }
+  .ficha:last-child{page-break-after:auto!important;break-after:auto!important;}
+  .ficha-session-name{color:#000!important;}
+  .meta-value.highlight{color:#b07800!important;}
+  .ficha-evento-badge{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .cpl-text,.cpl-value{color:#1a5c30!important;}
+  .cpl-cell{background:rgba(0,0,0,0.04)!important;border-left:2px solid #aaa!important;}
+  .cpl-ov-ficha{color:#2a7a40!important;}
+  .badge-flat,.badge-scope,.badge-51,.badge-stereo{color:#000!important;background:#eee!important;border:1px solid #999!important;}
+  .badge-kdm{color:#c00!important;background:#fee!important;border:1px solid #c00!important;}
+  .badge-kdm-esp{color:#b07800!important;background:#ffd!important;border:1px solid #b07800!important;}
+  .badge-kdm-nao{color:#999!important;}
+  .footer-stamp{color:#999!important;}
   .film-table-wrap{overflow:visible!important;}
-  /* OUTROS MÓDULOS — portrait */
-  body:not([data-print="ficha"]) @page{size:A4 portrait;margin:14mm;}
-  /* grade grid: show col header only in grid mode */
+  table.ficha-table th{color:#b07800!important;background:#fdf8ec!important;}
+  table.ficha-table thead tr{background:#fdf8ec!important;}
+
+  /* ── OUTROS MÓDULOS: A4 retrato ── */
+  body:not([data-print="ficha"]) .ficha{page-break-after:auto;break-after:auto;page-break-inside:auto;break-inside:auto;}
   #gradeColHeaderOuter{display:none!important;}
   body[data-grademode="grid"] #gradeColHeaderOuter{display:block!important;overflow:visible!important;}
   body[data-grademode="grid"] .grade-wrap{overflow:visible!important;}
   body[data-grademode="grid"] .grid-body{flex-wrap:wrap!important;}
-  /* sessoes / cinemas / equipe / acervo / dashboard tables */
   .sessoes-table,.dash-table,.equipe-table,.tabela-list,table.ficha-table{width:100%!important;}
   .cinemas-grid{grid-template-columns:repeat(2,1fr)!important;}
   .film-card{page-break-inside:avoid;}
@@ -581,6 +596,10 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
     <option value="evento">Evento inteiro</option>
   </select>
   <div id="fichaFilters" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;"></div>
+  <label style="display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;color:var(--text-dim);cursor:pointer;white-space:nowrap;margin-left:4px;">
+    <input type="checkbox" id="fichaShowMonitor" checked style="accent-color:var(--accent);width:13px;height:13px;">
+    Monitor
+  </label>
   <button class="print-btn" id="fichaGerarBtn" disabled onclick="gerarFicha()">Gerar</button>
   <button class="print-btn" id="printBtn" disabled onclick="printModule()">⎙ Imprimir</button>
 </div>
@@ -1589,6 +1608,7 @@ function updateFichaFilters(){
 function gerarFicha(){
   var type=document.getElementById('fichaTypeSelect').value;
   var sessions=[];
+  var visFilter=function(s){return eventoVisible(s.evento);};
   if(type==='sessao'){
     var v=document.getElementById('fichaSelSessao').value;
     if(v&&sessoesMap[v])sessions=[sessoesMap[v]];
@@ -1596,30 +1616,37 @@ function gerarFicha(){
   if(type==='dia-sala'){
     var dia=document.getElementById('fichaSelDia').value;
     var sala=document.getElementById('fichaSelSala').value;
-    sessions=sessoesArr.filter(function(s){return(!dia||s.dia===dia)&&(!sala||s.cinema===sala);});
+    sessions=sessoesArr.filter(function(s){return visFilter(s)&&(!dia||s.dia===dia)&&(!sala||s.cinema===sala);});
   }
   if(type==='dia-complexo'){
     var dia=document.getElementById('fichaSelDia').value;
     var comp=document.getElementById('fichaSelComplexo').value;
     var salasDoComplexo=new Set();
     if(comp){
-      if(cinemesArr.length){cinemesArr.filter(function(c){return c.complexo===comp;}).forEach(function(c){salasDoComplexo.add(c.nome);});}
-      else{salasDoComplexo.add(comp);}
+      if(cinemesArr.length){
+        // use cinemas.json complexo field
+        cinemesArr.filter(function(c){return c.complexo===comp;}).forEach(function(c){salasDoComplexo.add(c.nome);});
+      } else {
+        // no cinemas.json — treat selected value as cinema name directly
+        salasDoComplexo.add(comp);
+      }
     }
-    sessions=sessoesArr.filter(function(s){return(!dia||s.dia===dia)&&(!comp||salasDoComplexo.has(s.cinema));});
+    sessions=sessoesArr.filter(function(s){return visFilter(s)&&(!dia||s.dia===dia)&&(!comp||salasDoComplexo.has(s.cinema));});
   }
   if(type==='dia'){
     var dia=document.getElementById('fichaSelDia').value;
-    sessions=sessoesArr.filter(function(s){return!dia||s.dia===dia;});
+    sessions=sessoesArr.filter(function(s){return visFilter(s)&&(!dia||s.dia===dia);});
   }
-  if(type==='evento')sessions=sessoesArr.filter(function(s){return eventoVisible(s.evento);});
+  if(type==='evento')sessions=sessoesArr.filter(visFilter);
   sessions.sort(function(a,b){
     if(!a.date&&!b.date)return 0;if(!a.date)return 1;if(!b.date)return-1;
+    // sort by cinema then by time within same day
     var dd=a.date-b.date;if(dd!==0)return dd;
+    if(a.cinema<b.cinema)return-1;if(a.cinema>b.cinema)return 1;
     return(a.time.h*60+a.time.m)-(b.time.h*60+b.time.m);
   });
   if(!sessions.length){document.getElementById('fichaWrap').style.display='none';document.getElementById('fichaEmpty').style.display='flex';return;}
-  var html=sessions.map(function(s,idx){return renderFichaBlock(s.nome,s,idx<sessions.length-1);}).join('');
+  var html=sessions.map(function(s){return renderFichaBlock(s.nome,s,false);}).join('');
   document.getElementById('fichaWrap').innerHTML=html;
   document.getElementById('fichaWrap').style.display='block';
   document.getElementById('fichaEmpty').style.display='none';
@@ -1659,11 +1686,17 @@ function renderFichaBlock(nome,s,addBreak){
     return'<tr><td class="film-num">'+(idx+1)+'</td><td><div class="film-title">'+titulo+(hdTag?' '+hdTag:'')+'</div><div class="film-sub"><span class="film-code">'+f.codigo+'</span></div></td><td>'+idiomaCell+'</td><td>'+legCell+'</td><td class="center">'+lenteBadge(lente)+'</td><td class="center">'+somBadge(som)+'</td><td class="center">'+kdmFichaBadge(kdm)+'</td><td class="mono center">'+durCell+'</td>'+cplCell+'<td class="center">'+fpsgbCell+'</td><td><div class="obs-text">'+(obs||'')+'</div></td></tr>';
   });
   var monInfo='';
-  if(cinemesArr.length){
+  var showMon=document.getElementById('fichaShowMonitor');
+  if(showMon&&showMon.checked&&cinemesArr.length){
     var cinInfo=cinemesArr.find(function(c){return c.nome===s.cinema;});
-    if(cinInfo&&cinInfo.monitoresNomes)monInfo='<div class="meta-item"><div class="meta-label">Monitor</div><div class="meta-value">'+cinInfo.monitoresNomes+'</div></div>';
+    if(cinInfo&&cinInfo.monitoresNomes){
+      var monContato=cinInfo.monitoresContatos?'<div class="meta-value" style="font-size:10px;font-weight:400;color:var(--text-dim);">'+cinInfo.monitoresContatos+'</div>':'';
+      monInfo='<div class="meta-item"><div class="meta-label">Monitor</div><div class="meta-value">'+cinInfo.monitoresNomes+'</div>'+monContato+'</div>';
+    }
   }
-  return'<div class="ficha">'+(addBreak?'<div class="ficha-break" style="display:none"></div>':'')+'<div class="ficha-header"><div class="ficha-session-wrap"><div class="ficha-session-name">'+nome+'</div>'+(s.nomeSessao?'<div class="ficha-session-fullname">'+s.nomeSessao+'</div>':'')+(s.evento&&col?'<span class="ficha-evento-badge" '+badgeSt+'>'+s.evento+'</span>':'')+'</div><div class="ficha-meta"><div class="meta-item"><div class="meta-label">Cinema</div><div class="meta-value highlight">'+s.cinema+'</div></div><div class="meta-item"><div class="meta-label">Dia</div><div class="meta-value">'+s.dia+'</div></div><div class="meta-item"><div class="meta-label">Hora</div><div class="meta-value">'+s.hora+'</div></div>'+(s.mostra?'<div class="meta-item"><div class="meta-label">Mostra</div><div class="meta-value">'+s.mostra+'</div></div>':'')+monInfo+'</div></div><div class="film-table-wrap"><table class="ficha-table"><thead><tr><th></th><th>Título</th><th>Idioma</th><th>Legenda</th><th class="center">Lente</th><th class="center">Som</th><th class="center">KDM</th><th class="center">Dur</th><th>CPL</th><th class="center">FPS/GB</th><th>Obs</th></tr></thead><tbody>'+rows.join('')+'</tbody></table></div><div class="ficha-footer"><div class="footer-total">'+films.length+' filme'+(films.length!==1?'s':'')+' · Duração total<strong>'+totalDur+'</strong> · Tamanho total<strong>'+totalGBStr+'</strong></div><div class="footer-stamp">OLGA WEB · luguilherme/festivais</div></div></div>';
+  var kdmCount=films.filter(function(f){return(f.kdm||'').toLowerCase()==='sim';}).length;
+  var kdmAlert=kdmCount>0?'<span style="font-family:var(--mono);font-size:9px;color:#ff6055;margin-left:12px;">⚠ '+kdmCount+' KDM</span>':'';
+  return'<div class="ficha">'+'<div class="ficha-header"><div class="ficha-session-wrap"><div class="ficha-session-name">'+nome+'</div>'+(s.nomeSessao?'<div class="ficha-session-fullname">'+s.nomeSessao+'</div>':'')+(s.evento&&col?'<span class="ficha-evento-badge" '+badgeSt+'>'+s.evento+'</span>':'')+'</div><div class="ficha-meta"><div class="meta-item"><div class="meta-label">Cinema</div><div class="meta-value highlight">'+s.cinema+'</div></div><div class="meta-item"><div class="meta-label">Dia</div><div class="meta-value">'+s.dia+'</div></div><div class="meta-item"><div class="meta-label">Hora</div><div class="meta-value">'+s.hora+'</div></div>'+(s.mostra?'<div class="meta-item"><div class="meta-label">Mostra</div><div class="meta-value">'+s.mostra+'</div></div>':'')+monInfo+'</div></div><div class="film-table-wrap"><table class="ficha-table"><thead><tr><th></th><th>Título</th><th>Idioma</th><th>Legenda</th><th class="center">Lente</th><th class="center">Som</th><th class="center">KDM</th><th class="center">Dur</th><th>CPL</th><th class="center">FPS/GB</th><th>Obs</th></tr></thead><tbody>'+rows.join('')+'</tbody></table></div><div class="ficha-footer"><div class="footer-total">'+films.length+' filme'+(films.length!==1?'s':'')+' · <strong>'+totalDur+'</strong> · <strong>'+totalGBStr+'</strong>'+kdmAlert+'</div><div class="footer-stamp">OLGA WEB · luguilherme/festivais</div></div></div>';
 }
 
 // ── ACERVO (BUSCA) ──
