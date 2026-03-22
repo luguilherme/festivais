@@ -251,7 +251,7 @@ select.bar-select:disabled{opacity:0.35;cursor:not-allowed;}
 
 /* ── FICHA ── */
 #ficha-container{padding:24px 28px;}
-.ficha{max-width:1100px;margin:0 auto;background:var(--surface);border:1px solid var(--border);}
+.ficha{width:fit-content;min-width:700px;max-width:100%;margin:0 auto;background:var(--surface);border:1px solid var(--border);}
 .ficha+.ficha{margin-top:32px;}
 .ficha-header{padding:20px 24px 16px;border-bottom:2px solid var(--accent);}
 .ficha-session-wrap{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px;}
@@ -455,9 +455,11 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
   table.ficha-table th{color:#b07800!important;background:#fdf8ec!important;}
   table.ficha-table thead tr{background:#fdf8ec!important;}
 
-  /* ── FICHA: fit to page — scale down if overflowing ── */
+  /* ── FICHA: fit to page via zoom (set inline by JS) ── */
   body[data-print="ficha"] .ficha{
-    transform-origin:top left;
+    width:100%!important;
+    max-width:100%!important;
+    /* zoom is set inline by fitFichasToPage() */
   }
 
   /* ── PB MODE: all black and white, no grays ── */
@@ -1966,27 +1968,22 @@ function applyRole(role, skipEventosReset){
 }
 
 // ── PRINT ──
-// A4 landscape usable area in px at 96dpi: ~1050 x 740
-var PRINT_W=1050, PRINT_H=740;
+// A4 landscape usable area at 96dpi approx: 1122 x 794px minus 20mm margins = ~1046 x 718px
+var PRINT_W=1046, PRINT_H=718;
 
 function fitFichasToPage(){
   document.querySelectorAll('.ficha').forEach(function(el){
-    el.style.transform='';
-    el.style.marginBottom='';
+    el.style.zoom='';
     var w=el.scrollWidth, h=el.scrollHeight;
     var scale=Math.min(1, PRINT_W/w, PRINT_H/h);
-    if(scale<1){
-      el.style.transform='scale('+scale+')';
-      el.style.transformOrigin='top left';
-      // compensate for collapsed height after scale
-      el.style.marginBottom=((h*scale)-h)+'px';
+    if(scale<0.99){
+      el.style.zoom=scale;
     }
   });
 }
 function unFitFichas(){
   document.querySelectorAll('.ficha').forEach(function(el){
-    el.style.transform='';
-    el.style.marginBottom='';
+    el.style.zoom='';
   });
 }
 
