@@ -495,6 +495,8 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
   <div class="file-zone">
     <span class="auth-dot" id="authDot"></span>
     <span class="auth-status" id="authStatus">—</span>
+    <button class="auth-btn" id="refreshBtn" onclick="refreshData()" style="display:none;" title="Recarregar dados do repositório">↻</button>
+    <button class="auth-btn" id="logoutBtn" onclick="doLogout()" style="display:none;">Sair</button>
     <button class="auth-btn" id="authBtn" onclick="showLogin()" style="display:none;">Entrar</button>
   </div>
   <nav class="nav-tabs">
@@ -532,6 +534,7 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
 <!-- MODE BARS -->
 <div class="mode-bar hidden" id="barDashboard">
   <select class="bar-select" id="dashCinemaFilter" style="min-width:180px;" onchange="renderDashboard()"><option value="">— todos os cinemas —</option></select>
+  <span id="lastUpdatedStamp" style="font-family:var(--mono);font-size:9px;color:var(--text-muted);margin-left:auto;"></span>
   <button class="print-btn" onclick="printModule()">⎙ Imprimir</button>
 </div>
 <div class="mode-bar hidden" id="barAcervo">
@@ -747,36 +750,103 @@ async function doLogin(){
 function setAuthStatus(state,label){
   var dot=document.getElementById('authDot');
   var st=document.getElementById('authStatus');
-  var btn=document.getElementById('authBtn');
+  var authBtn=document.getElementById('authBtn');
+  var refreshBtn=document.getElementById('refreshBtn');
+  var logoutBtn=document.getElementById('logoutBtn');
   if(state==='ok'){
     dot.className='auth-dot ok';
-    st.textContent=label||currentUser.email;
-    btn.style.display='none';
+    st.textContent=label||(currentUser.email+' · '+currentUser.papel);
+    authBtn.style.display='none';
+    refreshBtn.style.display='inline-flex';
+    logoutBtn.style.display='inline-flex';
   } else if(state==='loading'){
     dot.className='auth-dot loading';
     st.textContent='Carregando…';
-    btn.style.display='none';
+    authBtn.style.display='none';
+    refreshBtn.style.display='none';
+    logoutBtn.style.display='none';
   } else {
     dot.className='auth-dot';
     st.textContent='Não autenticado';
-    btn.style.display='inline-flex';
+    authBtn.style.display='inline-flex';
+    refreshBtn.style.display='none';
+    logoutBtn.style.display='none';
   }
+}
+
+function doLogout(){
+  localStorage.removeItem('olga_email');
+  localStorage.removeItem('olga_token');
+  currentUser={email:'',token:'',papel:'admin',eventos:[]};
+  dataLoaded=false;
+  // reset UI
+  setAuthStatus('none');
+  document.getElementById('eventosBar').classList.remove('visible');
+  var allTabs=['Dashboard','Acervo','Sessoes','Cinemas','Equipe','Grade','Ficha'];
+  allTabs.forEach(function(t){document.getElementById('tab'+t).disabled=true;});
+  ['modCardDashboard','modCardGrade','modCardFicha','modCardAcervo'].forEach(function(id){
+    document.getElementById(id).classList.add('disabled');
+  });
+  goHome();
+  showLogin();
+}
+
+async function refreshData(){
+  var refreshBtn=document.getElementById('refreshBtn');
+  refreshBtn.textContent='…';
+  refreshBtn.disabled=true;
+  try{
+    await loadFromGitHub();
+    refreshBtn.textContent='↻';
+  } catch(e){}
+  refreshBtn.disabled=false;
+  refreshBtn.textContent='↻';
+  if(currentMode)switchMode(currentMode);
 }
 
 // ── GITHUB DATA LOADING ──
 async function loadFromGitHub(){
   setLandingState('loading','Carregando dados…','Conectando ao GitHub');
   try{
-    var [filmes,sessoes,cinemas,equipe]=await Promise.all([
+    var [filmes,sessoes,cinemas,equipe,config]=await Promise.all([
       fetchJSON('filmes.json'),
       fetchJSON('sessoes.json'),
       fetchJSON('cinemas.json'),
       fetchJSON('equipe.json'),
+      fetchJSON('config.json'),
     ]);
+    applyConfig(config);
     processJSONData(filmes,sessoes,cinemas,equipe);
   }catch(e){
     setLandingState('error','Erro ao carregar dados',e.message||'Verifique sua conexão');
     setAuthStatus('error');
+  }
+}
+
+function applyConfig(config){
+  var email=(currentUser.email||'').toLowerCase();
+  var matches=config.filter(function(c){
+    return(c.email||'').toLowerCase()===email;
+  });
+  if(!matches.length){
+    // email not in config — keep admin for now (offline-like)
+    currentUser.papel='admin';
+    currentUser.eventos=[];
+    return;
+  }
+  // check for admin
+  var isAdmin=matches.some(function(c){return c.papel==='admin';});
+  if(isAdmin){
+    currentUser.papel='admin';
+    currentUser.eventos=[];
+  } else {
+    currentUser.papel=matches[0].papel;
+    currentUser.eventos=matches.map(function(c){return c.evento;}).filter(Boolean);
+  }
+  applyRole(currentUser.papel);
+  // restrict eventosAtivos to authorized events for non-admin
+  if(currentUser.papel!=='admin'&&currentUser.eventos.length){
+    eventosAtivos=new Set(currentUser.eventos);
   }
 }
 
@@ -851,9 +921,14 @@ function processJSONData(filmes,sessoes,cinemas,equipe){
   var events=Array.from(evSet);
 
   applyData(events);
+  // last updated stamp
+  var now=new Date();
+  var stamp=now.toLocaleDateString('pt-BR')+' '+now.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+  var el=document.getElementById('lastUpdatedStamp');
+  if(el)el.textContent='↻ '+stamp;
   setLandingState('ok',
     filmesArr.length+' filmes · '+sessoesArr.length+' sessões',
-    'luguilherme/festivais'
+    'luguilherme/festivais · '+stamp
   );
   setAuthStatus('ok');
 }
@@ -1634,11 +1709,14 @@ function buildEventosPills(){
   var bar=document.getElementById('eventosBar');
   if(!zone||!bar)return;
   zone.innerHTML='';
-  var evts=Object.keys(eventColors);
+  // for non-admin, only show authorized events
+  var allEvts=Object.keys(eventColors);
+  var evts=currentUser.papel==='admin'||!currentUser.eventos.length
+    ? allEvts
+    : allEvts.filter(function(e){return currentUser.eventos.indexOf(e)>=0;});
   if(!evts.length){bar.classList.remove('visible');return;}
   bar.classList.add('visible');
-  var isAdmin=(currentRole==='admin');
-  var solo=evts.length===1||!isAdmin;
+  var solo=evts.length===1;
 
   evts.forEach(function(ev){
     var col=eventColors[ev];
@@ -1668,9 +1746,11 @@ function buildEventosPills(){
 }
 
 function refreshEventoPills(){
-  var evts=Object.keys(eventColors);
-  var isAdmin=(currentRole==='admin');
-  var solo=evts.length===1||!isAdmin;
+  var allEvts=Object.keys(eventColors);
+  var evts=currentUser.papel==='admin'||!currentUser.eventos.length
+    ? allEvts
+    : allEvts.filter(function(e){return currentUser.eventos.indexOf(e)>=0;});
+  var solo=evts.length===1;
   evts.forEach(function(ev){
     var pill=document.getElementById('hdrPill-'+ev);
     if(!pill)return;
