@@ -428,24 +428,40 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
   /* ── FICHA: A4 paisagem, uma sessão por página ── */
   body[data-print="ficha"] *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
   body[data-print="ficha"] #ficha-container{padding:0!important;}
-  @page{size:A4 landscape;margin:10mm;}
+  @page{size:A4 landscape;margin:8mm;}
   .ficha{
     background:#fff!important;
     border:1px solid #ccc!important;
-    margin:0 0 0 0!important;
+    margin:0!important;
     page-break-after:always;
     page-break-inside:avoid;
     break-after:page;
     break-inside:avoid;
+    width:100%!important;
     max-width:100%!important;
+    box-sizing:border-box!important;
+    /* reduce everything proportionally to fit one page */
+    zoom:0.78;
   }
   .ficha:last-child{page-break-after:auto!important;break-after:auto!important;}
+  /* tighter padding in print */
+  .ficha-header{padding:10px 16px 8px!important;}
+  .ficha-footer{padding:6px 16px!important;}
+  .meta-item{padding:3px 10px 3px 0!important;margin-right:10px!important;}
+  table.ficha-table td{padding:5px 7px!important;}
+  table.ficha-table th{padding:5px 7px!important;}
+  /* smaller fonts */
+  .ficha-session-name{font-size:18px!important;}
+  table.ficha-table td,table.ficha-table th{font-size:10px!important;}
+  .cpl-text{font-size:9px!important;min-width:0!important;}
+  .film-title{font-size:10px!important;}
+  /* colors */
   .ficha-session-name{color:#000!important;}
   .meta-value.highlight{color:#b07800!important;}
   .ficha-evento-badge{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
   .cpl-text,.cpl-value{color:#1a5c30!important;}
   .cpl-cell{background:rgba(0,0,0,0.04)!important;border-left:2px solid #aaa!important;}
-  .cpl-ov-ficha{color:#2a7a40!important;}
+  .cpl-ov-ficha{color:#2a7a40!important;font-size:8px!important;}
   .badge-flat,.badge-scope,.badge-51,.badge-stereo{color:#000!important;background:#eee!important;border:1px solid #999!important;}
   .badge-kdm{color:#c00!important;background:#fee!important;border:1px solid #c00!important;}
   .badge-kdm-esp{color:#b07800!important;background:#ffd!important;border:1px solid #b07800!important;}
@@ -454,13 +470,6 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
   .film-table-wrap{overflow:visible!important;}
   table.ficha-table th{color:#b07800!important;background:#fdf8ec!important;}
   table.ficha-table thead tr{background:#fdf8ec!important;}
-
-  /* ── FICHA: fit to page via zoom (set inline by JS) ── */
-  body[data-print="ficha"] .ficha{
-    width:100%!important;
-    max-width:100%!important;
-    /* zoom is set inline by fitFichasToPage() */
-  }
 
   /* ── PB MODE: all black and white, no grays ── */
   body[data-print-pb] .ficha-session-name,
@@ -1968,23 +1977,24 @@ function applyRole(role, skipEventosReset){
 }
 
 // ── PRINT ──
-// A4 landscape usable area at 96dpi approx: 1122 x 794px minus 20mm margins = ~1046 x 718px
-var PRINT_W=1046, PRINT_H=718;
+// A4 landscape at 96dpi with 8mm margins ≈ 1106 x 779px, after CSS zoom:0.78 → effective page ≈ 1420 x 1000
+// JS adds extra zoom only for sessions that are still too tall after CSS zoom
+var CSS_ZOOM=0.78;
+var PRINT_H_EFFECTIVE=770; // px at screen resolution after CSS zoom
 
 function fitFichasToPage(){
   document.querySelectorAll('.ficha').forEach(function(el){
     el.style.zoom='';
-    var w=el.scrollWidth, h=el.scrollHeight;
-    var scale=Math.min(1, PRINT_W/w, PRINT_H/h);
-    if(scale<0.99){
-      el.style.zoom=scale;
+    var h=el.scrollHeight;
+    var target=PRINT_H_EFFECTIVE/CSS_ZOOM;
+    if(h>target){
+      var extra=target/h;
+      el.style.zoom=CSS_ZOOM*extra;
     }
   });
 }
 function unFitFichas(){
-  document.querySelectorAll('.ficha').forEach(function(el){
-    el.style.zoom='';
-  });
+  document.querySelectorAll('.ficha').forEach(function(el){el.style.zoom='';});
 }
 
 function printModule(){
