@@ -255,6 +255,7 @@ select.bar-select:disabled{opacity:0.35;cursor:not-allowed;}
 .ficha+.ficha{margin-top:32px;}
 .ficha-header{padding:20px 24px 16px;border-bottom:2px solid var(--accent);}
 .ficha-session-wrap{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px;}
+.ficha-film-count{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text-dim);border:1px solid var(--border);padding:3px 10px;border-radius:2px;margin-left:auto;white-space:nowrap;}
 .ficha-session-name{font-family:var(--mono);font-size:24px;font-weight:600;color:var(--accent);letter-spacing:0.05em;text-transform:uppercase;line-height:1;}
 .ficha-session-fullname{font-family:var(--sans);font-size:13px;color:var(--text-dim);margin-left:4px;}
 .ficha-evento-badge{font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;padding:2px 8px;border-radius:2px;white-space:nowrap;align-self:center;}
@@ -304,7 +305,7 @@ td.cpl-cell{background:var(--cpl-bg);border-left:3px solid var(--cpl-border);pad
 .fps-val{font-family:var(--mono);font-size:10px;color:var(--text-dim);}
 .gb-val{font-family:var(--mono);font-size:8px;color:#e8e8e8;}
 .obs-text{font-size:10px;color:rgba(232,160,32,0.75);font-style:italic;max-width:180px;}
-.ficha-footer{padding:10px 24px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.ficha-footer{padding:10px 24px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
 .footer-total{font-family:var(--mono);font-size:10px;color:var(--text-dim);}
 .footer-total strong{color:var(--text);font-size:13px;margin-left:6px;}
 .footer-stamp{font-family:var(--mono);font-size:8px;color:var(--text-muted);letter-spacing:0.1em;}
@@ -473,6 +474,7 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
 
   /* ── PB MODE: all black and white, no grays ── */
   body[data-print-pb] .ficha-session-name,
+  body[data-print-pb] .ficha-film-count,
   body[data-print-pb] .meta-value,
   body[data-print-pb] .meta-value.highlight,
   body[data-print-pb] .meta-label,
@@ -1803,8 +1805,29 @@ function renderFichaBlock(nome,s,addBreak){
     }
   }
   var kdmCount=films.filter(function(f){return(f.kdm||'').toLowerCase()==='sim';}).length;
-  var kdmAlert=kdmCount>0?'<span style="font-family:var(--mono);font-size:9px;color:#ff6055;margin-left:12px;">⚠ '+kdmCount+' KDM</span>':'';
-  return'<div class="ficha">'+'<div class="ficha-header"><div class="ficha-session-wrap"><div class="ficha-session-name">'+nome+'</div>'+(s.nomeSessao?'<div class="ficha-session-fullname">'+s.nomeSessao+'</div>':'')+(s.evento&&col?'<span class="ficha-evento-badge" '+badgeSt+'>'+s.evento+'</span>':'')+'</div><div class="ficha-meta"><div class="meta-item"><div class="meta-label">Cinema</div><div class="meta-value highlight">'+s.cinema+'</div></div><div class="meta-item"><div class="meta-label">Dia</div><div class="meta-value">'+s.dia+'</div></div><div class="meta-item"><div class="meta-label">Hora</div><div class="meta-value">'+s.hora+'</div></div>'+(s.mostra?'<div class="meta-item"><div class="meta-label">Mostra</div><div class="meta-value">'+s.mostra+'</div></div>':'')+monInfo+'</div></div><div class="film-table-wrap"><table class="ficha-table"><thead><tr><th></th><th>Título</th><th>Idioma</th><th>Legenda</th><th class="center">Lente</th><th class="center">Som</th><th class="center">KDM</th><th class="center">Dur</th><th>CPL</th><th class="center">FPS/GB</th><th>Obs</th></tr></thead><tbody>'+rows.join('')+'</tbody></table></div><div class="ficha-footer"><div class="footer-total">'+films.length+' filme'+(films.length!==1?'s':'')+' · <strong>'+totalDur+'</strong> · <strong>'+totalGBStr+'</strong>'+kdmAlert+'</div><div class="footer-stamp">OLGA WEB · luguilherme/festivais</div></div></div>';
+  return'<div class="ficha">'
+    +'<div class="ficha-header">'
+      +'<div class="ficha-session-wrap">'
+        +'<div class="ficha-session-name">'+nome+'</div>'
+        +(s.nomeSessao?'<div class="ficha-session-fullname">'+s.nomeSessao+'</div>':'')
+        +(s.evento&&col?'<span class="ficha-evento-badge" '+badgeSt+'>'+s.evento+'</span>':'')
+        +'<span class="ficha-film-count">'+films.length+' filme'+(films.length!==1?'s':'')+kdmAlert+'</span>'
+      +'</div>'
+      +'<div class="ficha-meta">'
+        +'<div class="meta-item"><div class="meta-label">Cinema</div><div class="meta-value highlight">'+s.cinema+'</div></div>'
+        +'<div class="meta-item"><div class="meta-label">Dia</div><div class="meta-value">'+s.dia+'</div></div>'
+        +'<div class="meta-item"><div class="meta-label">Hora</div><div class="meta-value">'+s.hora+'</div></div>'
+        +(s.mostra?'<div class="meta-item"><div class="meta-label">Mostra</div><div class="meta-value">'+s.mostra+'</div></div>':'')
+        +monInfo
+      +'</div>'
+    +'</div>'
+    +'<div class="film-table-wrap"><table class="ficha-table"><thead><tr><th></th><th>Título</th><th>Idioma</th><th>Legenda</th><th class="center">Lente</th><th class="center">Som</th><th class="center">KDM</th><th class="center">Dur</th><th>CPL</th><th class="center">FPS/GB</th><th>Obs</th></tr></thead><tbody>'+rows.join('')+'</tbody></table></div>'
+    +'<div class="ficha-footer">'
+      +'<div class="footer-total"><strong>'+nome+'</strong>'+(s.nomeSessao?' · '+s.nomeSessao:'')+(s.cinema?' · '+s.cinema:'')+'</div>'
+      +'<div class="footer-total" style="margin-left:auto;"><strong>'+totalDur+'</strong> · <strong>'+totalGBStr+'</strong></div>'
+      +'<div class="footer-stamp">OLGA WEB · luguilherme/festivais</div>'
+    +'</div>'
+  +'</div>';
 }
 
 // ── ACERVO (BUSCA) ──
