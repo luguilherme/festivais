@@ -95,6 +95,26 @@ select.bar-select:disabled{opacity:0.35;cursor:not-allowed;}
 .print-btn{display:inline-flex;align-items:center;gap:5px;padding:6px 14px;background:transparent;color:var(--accent);border:1px solid var(--accent);font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:all 0.15s;}
 .print-btn:hover{background:var(--accent);color:#000;}
 .print-btn:disabled{opacity:0.3;cursor:not-allowed;}
+.print-btn-pb{color:var(--text-dim);border-color:var(--border2);}
+.print-btn-pb:hover{background:var(--text-dim);color:#000;border-color:var(--text-dim);}
+/* ── PRINT PB mode ── */
+body[data-print-pb] *{
+  color:#000!important;
+  background:#fff!important;
+  border-color:#000!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+  -webkit-print-color-adjust:exact;
+  print-color-adjust:exact;
+}
+body[data-print-pb] .ficha{border:1px solid #000!important;}
+body[data-print-pb] .ficha-header{border-bottom:2px solid #000!important;}
+body[data-print-pb] table.ficha-table thead tr{background:#eee!important;}
+body[data-print-pb] table.ficha-table th{color:#000!important;background:#eee!important;}
+body[data-print-pb] td.cpl-cell{background:#f4f4f4!important;border-left:2px solid #000!important;}
+body[data-print-pb] .ficha-evento-badge{background:#000!important;color:#fff!important;}
+body[data-print-pb] .session-block{background:#ddd!important;color:#000!important;}
+body[data-print-pb] .event-pill,.badge{background:#eee!important;border:1px solid #000!important;}
 .search-wrap{flex:1;min-width:200px;max-width:400px;position:relative;}
 .search-wrap input{width:100%;font-family:var(--mono);font-size:11px;background:var(--surface2);color:var(--text);border:1px solid var(--border2);padding:6px 30px 6px 10px;outline:none;transition:border-color 0.15s;}
 .search-wrap input::placeholder{color:var(--text-muted);}
@@ -237,6 +257,7 @@ select.bar-select:disabled{opacity:0.35;cursor:not-allowed;}
 [data-theme="light"] .tabela-list thead tr th{background:#f0f0ec;}
 .tabela-list td{font-family:var(--mono);font-size:11px;color:var(--text);padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:middle;}
 .tabela-list tr:hover td{background:rgba(255,255,255,0.02);}
+.grade-row-clickable:hover td{background:rgba(232,160,32,0.06)!important;cursor:pointer;}
 .tabela-list .td-dia{color:var(--text-dim);font-size:10px;white-space:nowrap;}
 .tabela-list .td-hora{font-weight:600;}
 .tabela-list .td-cinema{color:var(--text-dim);}
@@ -552,6 +573,12 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
   <span id="lastUpdatedStamp" style="font-family:var(--mono);font-size:9px;color:var(--text-muted);margin-left:auto;"></span>
   <button class="print-btn" onclick="printModule()">⎙ Imprimir</button>
 </div>
+<div class="mode-bar hidden" id="barDashboard">
+  <select class="bar-select" id="dashCinemaFilter" style="min-width:180px;" onchange="renderDashboard()"><option value="">— todos os cinemas —</option></select>
+  <span id="lastUpdatedStamp" style="font-family:var(--mono);font-size:9px;color:var(--text-muted);margin-left:auto;"></span>
+  <button class="print-btn" onclick="printModule()">⎙ Imprimir</button>
+  <button class="print-btn print-btn-pb" onclick="printModulePB()">⎙ PB</button>
+</div>
 <div class="mode-bar hidden" id="barAcervo">
   <div class="search-wrap">
     <input type="text" id="searchInput" placeholder="título, código, CPL, idioma…" disabled>
@@ -559,6 +586,7 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
   </div>
   <span class="result-count" id="resultCount"></span>
   <button class="print-btn" onclick="printModule()">⎙ Imprimir</button>
+  <button class="print-btn print-btn-pb" onclick="printModulePB()">⎙ PB</button>
 </div>
 <div class="mode-bar hidden" id="barSessoes">
   <select class="bar-select" id="sessDiaFilter" style="min-width:160px;" onchange="renderSessoes()"><option value="">— todos os dias —</option></select>
@@ -566,16 +594,19 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
   <select class="bar-select" id="sessMostraFilter" style="min-width:160px;" onchange="renderSessoes()"><option value="">— todas as mostras —</option></select>
   <span class="result-count" id="sessCount"></span>
   <button class="print-btn" onclick="printModule()">⎙ Imprimir</button>
+  <button class="print-btn print-btn-pb" onclick="printModulePB()">⎙ PB</button>
 </div>
 <div class="mode-bar hidden" id="barCinemas">
   <span class="filter-label" style="font-family:var(--mono);font-size:9px;color:var(--text-muted);">SALAS DO EVENTO</span>
   <span class="result-count" id="cinemasCount"></span>
   <button class="print-btn" onclick="printModule()">⎙ Imprimir</button>
+  <button class="print-btn print-btn-pb" onclick="printModulePB()">⎙ PB</button>
 </div>
 <div class="mode-bar hidden" id="barEquipe">
   <span class="filter-label" style="font-family:var(--mono);font-size:9px;color:var(--text-muted);">EQUIPE DO EVENTO</span>
   <span class="result-count" id="equipeCount"></span>
   <button class="print-btn" onclick="printModule()">⎙ Imprimir</button>
+  <button class="print-btn print-btn-pb" onclick="printModulePB()">⎙ PB</button>
 </div>
 <div class="mode-bar hidden" id="barGrade">
   <div class="mode-tabs">
@@ -586,6 +617,7 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
   <div class="bar-sep"></div>
   <div class="day-tabs" id="dayTabs"></div>
   <button class="print-btn" onclick="printModule()" style="margin-left:auto;">⎙ Imprimir</button>
+  <button class="print-btn print-btn-pb" onclick="printModulePB()">⎙ PB</button>
 </div>
 <div class="mode-bar hidden" id="barFicha">
   <select class="bar-select" id="fichaTypeSelect" style="min-width:180px;" onchange="updateFichaFilters()">
@@ -602,6 +634,7 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
   </label>
   <button class="print-btn" id="fichaGerarBtn" disabled onclick="gerarFicha()">Gerar</button>
   <button class="print-btn" id="printBtn" disabled onclick="printModule()">⎙ Imprimir</button>
+  <button class="print-btn print-btn-pb" id="printBtnPB" disabled onclick="printModulePB()">⎙ PB</button>
 </div>
 
 <!-- LANDING -->
@@ -1485,13 +1518,42 @@ function renderGrade(){
   gw.onscroll=function(){colHdrOuter.scrollLeft=this.scrollLeft;};
 }
 
+function calcTotalDur(s){
+  var totalMin=s.filmes.reduce(function(acc,c){
+    var f=filmesMap[c];if(!f)return acc;
+    var d=f.duracao||'';if(/^\d{1,2}:\d{2}/.test(d)){var p=d.split(':').map(Number);return acc+p[0]*60+p[1];}
+    return acc;
+  },0);
+  return totalMin>0?Math.floor(totalMin/60)+'h'+String(totalMin%60).padStart(2,'0'):'';
+}
 function showTooltip(ev,s){
   var t=document.getElementById('tooltip');
-  var filmDetails=s.filmes.map(function(c){var f=filmesMap[c];return f?'<div class="tt-film">'+c+' <span>'+f.titulo+'</span></div>':'<div class="tt-film">'+c+'</div>';}).join('');
-  t.innerHTML='<div class="tt-name">'+s.nome+'</div><div class="tt-row">Cinema <span>'+s.cinema+'</span></div><div class="tt-row">Dia <span>'+s.dia+'</span></div><div class="tt-row">Hora <span>'+s.hora+'</span></div><div class="tt-films">'+filmDetails+'</div>';
-  t.style.display='block';posTooltip(ev);
+  var dur=calcTotalDur(s);
+  var filmDetails=s.filmes.map(function(c){
+    var f=filmesMap[c];
+    var d=f&&f.duracao?'<span style="opacity:0.5;margin-left:4px;">'+fmtDur(f.duracao)+'</span>':'';
+    return f?'<div class="tt-film">'+c+' <span>'+f.titulo+'</span>'+d+'</div>':'<div class="tt-film">'+c+'</div>';
+  }).join('');
+  t.innerHTML='<div class="tt-name">'+s.nome+(s.nomeSessao?' <span style="font-size:9px;font-weight:400;opacity:0.6;">'+s.nomeSessao+'</span>':'')+'</div>'
+    +'<div class="tt-row">Cinema <span>'+s.cinema+'</span></div>'
+    +'<div class="tt-row">Dia <span>'+s.dia+'</span></div>'
+    +'<div class="tt-row">Hora <span>'+s.hora+'</span></div>'
+    +(dur?'<div class="tt-row">Duração total <span>'+dur+'</span></div>':'')
+    +'<div class="tt-films">'+filmDetails+'</div>';
+  t.style.display='block';
+  posTooltip(ev);
 }
-function posTooltip(ev){var t=document.getElementById('tooltip');var x=ev.clientX+12,y=ev.clientY+12;if(x+300>window.innerWidth)x=ev.clientX-320;t.style.left=x+'px';t.style.top=y+'px';}
+function posTooltip(ev){
+  var t=document.getElementById('tooltip');
+  var tw=t.offsetWidth||280,th=t.offsetHeight||160;
+  var margin=14;
+  var x=ev.clientX+margin;
+  var y=ev.clientY+margin;
+  if(x+tw>window.innerWidth-8)x=ev.clientX-tw-margin;
+  if(y+th>window.innerHeight-8)y=ev.clientY-th-margin;
+  t.style.left=x+'px';
+  t.style.top=y+'px';
+}
 function hideTooltip(){document.getElementById('tooltip').style.display='none';}
 document.addEventListener('mousemove',function(ev){if(document.getElementById('tooltip').style.display==='block')posTooltip(ev);});
 
@@ -1510,7 +1572,7 @@ function renderGradeTabela(){
   sorted.forEach(function(s){
     var filmTitles=s.filmes.map(function(c){return filmesMap[c]?filmesMap[c].titulo||c:c;}).join(', ');
     var col=eventColors[s.evento]||null;
-    html+='<tr>';
+    html+='<tr class="grade-row-clickable" data-sessao="'+s.nome+'">';
     html+='<td class="td-dia">'+s.dia+'</td>';
     html+='<td class="td-hora">'+s.hora+'</td>';
     html+='<td class="td-cinema" style="border-left:3px solid '+(col?col.bg:'var(--border)')+'">'+s.cinema+'</td>';
@@ -1521,7 +1583,18 @@ function renderGradeTabela(){
     html+='</tr>';
   });
   html+='</tbody>';
-  document.getElementById('gradeTabelaTable').innerHTML=html;
+  var tbl=document.getElementById('gradeTabelaTable');
+  tbl.innerHTML=html;
+  // attach events after render
+  tbl.querySelectorAll('.grade-row-clickable').forEach(function(tr){
+    var nome=tr.dataset.sessao;
+    var s=sessoesMap[nome];
+    if(!s)return;
+    tr.style.cursor='pointer';
+    tr.onclick=function(){goToFicha(nome);};
+    tr.onmouseenter=function(ev){showTooltip(ev,s);};
+    tr.onmouseleave=hideTooltip;
+  });
 }
 
 // ── GRADE POR CINEMA ──
@@ -1549,13 +1622,23 @@ function renderGradeCinema(){
     var col=eventColors[s.evento]||null;
     var totalMin=s.filmes.reduce(function(acc,c){var f=filmesMap[c];if(!f)return acc;var d=f.duracao||'';if(/^\d{1,2}:\d{2}/.test(d)){var p=d.split(':').map(Number);return acc+p[0]*60+p[1];}return acc;},0);
     var durStr=totalMin>0?Math.floor(totalMin/60)+'h'+String(totalMin%60).padStart(2,'0'):'—';
-    html+='<tr><td class="td-dia">'+s.dia+'</td><td class="td-hora">'+s.hora+'</td>';
+    html+='<tr class="grade-row-clickable" data-sessao="'+s.nome+'"><td class="td-dia">'+s.dia+'</td><td class="td-hora">'+s.hora+'</td>';
     html+='<td style="font-family:var(--mono);font-size:10px;color:var(--accent);border-left:3px solid '+(col?col.bg:'var(--border)')+'">'+s.nome+'</td>';
     html+='<td style="font-family:var(--sans);font-size:12px;font-weight:600;">'+(s.nomeSessao||'—')+'</td>';
     html+='<td class="td-filmes">'+filmTitles+'</td><td style="font-family:var(--mono);font-size:10px;color:var(--text-dim);">'+durStr+'</td></tr>';
   });
   html+='</tbody></table>';
   content.innerHTML=html;
+  // attach events after render
+  content.querySelectorAll('.grade-row-clickable').forEach(function(tr){
+    var nome=tr.dataset.sessao;
+    var s=sessoesMap[nome];
+    if(!s)return;
+    tr.style.cursor='pointer';
+    tr.onclick=function(){goToFicha(nome);};
+    tr.onmouseenter=function(ev){showTooltip(ev,s);};
+    tr.onmouseleave=hideTooltip;
+  });
 }
 
 // ── FICHA CASCADE ──
@@ -1651,6 +1734,7 @@ function gerarFicha(){
   document.getElementById('fichaWrap').style.display='block';
   document.getElementById('fichaEmpty').style.display='none';
   document.getElementById('printBtn').disabled=false;
+  var pb=document.getElementById('printBtnPB');if(pb)pb.disabled=false;
 }
 
 function goToFicha(nome){
@@ -1873,6 +1957,15 @@ function printModule(){
   document.body.setAttribute('data-print', currentMode||'');
   window.print();
   setTimeout(function(){document.body.removeAttribute('data-print');},500);
+}
+function printModulePB(){
+  document.body.setAttribute('data-print', currentMode||'');
+  document.body.setAttribute('data-print-pb','1');
+  window.print();
+  setTimeout(function(){
+    document.body.removeAttribute('data-print');
+    document.body.removeAttribute('data-print-pb');
+  },500);
 }
 var ZOOM_STEPS=[70,80,90,100,110,120,130,150];var zoomIdx=ZOOM_STEPS.indexOf(100);
 function applyZoom(idx){zoomIdx=Math.max(0,Math.min(ZOOM_STEPS.length-1,idx));var pct=ZOOM_STEPS[zoomIdx];document.getElementById('main-content').style.zoom=(pct/100);document.getElementById('zoomLabel').textContent=pct+'%';try{localStorage.setItem('olga-zoom',zoomIdx);}catch(e){}}
