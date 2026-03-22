@@ -4,34 +4,3 @@
   {"email": "programa@curtacinema.com.br", "papel": "programacao", "evento": "CC2026"},
   {"email": "lg.richard@hotmail.com", "papel": "projecao", "evento": "*"}
 ]
-```
----
-
-## 5. Gerar um Personal Access Token
-
-1. Clique na sua foto → **Settings**
-2. No menu lateral, role até **Developer settings** (último item)
-3. **Personal access tokens → Tokens (classic)**
-4. Clique em **Generate new token (classic)**
-5. Dê um nome: `olga-web`
-6. Expiration: **No expiration** (ou o período que preferir)
-7. Marque apenas o escopo **`repo`**
-8. Clique em **Generate token**
-9. **Copie o token agora** — ele não aparece de novo
-
-Guarde esse token. Ele é o equivalente ao Apps Script — é o que o site vai usar para escrever nos arquivos JSON.
-
----
-
-## Estrutura final do repositório
-```
-festivais/
-├── README.md
-├── index.html          ← virá depois
-├── SPEC.md             ← virá depois
-└── data/
-    ├── filmes.json
-    ├── sessoes.json
-    ├── cinemas.json
-    ├── equipe.json
-    └── config.json
