@@ -1,1 +1,5024 @@
-[]
+[
+  {
+    "codigo": "KIDS1.2",
+    "nome": "",
+    "cinema": "MIS",
+    "dia": "31/08/2025",
+    "hora": "10:30",
+    "filmes": [
+      "KIDS_1_1",
+      "KIDS_1_2",
+      "KIDS_1_3",
+      "KIDS_1_4",
+      "KIDS_1_5",
+      "KIDS_1_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "KINOTECA",
+    "nome": "",
+    "cinema": "Cinemateca - Open Air",
+    "dia": "03/09/2025",
+    "hora": "20:00",
+    "filmes": [
+      "E_ZITA_7",
+      "BR_12_2",
+      "E_ANI_7",
+      "BR_07_2",
+      "LIM_2_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "KIDS2.2",
+    "nome": "",
+    "cinema": "MIS",
+    "dia": "31/08/2025",
+    "hora": "12:00",
+    "filmes": [
+      "KIDS_2_1",
+      "KIDS_2_2",
+      "KIDS_2_3",
+      "KIDS_2_4",
+      "KIDS_2_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "10+EST1.2",
+    "nome": "",
+    "cinema": "MIS",
+    "dia": "31/08/2025",
+    "hora": "18:00",
+    "filmes": [
+      "INT_06_2",
+      "LAT_4_4",
+      "E_NOCT_2",
+      "LIM_3_6",
+      "INT_07_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "10+BR1.2",
+    "nome": "",
+    "cinema": "MIS",
+    "dia": "31/08/2025",
+    "hora": "20:00",
+    "filmes": [
+      "CUR_3_5",
+      "BR_01_3",
+      "BR_07_4",
+      "BR_05_5",
+      "BR_03_2"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "10+ BR 1",
+    "nome": "",
+    "cinema": "CCSP - Lima Barreto",
+    "dia": "31/08/2025",
+    "hora": "18:00",
+    "filmes": [
+      "CUR_3_5",
+      "BR_01_3",
+      "BR_07_4",
+      "BR_05_5",
+      "BR_03_2"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "10+ BR 2.0",
+    "nome": "",
+    "cinema": "Cinemateca - Grande Otelo",
+    "dia": "31/08/2025",
+    "hora": "18:30",
+    "filmes": [
+      "BR_03_1",
+      "CUR_1_5",
+      "LIM_2_5",
+      "BR_04_4",
+      "BR_09_2"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "10+ ESTRANG 1",
+    "nome": "",
+    "cinema": "CCSP - Lima Barreto",
+    "dia": "31/08/2025",
+    "hora": "20:00",
+    "filmes": [
+      "INT_06_2",
+      "LAT_4_4",
+      "E_NOCT_2",
+      "LIM_3_6",
+      "INT_07_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "10+ ESTRANG 2.0",
+    "nome": "",
+    "cinema": "Cinemateca - Grande Otelo",
+    "dia": "31/08/2025",
+    "hora": "20:45",
+    "filmes": [
+      "LAT_4_2",
+      "INT_04_1",
+      "INT_05_2",
+      "INT_02_5",
+      "LAT_5_4"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "ANIMA.3",
+    "nome": "",
+    "cinema": "Cinemateca - Oscarito",
+    "dia": "31/08/2025",
+    "hora": "18:30",
+    "filmes": [
+      "E_ANI_1",
+      "E_ANI_2",
+      "E_ANI_3",
+      "E_ANI_4",
+      "E_ANI_5",
+      "E_ANI_6",
+      "E_ANI_7"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "DESTAQUES.1",
+    "nome": "",
+    "cinema": "CCSP - Paulo Emilio",
+    "dia": "31/08/2025",
+    "hora": "17:00",
+    "filmes": [
+      "KIDS_1_4",
+      "CUR_2_2",
+      "LAT_3_1",
+      "INT_03_5",
+      "BR_09_4"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "DESTAQUES.2",
+    "nome": "",
+    "cinema": "Cinemateca - Oscarito",
+    "dia": "31/08/2025",
+    "hora": "16:00",
+    "filmes": [
+      "KIDS_1_4",
+      "CUR_2_2",
+      "LAT_3_1",
+      "INT_03_5",
+      "BR_09_4"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "NOCTURNU.3",
+    "nome": "",
+    "cinema": "CCSP - Paulo Emilio",
+    "dia": "31/08/2025",
+    "hora": "19:00",
+    "filmes": [
+      "E_NOCT_1",
+      "E_NOCT_2",
+      "E_NOCT_3",
+      "E_NOCT_4"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "SOM2.3",
+    "nome": "",
+    "cinema": "Cinemateca - Oscarito",
+    "dia": "31/08/2025",
+    "hora": "20:15",
+    "filmes": [
+      "E_SOM_2_1",
+      "E_SOM_2_2",
+      "E_SOM_2_3",
+      "E_SOM_2_4",
+      "E_SOM_2_5",
+      "E_SOM_2_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "ZITA.2",
+    "nome": "",
+    "cinema": "Cinemateca - Grande Otelo",
+    "dia": "31/08/2025",
+    "hora": "16:15",
+    "filmes": [
+      "E_ZITA_1",
+      "E_ZITA_2",
+      "E_ZITA_3",
+      "E_ZITA_4",
+      "E_ZITA_5",
+      "E_ZITA_6",
+      "E_ZITA_7"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "10+EST2.2",
+    "nome": "",
+    "cinema": "MIS",
+    "dia": "30/08/2025",
+    "hora": "16:00",
+    "filmes": [
+      "LAT_4_2",
+      "INT_04_1",
+      "INT_05_2",
+      "INT_02_5",
+      "LAT_5_4"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "10+BR2.2",
+    "nome": "",
+    "cinema": "MIS",
+    "dia": "30/08/2025",
+    "hora": "18:00",
+    "filmes": [
+      "BR_03_1",
+      "CUR_1_5",
+      "LIM_2_5",
+      "BR_04_4",
+      "BR_09_2"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "DESTAQUES.3",
+    "nome": "",
+    "cinema": "MIS",
+    "dia": "30/08/2025",
+    "hora": "20:00",
+    "filmes": [
+      "KIDS_1_4",
+      "CUR_2_2",
+      "LAT_3_1",
+      "INT_03_5",
+      "BR_09_4"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "10+ BR 1.0",
+    "nome": "",
+    "cinema": "Cinemateca - Grande Otelo",
+    "dia": "30/08/2025",
+    "hora": "18:30",
+    "filmes": [
+      "CUR_3_5",
+      "BR_01_3",
+      "BR_07_4",
+      "BR_05_5",
+      "BR_03_2"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "10+ BR 2.4",
+    "nome": "",
+    "cinema": "CCSP - Lima Barreto",
+    "dia": "30/08/2025",
+    "hora": "18:00",
+    "filmes": [
+      "BR_03_1",
+      "CUR_1_5",
+      "LIM_2_5",
+      "BR_04_4",
+      "BR_09_2"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "10+ ESTRANG 1.4",
+    "nome": "",
+    "cinema": "Cinemateca - Grande Otelo",
+    "dia": "30/08/2025",
+    "hora": "20:45",
+    "filmes": [
+      "INT_06_2",
+      "LAT_4_4",
+      "E_NOCT_2",
+      "LIM_3_6",
+      "INT_07_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "10+ ESTRANG 2.2",
+    "nome": "",
+    "cinema": "CCSP - Lima Barreto",
+    "dia": "30/08/2025",
+    "hora": "20:00",
+    "filmes": [
+      "LAT_4_2",
+      "INT_04_1",
+      "INT_05_2",
+      "INT_02_5",
+      "LAT_5_4"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "ABERTURAKINO.2",
+    "nome": "",
+    "cinema": "Cinemateca - Open Air",
+    "dia": "30/08/2025",
+    "hora": "18:30",
+    "filmes": [
+      "BR_06_3",
+      "E_SOM_1_4",
+      "LAT_4_2",
+      "INT_09_5",
+      "BR_06_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "DOGMA1.3",
+    "nome": "",
+    "cinema": "Cinemateca - Grande Otelo",
+    "dia": "30/08/2025",
+    "hora": "16:15",
+    "filmes": [
+      "E_DOGMA1_1",
+      "E_DOGMA1_2",
+      "E_DOGMA1_3",
+      "E_DOGMA1_4",
+      "E_DOGMA1_5",
+      "E_DOGMA1_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "DOGMA2.2",
+    "nome": "",
+    "cinema": "Cinemateca - Oscarito",
+    "dia": "30/08/2025",
+    "hora": "18:30",
+    "filmes": [
+      "E_DOGMA2_1",
+      "E_DOGMA2_2",
+      "E_DOGMA2_3",
+      "E_DOGMA2_4",
+      "E_DOGMA2_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "KIDS1 ACESSIVEL",
+    "nome": "",
+    "cinema": "CCSP - Paulo Emilio",
+    "dia": "30/08/2025",
+    "hora": "17:00",
+    "filmes": [],
+    "evento": "",
+    "mostra": ""
+  },
+  {
+    "codigo": "KIDS2 ACESSIVEL",
+    "nome": "",
+    "cinema": "CCSP - Paulo Emilio",
+    "dia": "30/08/2025",
+    "hora": "19:00",
+    "filmes": [],
+    "evento": "",
+    "mostra": ""
+  },
+  {
+    "codigo": "NKINO.3",
+    "nome": "",
+    "cinema": "Cinemateca - Oscarito",
+    "dia": "30/08/2025",
+    "hora": "20:15",
+    "filmes": [],
+    "evento": "",
+    "mostra": ""
+  },
+  {
+    "codigo": "AFRICAS.2",
+    "nome": "",
+    "cinema": "CCSP - Lima Barreto",
+    "dia": "29/08/2025",
+    "hora": "20:00",
+    "filmes": [
+      "E_AFR_1",
+      "E_AFR_2",
+      "E_AFR_3",
+      "E_AFR_4",
+      "E_AFR_5",
+      "E_AFR_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "ANIMA.2",
+    "nome": "",
+    "cinema": "CCSP - Paulo Emilio",
+    "dia": "29/08/2025",
+    "hora": "19:00",
+    "filmes": [
+      "E_ANI_1",
+      "E_ANI_2",
+      "E_ANI_3",
+      "E_ANI_4",
+      "E_ANI_5",
+      "E_ANI_6",
+      "E_ANI_7"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "CURSO3.3",
+    "nome": "",
+    "cinema": "CCSP - Paulo Emilio",
+    "dia": "29/08/2025",
+    "hora": "17:00",
+    "filmes": [
+      "CUR_3_1",
+      "CUR_3_2",
+      "CUR_3_3",
+      "CUR_3_4",
+      "CUR_3_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "DOGMA2.1",
+    "nome": "",
+    "cinema": "CINUSP",
+    "dia": "29/08/2025",
+    "hora": "20:30",
+    "filmes": [
+      "E_DOGMA2_1",
+      "E_DOGMA2_2",
+      "E_DOGMA2_3",
+      "E_DOGMA2_4",
+      "E_DOGMA2_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "JUV.2",
+    "nome": "",
+    "cinema": "CCSP - Lima Barreto",
+    "dia": "29/08/2025",
+    "hora": "18:00",
+    "filmes": [
+      "JUV_1",
+      "JUV_2",
+      "JUV_3",
+      "JUV_4",
+      "JUV_5",
+      "JUV_6",
+      "JUV_7",
+      "JUV_8"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "PREMIAÇÃO",
+    "nome": "",
+    "cinema": "Cinemateca - Grande Otelo",
+    "dia": "29/08/2025",
+    "hora": "20:30",
+    "filmes": [],
+    "evento": "",
+    "mostra": ""
+  },
+  {
+    "codigo": "LIMITE1.3",
+    "nome": "",
+    "cinema": "MIS",
+    "dia": "28/08/2025",
+    "hora": "18:00",
+    "filmes": [
+      "LIM_1_1",
+      "LIM_1_2",
+      "LIM_1_3",
+      "LIM_1_4",
+      "LIM_1_5",
+      "LIM_1_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "ECOMINDS.4",
+    "nome": "",
+    "cinema": "MIS",
+    "dia": "28/08/2025",
+    "hora": "20:00",
+    "filmes": [
+      "E_ECO_1",
+      "E_ECO_2",
+      "E_ECO_3",
+      "E_ECO_4",
+      "E_ECO_5",
+      "E_ECO_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "AFRICAS.1",
+    "nome": "",
+    "cinema": "Cinemateca - Oscarito",
+    "dia": "28/08/2025",
+    "hora": "16:00",
+    "filmes": [
+      "E_AFR_1",
+      "E_AFR_2",
+      "E_AFR_3",
+      "E_AFR_4",
+      "E_AFR_5",
+      "E_AFR_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "BR10.2",
+    "nome": "",
+    "cinema": "Cinemateca - Oscarito",
+    "dia": "28/08/2025",
+    "hora": "18:30",
+    "filmes": [
+      "BR_10_1",
+      "BR_10_2",
+      "BR_10_3",
+      "BR_10_4"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "BR11.2",
+    "nome": "",
+    "cinema": "Cinemateca - Grande Otelo",
+    "dia": "28/08/2025",
+    "hora": "18:30",
+    "filmes": [
+      "BR_11_1",
+      "BR_11_2",
+      "BR_11_3",
+      "BR_11_4"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "BR12.2",
+    "nome": "",
+    "cinema": "Cinemateca - Oscarito",
+    "dia": "28/08/2025",
+    "hora": "20:15",
+    "filmes": [
+      "BR_12_1",
+      "BR_12_2",
+      "BR_12_3",
+      "BR_12_4"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "BR9.2",
+    "nome": "",
+    "cinema": "Cinemateca - Grande Otelo",
+    "dia": "28/08/2025",
+    "hora": "16:15",
+    "filmes": [
+      "BR_09_1",
+      "BR_09_2",
+      "BR_09_3",
+      "BR_09_4"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "CURSO1.3",
+    "nome": "",
+    "cinema": "CCSP - Paulo Emilio",
+    "dia": "28/08/2025",
+    "hora": "19:00",
+    "filmes": [
+      "CUR_1_1",
+      "CUR_1_2",
+      "CUR_1_3",
+      "CUR_1_4",
+      "CUR_1_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "CURSO2.3",
+    "nome": "",
+    "cinema": "CCSP - Lima Barreto",
+    "dia": "28/08/2025",
+    "hora": "20:00",
+    "filmes": [
+      "CUR_2_1",
+      "CUR_2_2",
+      "CUR_2_3",
+      "CUR_2_4"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "CURSO4 ACESSIVEL",
+    "nome": "",
+    "cinema": "CCSP - Lima Barreto",
+    "dia": "28/08/2025",
+    "hora": "18:00",
+    "filmes": [
+      "CUR_4_1",
+      "CUR_4_2",
+      "CUR_4_3",
+      "CUR_4_4",
+      "CUR_4_5",
+      "CUR_4_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "DOGMA1.2",
+    "nome": "",
+    "cinema": "CINUSP",
+    "dia": "28/08/2025",
+    "hora": "20:30",
+    "filmes": [
+      "E_DOGMA1_1",
+      "E_DOGMA1_2",
+      "E_DOGMA1_3",
+      "E_DOGMA1_4",
+      "E_DOGMA1_5",
+      "E_DOGMA1_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "escolhidos",
+    "nome": "",
+    "cinema": "CINEB",
+    "dia": "28/08/2025",
+    "hora": "18:30",
+    "filmes": [],
+    "evento": "",
+    "mostra": ""
+  },
+  {
+    "codigo": "KIDS3.2",
+    "nome": "",
+    "cinema": "CCSP - Paulo Emilio",
+    "dia": "28/08/2025",
+    "hora": "17:00",
+    "filmes": [
+      "KIDS_3_1",
+      "KIDS_3_2",
+      "KIDS_3_3",
+      "KIDS_3_4",
+      "KIDS_3_5",
+      "KIDS_3_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "NKINO.1",
+    "nome": "",
+    "cinema": "Cinemateca - Open Air",
+    "dia": "28/08/2025",
+    "hora": "20:00",
+    "filmes": [],
+    "evento": "",
+    "mostra": ""
+  },
+  {
+    "codigo": "NKINO.2",
+    "nome": "",
+    "cinema": "Cinemateca - Grande Otelo",
+    "dia": "28/08/2025",
+    "hora": "20:45",
+    "filmes": [],
+    "evento": "",
+    "mostra": ""
+  },
+  {
+    "codigo": "DOGMA1.4",
+    "nome": "",
+    "cinema": "MIS",
+    "dia": "27/08/2025",
+    "hora": "18:00",
+    "filmes": [
+      "E_DOGMA1_1",
+      "E_DOGMA1_2",
+      "E_DOGMA1_3",
+      "E_DOGMA1_4",
+      "E_DOGMA1_5",
+      "E_DOGMA1_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "DOGMA2.3",
+    "nome": "",
+    "cinema": "MIS",
+    "dia": "27/08/2025",
+    "hora": "20:00",
+    "filmes": [
+      "E_DOGMA2_1",
+      "E_DOGMA2_2",
+      "E_DOGMA2_3",
+      "E_DOGMA2_4",
+      "E_DOGMA2_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "ABERTURA ACESSIVEL",
+    "nome": "",
+    "cinema": "CineSesc",
+    "dia": "27/08/2025",
+    "hora": "15:30",
+    "filmes": [
+      "BR_06_3",
+      "E_SOM_1_4",
+      "LAT_4_2",
+      "INT_09_5",
+      "BR_06_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "ANIMA.1",
+    "nome": "",
+    "cinema": "CINUSP",
+    "dia": "27/08/2025",
+    "hora": "20:30",
+    "filmes": [
+      "E_ANI_1",
+      "E_ANI_2",
+      "E_ANI_3",
+      "E_ANI_4",
+      "E_ANI_5",
+      "E_ANI_6",
+      "E_ANI_7"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "BR1.2",
+    "nome": "",
+    "cinema": "CineSesc",
+    "dia": "27/08/2025",
+    "hora": "18:15",
+    "filmes": [
+      "BR_01_1",
+      "BR_01_2",
+      "BR_01_3",
+      "BR_01_4",
+      "BR_01_5",
+      "BR_01_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "BR9.1",
+    "nome": "",
+    "cinema": "CineSesc",
+    "dia": "27/08/2025",
+    "hora": "20:30",
+    "filmes": [
+      "BR_09_1",
+      "BR_09_2",
+      "BR_09_3",
+      "BR_09_4"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "CIBA/CILECT",
+    "nome": "",
+    "cinema": "Cinemateca - Oscarito",
+    "dia": "27/08/2025",
+    "hora": "18:00",
+    "filmes": [
+      "E_CIBA_1",
+      "E_CIBA_2",
+      "E_CIBA_3",
+      "E_CIBA_4"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "CURSO2.2",
+    "nome": "",
+    "cinema": "Espaço de Cinema",
+    "dia": "27/08/2025",
+    "hora": "19:00",
+    "filmes": [
+      "CUR_2_1",
+      "CUR_2_2",
+      "CUR_2_3",
+      "CUR_2_4"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "CURSO3.2",
+    "nome": "",
+    "cinema": "Espaço de Cinema",
+    "dia": "27/08/2025",
+    "hora": "21:30",
+    "filmes": [
+      "CUR_3_1",
+      "CUR_3_2",
+      "CUR_3_3",
+      "CUR_3_4",
+      "CUR_3_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "INTER10.2",
+    "nome": "",
+    "cinema": "Cinemateca - Grande Otelo",
+    "dia": "27/08/2025",
+    "hora": "18:30",
+    "filmes": [
+      "INT_10_1",
+      "INT_10_2",
+      "INT_10_3",
+      "INT_10_4",
+      "INT_10_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "INTER8.2",
+    "nome": "",
+    "cinema": "Espaço de Cinema",
+    "dia": "27/08/2025",
+    "hora": "16:30",
+    "filmes": [
+      "INT_08_1",
+      "INT_08_2",
+      "INT_08_3",
+      "INT_08_4",
+      "INT_08_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "INTER9.2",
+    "nome": "",
+    "cinema": "Cinemateca - Grande Otelo",
+    "dia": "27/08/2025",
+    "hora": "16:15",
+    "filmes": [
+      "INT_09_1",
+      "INT_09_2",
+      "INT_09_3",
+      "INT_09_4",
+      "INT_09_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "KIDS3.1",
+    "nome": "",
+    "cinema": "Circuito SPCINE",
+    "dia": "27/08/2025",
+    "hora": "10:00",
+    "filmes": [
+      "KIDS_3_1",
+      "KIDS_3_2",
+      "KIDS_3_3",
+      "KIDS_3_4",
+      "KIDS_3_5",
+      "KIDS_3_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "LIMITE3.2",
+    "nome": "",
+    "cinema": "Cinemateca - Grande Otelo",
+    "dia": "27/08/2025",
+    "hora": "20:45",
+    "filmes": [
+      "LIM_3_1",
+      "LIM_3_2",
+      "LIM_3_3",
+      "LIM_3_4",
+      "LIM_3_5",
+      "LIM_3_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "SOM1.4",
+    "nome": "",
+    "cinema": "CCSP - Paulo Emilio",
+    "dia": "27/08/2025",
+    "hora": "17:00",
+    "filmes": [
+      "E_SOM_1_1",
+      "E_SOM_1_2",
+      "E_SOM_1_3",
+      "E_SOM_1_4",
+      "E_SOM_1_5",
+      "E_SOM_1_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "SOM2.2",
+    "nome": "",
+    "cinema": "CCSP - Paulo Emilio",
+    "dia": "27/08/2025",
+    "hora": "19:00",
+    "filmes": [
+      "E_SOM_2_1",
+      "E_SOM_2_2",
+      "E_SOM_2_3",
+      "E_SOM_2_4",
+      "E_SOM_2_5",
+      "E_SOM_2_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "TRILOGIA.2",
+    "nome": "",
+    "cinema": "CCSP - Lima Barreto",
+    "dia": "27/08/2025",
+    "hora": "18:00",
+    "filmes": [
+      "E_TRI_1",
+      "E_TRI_2",
+      "E_TRI_3"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "AFRICAS.3",
+    "nome": "",
+    "cinema": "MIS",
+    "dia": "26/08/2025",
+    "hora": "18:00",
+    "filmes": [
+      "E_AFR_1",
+      "E_AFR_2",
+      "E_AFR_3",
+      "E_AFR_4",
+      "E_AFR_5",
+      "E_AFR_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "TRILOGIA.3",
+    "nome": "",
+    "cinema": "MIS",
+    "dia": "26/08/2025",
+    "hora": "20:00",
+    "filmes": [
+      "E_TRI_1",
+      "E_TRI_2",
+      "E_TRI_3"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "BR11.1",
+    "nome": "",
+    "cinema": "CineSesc",
+    "dia": "26/08/2025",
+    "hora": "20:30",
+    "filmes": [
+      "BR_11_1",
+      "BR_11_2",
+      "BR_11_3",
+      "BR_11_4"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "CURSO1.2",
+    "nome": "",
+    "cinema": "Espaço de Cinema",
+    "dia": "26/08/2025",
+    "hora": "21:30",
+    "filmes": [
+      "CUR_1_1",
+      "CUR_1_2",
+      "CUR_1_3",
+      "CUR_1_4",
+      "CUR_1_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "CURSO4.2",
+    "nome": "",
+    "cinema": "Espaço de Cinema",
+    "dia": "26/08/2025",
+    "hora": "19:00",
+    "filmes": [
+      "CUR_4_1",
+      "CUR_4_2",
+      "CUR_4_3",
+      "CUR_4_4",
+      "CUR_4_5",
+      "CUR_4_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "ECOMINDS.3",
+    "nome": "",
+    "cinema": "CCSP - Lima Barreto",
+    "dia": "26/08/2025",
+    "hora": "20:00",
+    "filmes": [
+      "E_ECO_1",
+      "E_ECO_2",
+      "E_ECO_3",
+      "E_ECO_4",
+      "E_ECO_5",
+      "E_ECO_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "INTER8.1",
+    "nome": "",
+    "cinema": "CineSesc",
+    "dia": "26/08/2025",
+    "hora": "18:15",
+    "filmes": [
+      "INT_08_1",
+      "INT_08_2",
+      "INT_08_3",
+      "INT_08_4",
+      "INT_08_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "LAT1.2",
+    "nome": "",
+    "cinema": "CineSesc",
+    "dia": "26/08/2025",
+    "hora": "15:30",
+    "filmes": [
+      "LAT_1_1",
+      "LAT_1_2",
+      "LAT_1_3",
+      "LAT_1_4",
+      "LAT_1_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "LAT4.2",
+    "nome": "",
+    "cinema": "Espaço de Cinema",
+    "dia": "26/08/2025",
+    "hora": "16:30",
+    "filmes": [
+      "LAT_4_1",
+      "LAT_4_2",
+      "LAT_4_3",
+      "LAT_4_4",
+      "LAT_4_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "LIMITE1.2",
+    "nome": "",
+    "cinema": "CCSP - Paulo Emilio",
+    "dia": "26/08/2025",
+    "hora": "17:00",
+    "filmes": [
+      "LIM_1_1",
+      "LIM_1_2",
+      "LIM_1_3",
+      "LIM_1_4",
+      "LIM_1_5",
+      "LIM_1_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "LIMITE2.3",
+    "nome": "",
+    "cinema": "CCSP - Lima Barreto",
+    "dia": "26/08/2025",
+    "hora": "18:00",
+    "filmes": [
+      "LIM_2_1",
+      "LIM_2_2",
+      "LIM_2_3",
+      "LIM_2_4",
+      "LIM_2_5",
+      "LIM_2_6",
+      "LIM_2_7"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "LIMITE3.1",
+    "nome": "",
+    "cinema": "CCSP - Paulo Emilio",
+    "dia": "26/08/2025",
+    "hora": "19:00",
+    "filmes": [
+      "LIM_3_1",
+      "LIM_3_2",
+      "LIM_3_3",
+      "LIM_3_4",
+      "LIM_3_5",
+      "LIM_3_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "SOM2.1",
+    "nome": "",
+    "cinema": "CINUSP",
+    "dia": "26/08/2025",
+    "hora": "20:30",
+    "filmes": [
+      "E_SOM_2_1",
+      "E_SOM_2_2",
+      "E_SOM_2_3",
+      "E_SOM_2_4",
+      "E_SOM_2_5",
+      "E_SOM_2_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "BR7.2",
+    "nome": "",
+    "cinema": "CineSesc",
+    "dia": "25/08/2025",
+    "hora": "20:30",
+    "filmes": [
+      "BR_07_1",
+      "BR_07_2",
+      "BR_07_3",
+      "BR_07_4",
+      "BR_07_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "INTER6.2",
+    "nome": "",
+    "cinema": "Espaço de Cinema",
+    "dia": "25/08/2025",
+    "hora": "16:30",
+    "filmes": [
+      "INT_06_1",
+      "INT_06_2",
+      "INT_06_3",
+      "INT_06_4",
+      "INT_06_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "INTER7.2",
+    "nome": "",
+    "cinema": "CineSesc",
+    "dia": "25/08/2025",
+    "hora": "15:30",
+    "filmes": [
+      "INT_07_1",
+      "INT_07_2",
+      "INT_07_3",
+      "INT_07_4",
+      "INT_07_5",
+      "INT_07_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "LAT4.1",
+    "nome": "",
+    "cinema": "CineSesc",
+    "dia": "25/08/2025",
+    "hora": "18:15",
+    "filmes": [
+      "LAT_4_1",
+      "LAT_4_2",
+      "LAT_4_3",
+      "LAT_4_4",
+      "LAT_4_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "LAT5.2",
+    "nome": "",
+    "cinema": "Espaço de Cinema",
+    "dia": "25/08/2025",
+    "hora": "19:00",
+    "filmes": [
+      "LAT_5_1",
+      "LAT_5_2",
+      "LAT_5_3",
+      "LAT_5_4"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "SOM1.3",
+    "nome": "",
+    "cinema": "CINUSP",
+    "dia": "25/08/2025",
+    "hora": "20:30",
+    "filmes": [
+      "E_SOM_1_1",
+      "E_SOM_1_2",
+      "E_SOM_1_3",
+      "E_SOM_1_4",
+      "E_SOM_1_5",
+      "E_SOM_1_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "TRILOGIA.1",
+    "nome": "",
+    "cinema": "Espaço de Cinema",
+    "dia": "25/08/2025",
+    "hora": "21:30",
+    "filmes": [
+      "E_TRI_1",
+      "E_TRI_2",
+      "E_TRI_3"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "ABERTURAKINO.4",
+    "nome": "",
+    "cinema": "MIS",
+    "dia": "24/08/2025",
+    "hora": "16:00",
+    "filmes": [
+      "BR_06_3",
+      "E_SOM_1_4",
+      "LAT_4_2",
+      "INT_09_5",
+      "BR_06_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "LIMITE2.4",
+    "nome": "",
+    "cinema": "MIS",
+    "dia": "24/08/2025",
+    "hora": "18:00",
+    "filmes": [
+      "LIM_2_1",
+      "LIM_2_2",
+      "LIM_2_3",
+      "LIM_2_4",
+      "LIM_2_5",
+      "LIM_2_6",
+      "LIM_2_7"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "BR2.2",
+    "nome": "",
+    "cinema": "CineSesc",
+    "dia": "24/08/2025",
+    "hora": "19:30",
+    "filmes": [
+      "BR_02_1",
+      "BR_02_2",
+      "BR_02_3",
+      "BR_02_4"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "BR3.2",
+    "nome": "",
+    "cinema": "CineSesc",
+    "dia": "24/08/2025",
+    "hora": "17:00",
+    "filmes": [
+      "BR_03_1",
+      "BR_03_2",
+      "BR_03_3",
+      "BR_03_4",
+      "BR_03_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "BR8.2",
+    "nome": "",
+    "cinema": "Cinemateca - Grande Otelo",
+    "dia": "24/08/2025",
+    "hora": "14:00",
+    "filmes": [
+      "BR_08_1",
+      "BR_08_2",
+      "BR_08_3",
+      "BR_08_4"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "CURSO1.1",
+    "nome": "",
+    "cinema": "CCSP - Lima Barreto",
+    "dia": "24/08/2025",
+    "hora": "18:00",
+    "filmes": [
+      "CUR_1_1",
+      "CUR_1_2",
+      "CUR_1_3",
+      "CUR_1_4",
+      "CUR_1_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "CURSO2.1",
+    "nome": "",
+    "cinema": "CCSP - Lima Barreto",
+    "dia": "24/08/2025",
+    "hora": "20:00",
+    "filmes": [
+      "CUR_2_1",
+      "CUR_2_2",
+      "CUR_2_3",
+      "CUR_2_4"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "CURSO3.1",
+    "nome": "",
+    "cinema": "CCSP - Paulo Emilio",
+    "dia": "24/08/2025",
+    "hora": "17:00",
+    "filmes": [
+      "CUR_3_1",
+      "CUR_3_2",
+      "CUR_3_3",
+      "CUR_3_4",
+      "CUR_3_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "CURSO4.1",
+    "nome": "",
+    "cinema": "CCSP - Paulo Emilio",
+    "dia": "24/08/2025",
+    "hora": "19:00",
+    "filmes": [
+      "CUR_4_1",
+      "CUR_4_2",
+      "CUR_4_3",
+      "CUR_4_4",
+      "CUR_4_5",
+      "CUR_4_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "ECOMINDS.1",
+    "nome": "",
+    "cinema": "Cinemateca - Open Air",
+    "dia": "24/08/2025",
+    "hora": "18:30",
+    "filmes": [
+      "E_ECO_1",
+      "E_ECO_2",
+      "E_ECO_3",
+      "E_ECO_4",
+      "E_ECO_5",
+      "E_ECO_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "ECOMINDS.2",
+    "nome": "",
+    "cinema": "Cinemateca - Oscarito",
+    "dia": "24/08/2025",
+    "hora": "18:30",
+    "filmes": [
+      "E_ECO_1",
+      "E_ECO_2",
+      "E_ECO_3",
+      "E_ECO_4",
+      "E_ECO_5",
+      "E_ECO_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "INTER4.2",
+    "nome": "",
+    "cinema": "Espaço de Cinema",
+    "dia": "24/08/2025",
+    "hora": "21:30",
+    "filmes": [
+      "INT_04_1",
+      "INT_04_2",
+      "INT_04_3",
+      "INT_04_4",
+      "INT_04_5",
+      "INT_04_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "INTER6.1",
+    "nome": "",
+    "cinema": "Cinemateca - Grande Otelo",
+    "dia": "24/08/2025",
+    "hora": "18:30",
+    "filmes": [
+      "INT_06_1",
+      "INT_06_2",
+      "INT_06_3",
+      "INT_06_4",
+      "INT_06_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "INTER9.1",
+    "nome": "",
+    "cinema": "Espaço de Cinema",
+    "dia": "24/08/2025",
+    "hora": "19:00",
+    "filmes": [
+      "INT_09_1",
+      "INT_09_2",
+      "INT_09_3",
+      "INT_09_4",
+      "INT_09_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "KIDS2",
+    "nome": "",
+    "cinema": "CineSesc",
+    "dia": "24/08/2025",
+    "hora": "15:00",
+    "filmes": [
+      "KIDS_2_1",
+      "KIDS_2_2",
+      "KIDS_2_3",
+      "KIDS_2_4",
+      "KIDS_2_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "LAT2.2",
+    "nome": "",
+    "cinema": "Espaço de Cinema",
+    "dia": "24/08/2025",
+    "hora": "16:30",
+    "filmes": [
+      "LAT_2_1",
+      "LAT_2_2",
+      "LAT_2_3",
+      "LAT_2_4",
+      "LAT_2_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "LAT3.2",
+    "nome": "",
+    "cinema": "Cinemateca - Grande Otelo",
+    "dia": "24/08/2025",
+    "hora": "16:15",
+    "filmes": [
+      "LAT_3_1",
+      "LAT_3_2",
+      "LAT_3_3",
+      "LAT_3_4"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "LAT5.1",
+    "nome": "",
+    "cinema": "Cinemateca - Grande Otelo",
+    "dia": "24/08/2025",
+    "hora": "20:45",
+    "filmes": [
+      "LAT_5_1",
+      "LAT_5_2",
+      "LAT_5_3",
+      "LAT_5_4"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "SOM1.1",
+    "nome": "",
+    "cinema": "Cinemateca - Open Air",
+    "dia": "24/08/2025",
+    "hora": "20:15",
+    "filmes": [
+      "E_SOM_1_1",
+      "E_SOM_1_2",
+      "E_SOM_1_3",
+      "E_SOM_1_4",
+      "E_SOM_1_5",
+      "E_SOM_1_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "SOM1.2",
+    "nome": "",
+    "cinema": "Cinemateca - Oscarito",
+    "dia": "24/08/2025",
+    "hora": "20:15",
+    "filmes": [
+      "E_SOM_1_1",
+      "E_SOM_1_2",
+      "E_SOM_1_3",
+      "E_SOM_1_4",
+      "E_SOM_1_5",
+      "E_SOM_1_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "ANIMA.4",
+    "nome": "",
+    "cinema": "MIS",
+    "dia": "23/08/2025",
+    "hora": "16:00",
+    "filmes": [
+      "E_ANI_1",
+      "E_ANI_2",
+      "E_ANI_3",
+      "E_ANI_4",
+      "E_ANI_5",
+      "E_ANI_6",
+      "E_ANI_7"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "NOCTURNU.4",
+    "nome": "",
+    "cinema": "MIS",
+    "dia": "23/08/2025",
+    "hora": "18:00",
+    "filmes": [
+      "E_NOCT_1",
+      "E_NOCT_2",
+      "E_NOCT_3",
+      "E_NOCT_4"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "BR10.1",
+    "nome": "",
+    "cinema": "CineSesc",
+    "dia": "23/08/2025",
+    "hora": "14:00",
+    "filmes": [
+      "BR_10_1",
+      "BR_10_2",
+      "BR_10_3",
+      "BR_10_4"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "BR12.1",
+    "nome": "",
+    "cinema": "CineSesc",
+    "dia": "23/08/2025",
+    "hora": "16:00",
+    "filmes": [
+      "BR_12_1",
+      "BR_12_2",
+      "BR_12_3",
+      "BR_12_4"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "BR5.2",
+    "nome": "",
+    "cinema": "Cinemateca - Grande Otelo",
+    "dia": "23/08/2025",
+    "hora": "14:00",
+    "filmes": [
+      "BR_05_1",
+      "BR_05_2",
+      "BR_05_3",
+      "BR_05_4",
+      "BR_05_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "BR6.2",
+    "nome": "",
+    "cinema": "Cinemateca - Grande Otelo",
+    "dia": "23/08/2025",
+    "hora": "18:30",
+    "filmes": [
+      "BR_06_1",
+      "BR_06_2",
+      "BR_06_3",
+      "BR_06_4",
+      "BR_06_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "BR7.1",
+    "nome": "",
+    "cinema": "Cinemateca - Grande Otelo",
+    "dia": "23/08/2025",
+    "hora": "20:45",
+    "filmes": [
+      "BR_07_1",
+      "BR_07_2",
+      "BR_07_3",
+      "BR_07_4",
+      "BR_07_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "DOGMA1.1",
+    "nome": "",
+    "cinema": "CineSesc",
+    "dia": "23/08/2025",
+    "hora": "20:30",
+    "filmes": [
+      "E_DOGMA1_1",
+      "E_DOGMA1_2",
+      "E_DOGMA1_3",
+      "E_DOGMA1_4",
+      "E_DOGMA1_5",
+      "E_DOGMA1_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "INTER1.2",
+    "nome": "",
+    "cinema": "Espaço de Cinema",
+    "dia": "23/08/2025",
+    "hora": "19:00",
+    "filmes": [
+      "INT_01_1",
+      "INT_01_2",
+      "INT_01_3",
+      "INT_01_4",
+      "INT_01_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "INTER2.2",
+    "nome": "",
+    "cinema": "Espaço de Cinema",
+    "dia": "23/08/2025",
+    "hora": "21:30",
+    "filmes": [
+      "INT_02_1",
+      "INT_02_2",
+      "INT_02_3",
+      "INT_02_4",
+      "INT_02_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "INTER5.2",
+    "nome": "",
+    "cinema": "Cinemateca - Oscarito",
+    "dia": "23/08/2025",
+    "hora": "18:00",
+    "filmes": [
+      "INT_05_1",
+      "INT_05_2",
+      "INT_05_3",
+      "INT_05_4",
+      "INT_05_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "KIDS1",
+    "nome": "",
+    "cinema": "Cinemateca - Grande Otelo",
+    "dia": "23/08/2025",
+    "hora": "16:15",
+    "filmes": [
+      "KIDS_1_1",
+      "KIDS_1_2",
+      "KIDS_1_3",
+      "KIDS_1_4",
+      "KIDS_1_5",
+      "KIDS_1_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "LAT1.1",
+    "nome": "",
+    "cinema": "Espaço de Cinema",
+    "dia": "23/08/2025",
+    "hora": "16:30",
+    "filmes": [
+      "LAT_1_1",
+      "LAT_1_2",
+      "LAT_1_3",
+      "LAT_1_4",
+      "LAT_1_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "LIMITE2.1",
+    "nome": "",
+    "cinema": "Cinemateca - Open Air",
+    "dia": "23/08/2025",
+    "hora": "20:15",
+    "filmes": [
+      "LIM_2_1",
+      "LIM_2_2",
+      "LIM_2_3",
+      "LIM_2_4",
+      "LIM_2_5",
+      "LIM_2_6",
+      "LIM_2_7"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "LIMITE2.2",
+    "nome": "",
+    "cinema": "Cinemateca - Oscarito",
+    "dia": "23/08/2025",
+    "hora": "20:15",
+    "filmes": [
+      "LIM_2_1",
+      "LIM_2_2",
+      "LIM_2_3",
+      "LIM_2_4",
+      "LIM_2_5",
+      "LIM_2_6",
+      "LIM_2_7"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "ZITA.1",
+    "nome": "",
+    "cinema": "CineSesc",
+    "dia": "23/08/2025",
+    "hora": "18:15",
+    "filmes": [
+      "E_ZITA_1",
+      "E_ZITA_2",
+      "E_ZITA_3",
+      "E_ZITA_4",
+      "E_ZITA_5",
+      "E_ZITA_6",
+      "E_ZITA_7"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "LIMITE3.3",
+    "nome": "",
+    "cinema": "MIS",
+    "dia": "22/08/2025",
+    "hora": "18:00",
+    "filmes": [
+      "LIM_3_1",
+      "LIM_3_2",
+      "LIM_3_3",
+      "LIM_3_4",
+      "LIM_3_5",
+      "LIM_3_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "SOM2.4",
+    "nome": "",
+    "cinema": "MIS",
+    "dia": "22/08/2025",
+    "hora": "20:00",
+    "filmes": [
+      "E_SOM_2_1",
+      "E_SOM_2_2",
+      "E_SOM_2_3",
+      "E_SOM_2_4",
+      "E_SOM_2_5",
+      "E_SOM_2_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "NOCTURNU.1",
+    "nome": "",
+    "cinema": "Espaço de Cinema",
+    "dia": "22/08/2025",
+    "hora": "21:30",
+    "filmes": [
+      "E_NOCT_1",
+      "E_NOCT_2",
+      "E_NOCT_3",
+      "E_NOCT_4"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "BR3.1",
+    "nome": "",
+    "cinema": "Cinemateca - Oscarito",
+    "dia": "22/08/2025",
+    "hora": "18:00",
+    "filmes": [
+      "BR_03_1",
+      "BR_03_2",
+      "BR_03_3",
+      "BR_03_4",
+      "BR_03_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "BR4.2",
+    "nome": "",
+    "cinema": "Cinemateca - Oscarito",
+    "dia": "22/08/2025",
+    "hora": "20:15",
+    "filmes": [
+      "BR_04_1",
+      "BR_04_2",
+      "BR_04_3",
+      "BR_04_4"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "BR8.1",
+    "nome": "",
+    "cinema": "CineSesc",
+    "dia": "22/08/2025",
+    "hora": "15:30",
+    "filmes": [
+      "BR_08_1",
+      "BR_08_2",
+      "BR_08_3",
+      "BR_08_4"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "INTER10.1",
+    "nome": "",
+    "cinema": "Espaço de Cinema",
+    "dia": "22/08/2025",
+    "hora": "19:00",
+    "filmes": [
+      "INT_10_1",
+      "INT_10_2",
+      "INT_10_3",
+      "INT_10_4",
+      "INT_10_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "INTER2.1",
+    "nome": "",
+    "cinema": "Cinemateca - Grande Otelo",
+    "dia": "22/08/2025",
+    "hora": "16:00",
+    "filmes": [
+      "INT_02_1",
+      "INT_02_2",
+      "INT_02_3",
+      "INT_02_4",
+      "INT_02_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "INTER3.2",
+    "nome": "",
+    "cinema": "CineSesc",
+    "dia": "22/08/2025",
+    "hora": "18:15",
+    "filmes": [
+      "INT_03_1",
+      "INT_03_2",
+      "INT_03_3",
+      "INT_03_4",
+      "INT_03_5",
+      "INT_03_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "INTER4.1",
+    "nome": "",
+    "cinema": "CineSesc",
+    "dia": "22/08/2025",
+    "hora": "20:30",
+    "filmes": [
+      "INT_04_1",
+      "INT_04_2",
+      "INT_04_3",
+      "INT_04_4",
+      "INT_04_5",
+      "INT_04_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "INTER5.1",
+    "nome": "",
+    "cinema": "Espaço de Cinema",
+    "dia": "22/08/2025",
+    "hora": "16:30",
+    "filmes": [
+      "INT_05_1",
+      "INT_05_2",
+      "INT_05_3",
+      "INT_05_4",
+      "INT_05_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "INTER7.1",
+    "nome": "",
+    "cinema": "Espaço de Cinema",
+    "dia": "22/08/2025",
+    "hora": "21:30",
+    "filmes": [
+      "INT_07_1",
+      "INT_07_2",
+      "INT_07_3",
+      "INT_07_4",
+      "INT_07_5",
+      "INT_07_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "LAT2.1",
+    "nome": "",
+    "cinema": "Cinemateca - Grande Otelo",
+    "dia": "22/08/2025",
+    "hora": "18:00",
+    "filmes": [
+      "LAT_2_1",
+      "LAT_2_2",
+      "LAT_2_3",
+      "LAT_2_4",
+      "LAT_2_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "NOCTURNU.2",
+    "nome": "",
+    "cinema": "Bar Soberano",
+    "dia": "22/08/2025",
+    "hora": "20:00",
+    "filmes": [
+      "E_NOCT_1",
+      "E_NOCT_2",
+      "E_NOCT_3",
+      "E_NOCT_4"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "ZITA1.0",
+    "nome": "",
+    "cinema": "MIS",
+    "dia": "21/08/2025",
+    "hora": "18:00",
+    "filmes": [
+      "E_ZITA_1",
+      "E_ZITA_2",
+      "E_ZITA_3",
+      "E_ZITA_4",
+      "E_ZITA_5",
+      "E_ZITA_6",
+      "E_ZITA_7"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "SOM1.0",
+    "nome": "",
+    "cinema": "MIS",
+    "dia": "21/08/2025",
+    "hora": "20:00",
+    "filmes": [
+      "E_SOM_1_1",
+      "E_SOM_1_2",
+      "E_SOM_1_3",
+      "E_SOM_1_4",
+      "E_SOM_1_5",
+      "E_SOM_1_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "BR1.1",
+    "nome": "",
+    "cinema": "Cinemateca - Grande Otelo",
+    "dia": "21/08/2025",
+    "hora": "18:30",
+    "filmes": [
+      "BR_01_1",
+      "BR_01_2",
+      "BR_01_3",
+      "BR_01_4",
+      "BR_01_5",
+      "BR_01_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "BR2.1",
+    "nome": "",
+    "cinema": "Cinemateca - Grande Otelo",
+    "dia": "21/08/2025",
+    "hora": "20:45",
+    "filmes": [
+      "BR_02_1",
+      "BR_02_2",
+      "BR_02_3",
+      "BR_02_4"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "BR4.1",
+    "nome": "",
+    "cinema": "CineSesc",
+    "dia": "21/08/2025",
+    "hora": "15:30",
+    "filmes": [
+      "BR_04_1",
+      "BR_04_2",
+      "BR_04_3",
+      "BR_04_4"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "BR5.1",
+    "nome": "",
+    "cinema": "CineSesc",
+    "dia": "21/08/2025",
+    "hora": "20:30",
+    "filmes": [
+      "BR_05_1",
+      "BR_05_2",
+      "BR_05_3",
+      "BR_05_4",
+      "BR_05_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "BR6.1",
+    "nome": "",
+    "cinema": "CineSesc",
+    "dia": "21/08/2025",
+    "hora": "18:15",
+    "filmes": [
+      "BR_06_1",
+      "BR_06_2",
+      "BR_06_3",
+      "BR_06_4",
+      "BR_06_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "INTER1.1",
+    "nome": "",
+    "cinema": "Cinemateca - Oscarito",
+    "dia": "21/08/2025",
+    "hora": "20:15",
+    "filmes": [
+      "INT_01_1",
+      "INT_01_2",
+      "INT_01_3",
+      "INT_01_4",
+      "INT_01_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "INTER3.1",
+    "nome": "",
+    "cinema": "Espaço de Cinema",
+    "dia": "21/08/2025",
+    "hora": "16:30",
+    "filmes": [
+      "INT_03_1",
+      "INT_03_2",
+      "INT_03_3",
+      "INT_03_4",
+      "INT_03_5",
+      "INT_03_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "JUV.1",
+    "nome": "",
+    "cinema": "Cinemateca - Grande Otelo",
+    "dia": "21/08/2025",
+    "hora": "16:15",
+    "filmes": [
+      "JUV_1",
+      "JUV_2",
+      "JUV_3",
+      "JUV_4",
+      "JUV_5",
+      "JUV_6",
+      "JUV_7",
+      "JUV_8"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "LAT3.1",
+    "nome": "",
+    "cinema": "Espaço de Cinema",
+    "dia": "21/08/2025",
+    "hora": "19:00",
+    "filmes": [
+      "LAT_3_1",
+      "LAT_3_2",
+      "LAT_3_3",
+      "LAT_3_4"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "LIMITE1.1",
+    "nome": "",
+    "cinema": "Cinemateca - Oscarito",
+    "dia": "21/08/2025",
+    "hora": "18:00",
+    "filmes": [
+      "LIM_1_1",
+      "LIM_1_2",
+      "LIM_1_3",
+      "LIM_1_4",
+      "LIM_1_5",
+      "LIM_1_6"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "ABERTURAKINO.1",
+    "nome": "",
+    "cinema": "CineSesc",
+    "dia": "20/08/2025",
+    "hora": "20:00",
+    "filmes": [
+      "BR_06_3",
+      "E_SOM_1_4",
+      "LAT_4_2",
+      "INT_09_5",
+      "BR_06_5"
+    ],
+    "evento": "KINO36",
+    "mostra": ""
+  },
+  {
+    "codigo": "ENCERRA",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "30/04/2025",
+    "hora": "21:00",
+    "filmes": [],
+    "evento": "",
+    "mostra": ""
+  },
+  {
+    "codigo": "MEMO2",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "30/04/2025",
+    "hora": "19:00",
+    "filmes": [
+      "MR6",
+      "MR4",
+      "MR5",
+      "MR7"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "CARI3.2",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 2",
+    "dia": "30/04/2025",
+    "hora": "18:30",
+    "filmes": [
+      "PC03",
+      "PC07",
+      "PC10",
+      "PC12"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "PB4",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "30/04/2025",
+    "hora": "17:00",
+    "filmes": [
+      "PB07",
+      "PB03",
+      "PB16",
+      "PB19"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "NAC6.2",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 2",
+    "dia": "30/04/2025",
+    "hora": "16:00",
+    "filmes": [
+      "CN28",
+      "CN21",
+      "CN15",
+      "CN03",
+      "CN01"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "PB3",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "30/04/2025",
+    "hora": "15:00",
+    "filmes": [
+      "PB02",
+      "PB17",
+      "PB14",
+      "PB13",
+      "PB18"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "CARI3",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "29/04/2025",
+    "hora": "21:00",
+    "filmes": [
+      "PC03",
+      "PC07",
+      "PC10",
+      "PC12"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "NAC6",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "29/04/2025",
+    "hora": "19:00",
+    "filmes": [
+      "CN28",
+      "CN21",
+      "CN15",
+      "CN03",
+      "CN01"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "CARI2.2",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 2",
+    "dia": "29/04/2025",
+    "hora": "18:30",
+    "filmes": [
+      "PC02",
+      "PC08",
+      "PC01",
+      "PC05"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "DEBATE2",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 3",
+    "dia": "29/04/2025",
+    "hora": "18:30",
+    "filmes": [],
+    "evento": "",
+    "mostra": ""
+  },
+  {
+    "codigo": "INTER6",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "29/04/2025",
+    "hora": "17:00",
+    "filmes": [
+      "CI22",
+      "CI02",
+      "CI30X",
+      "CI14",
+      "CI16"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "NAC5.2",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 2",
+    "dia": "29/04/2025",
+    "hora": "16:00",
+    "filmes": [
+      "CN02",
+      "CN16",
+      "CN24",
+      "CN26",
+      "CN05"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "LAT3",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "29/04/2025",
+    "hora": "15:00",
+    "filmes": [
+      "PL05",
+      "PL03",
+      "PL09",
+      "PL10",
+      "PL04"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "ESC3",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "29/04/2025",
+    "hora": "10:00",
+    "filmes": [
+      "IJ05",
+      "IJ06",
+      "IJ02",
+      "IJ01",
+      "IJ08"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "CARI2",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "28/04/2025",
+    "hora": "21:00",
+    "filmes": [
+      "PC02",
+      "PC08",
+      "PC01",
+      "PC05"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "NAC5",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "28/04/2025",
+    "hora": "19:00",
+    "filmes": [
+      "CN02",
+      "CN16",
+      "CN24",
+      "CN26",
+      "CN05"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "DEBATE1",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 3",
+    "dia": "28/04/2025",
+    "hora": "18:30",
+    "filmes": [],
+    "evento": "",
+    "mostra": ""
+  },
+  {
+    "codigo": "INTER5",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "28/04/2025",
+    "hora": "17:00",
+    "filmes": [
+      "CI09",
+      "CI07",
+      "CI27",
+      "CI06",
+      "CI12"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "AD3",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 3",
+    "dia": "28/04/2025",
+    "hora": "16:00",
+    "filmes": [
+      "Cavalo Marinho",
+      "Casulo",
+      "Inflamável"
+    ],
+    "evento": "",
+    "mostra": ""
+  },
+  {
+    "codigo": "NAC4.2",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 2",
+    "dia": "28/04/2025",
+    "hora": "16:00",
+    "filmes": [
+      "CN07",
+      "CN11",
+      "CN18",
+      "CN29",
+      "CN27"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "LAT2",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "28/04/2025",
+    "hora": "15:00",
+    "filmes": [
+      "PL01",
+      "PL06",
+      "PL07",
+      "PL13",
+      "PL14",
+      "PL15"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "MEMO1",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "27/04/2025",
+    "hora": "21:00",
+    "filmes": [
+      "MR2",
+      "MR8",
+      "MR1",
+      "MR3"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "IZ2",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 3",
+    "dia": "27/04/2025",
+    "hora": "20:30",
+    "filmes": [
+      "IZ2",
+      "IZ4",
+      "IZ1",
+      "IZ7"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "IZ2.2",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 2",
+    "dia": "27/04/2025",
+    "hora": "20:30",
+    "filmes": [
+      "IZ2",
+      "IZ4",
+      "IZ1",
+      "IZ7"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "NAC4",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "27/04/2025",
+    "hora": "19:00",
+    "filmes": [
+      "CN07",
+      "CN11",
+      "CN18",
+      "CN29",
+      "CN27"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "PQ3",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 3",
+    "dia": "27/04/2025",
+    "hora": "18:30",
+    "filmes": [
+      "PQ14",
+      "PQ01",
+      "PQ12",
+      "PQ13",
+      "PQ11"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "INTER4",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "27/04/2025",
+    "hora": "17:00",
+    "filmes": [
+      "CI13",
+      "CI05",
+      "CI15",
+      "CI18",
+      "CI25"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "AD2",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 3",
+    "dia": "27/04/2025",
+    "hora": "16:00",
+    "filmes": [
+      "Noite Neon",
+      "O Colecionador de Cheiros de Nucas Femininas",
+      "Doença é Vida"
+    ],
+    "evento": "",
+    "mostra": ""
+  },
+  {
+    "codigo": "NAC3.2",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 2",
+    "dia": "27/04/2025",
+    "hora": "16:00",
+    "filmes": [
+      "CN23",
+      "CN25",
+      "CN08",
+      "CN04",
+      "CN06"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "LAT1",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "27/04/2025",
+    "hora": "15:00",
+    "filmes": [
+      "PL12",
+      "PL08",
+      "PL11",
+      "PL02",
+      "PL16"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "SLAM",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "26/04/2025",
+    "hora": "21:00",
+    "filmes": [],
+    "evento": "",
+    "mostra": ""
+  },
+  {
+    "codigo": "LIBRAS4",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 3",
+    "dia": "26/04/2025",
+    "hora": "20:30",
+    "filmes": [
+      "Ataques Psicotrônicos",
+      "Posso Contar nos dedos",
+      "Doença é Vida"
+    ],
+    "evento": "",
+    "mostra": ""
+  },
+  {
+    "codigo": "NAC3",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "26/04/2025",
+    "hora": "19:00",
+    "filmes": [
+      "CN23",
+      "CN25",
+      "CN08",
+      "CN04",
+      "CN06"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "PQ2",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 3",
+    "dia": "26/04/2025",
+    "hora": "18:30",
+    "filmes": [
+      "PQ04",
+      "PQ05",
+      "PQ06",
+      "PQ09",
+      "PQ16"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "INTER3",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "26/04/2025",
+    "hora": "17:00",
+    "filmes": [
+      "CI08",
+      "CI10",
+      "CI26",
+      "CI28",
+      "CI23"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "AD1",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 3",
+    "dia": "26/04/2025",
+    "hora": "16:00",
+    "filmes": [
+      "Javyju",
+      "Canto de Acauã",
+      "Mar de dentro"
+    ],
+    "evento": "",
+    "mostra": ""
+  },
+  {
+    "codigo": "NAC2.2",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 2",
+    "dia": "26/04/2025",
+    "hora": "16:00",
+    "filmes": [
+      "CN10",
+      "CN22",
+      "CN19",
+      "CN17"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "MASTERC",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "26/04/2025",
+    "hora": "15:00",
+    "filmes": [],
+    "evento": "",
+    "mostra": ""
+  },
+  {
+    "codigo": "PQ1",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "25/04/2025",
+    "hora": "21:00",
+    "filmes": [
+      "PQ08",
+      "PQ02",
+      "PQ15",
+      "PQ10",
+      "PQ07",
+      "PQ03"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "IZ1",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 3",
+    "dia": "25/04/2025",
+    "hora": "20:30",
+    "filmes": [
+      "IZ5",
+      "IZ3",
+      "IZ6",
+      "IZ8"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "IZ1.2",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 2",
+    "dia": "25/04/2025",
+    "hora": "20:30",
+    "filmes": [
+      "IZ5",
+      "IZ3",
+      "IZ6",
+      "IZ8"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "NAC2",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "25/04/2025",
+    "hora": "19:00",
+    "filmes": [
+      "CN10",
+      "CN22",
+      "CN19",
+      "CN17"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "CARI1.2",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 2",
+    "dia": "25/04/2025",
+    "hora": "18:30",
+    "filmes": [
+      "PC06",
+      "PC09",
+      "PC04",
+      "PC11"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "INTER2",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "25/04/2025",
+    "hora": "17:00",
+    "filmes": [
+      "CI30",
+      "CI01",
+      "CI04",
+      "CI19",
+      "CI29",
+      "CI17",
+      "CI24"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "LIBRAS3",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 3",
+    "dia": "25/04/2025",
+    "hora": "16:00",
+    "filmes": [
+      "Moti",
+      "O Nome da Vida",
+      "Viventes",
+      "Mar de dentro"
+    ],
+    "evento": "",
+    "mostra": ""
+  },
+  {
+    "codigo": "NAC1.2",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 2",
+    "dia": "25/04/2025",
+    "hora": "16:00",
+    "filmes": [
+      "CN09",
+      "CN13",
+      "CN20",
+      "CN12",
+      "CN14"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "PB2",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "25/04/2025",
+    "hora": "15:00",
+    "filmes": [
+      "PB15",
+      "PB05",
+      "PB10",
+      "PB06",
+      "PB01"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "ESC2",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "25/04/2025",
+    "hora": "10:00",
+    "filmes": [
+      "IJ01",
+      "IJ02",
+      "IJ03",
+      "IJ04"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "CARI1",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "24/04/2025",
+    "hora": "21:00",
+    "filmes": [
+      "PC06",
+      "PC09",
+      "PC04",
+      "PC11"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "LIBRAS2",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 3",
+    "dia": "24/04/2025",
+    "hora": "20:30",
+    "filmes": [
+      "Verde",
+      "Helio Melo",
+      "Canto de Acauã"
+    ],
+    "evento": "",
+    "mostra": ""
+  },
+  {
+    "codigo": "NAC1",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "24/04/2025",
+    "hora": "19:00",
+    "filmes": [
+      "CN09",
+      "CN13",
+      "CN20",
+      "CN12",
+      "CN14"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "INTER1",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "24/04/2025",
+    "hora": "17:00",
+    "filmes": [
+      "CI21",
+      "CI03",
+      "CI20",
+      "CI31",
+      "CI11"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "LIBRAS1",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 3",
+    "dia": "24/04/2025",
+    "hora": "16:00",
+    "filmes": [
+      "Esconde Esconde",
+      "Punhal",
+      "Casulo",
+      "Cavalo Marinho"
+    ],
+    "evento": "",
+    "mostra": ""
+  },
+  {
+    "codigo": "PB1",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "24/04/2025",
+    "hora": "15:00",
+    "filmes": [
+      "PB12",
+      "PB04",
+      "PB11",
+      "PB09"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "ESC1",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "24/04/2025",
+    "hora": "10:00",
+    "filmes": [
+      "IJ07",
+      "IJ09",
+      "IJ10",
+      "IJ11",
+      "IJ08",
+      "IJ05",
+      "IJ02"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "ABERTURACC",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "23/04/2025",
+    "hora": "20:00",
+    "filmes": [
+      "A01",
+      "A03",
+      "A05",
+      "A04",
+      "A02"
+    ],
+    "evento": "CC2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "RITAS2",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "13/04/2025",
+    "hora": "21:00",
+    "filmes": [
+      "ETV63"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "RITAS",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "13/04/2025",
+    "hora": "20:30",
+    "filmes": [
+      "ETV63"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "VENCEDORBR",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "13/04/2025",
+    "hora": "18:30",
+    "filmes": [
+      "!"
+    ],
+    "evento": "",
+    "mostra": ""
+  },
+  {
+    "codigo": "RECONHECIDOS2",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "13/04/2025",
+    "hora": "18:00",
+    "filmes": [
+      "ETV61"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "VENCEDORINT",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "13/04/2025",
+    "hora": "16:30",
+    "filmes": [
+      "!"
+    ],
+    "evento": "",
+    "mostra": ""
+  },
+  {
+    "codigo": "PAUDARCO2",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "13/04/2025",
+    "hora": "16:00",
+    "filmes": [
+      "ETV56"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "HJ3",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "13/04/2025",
+    "hora": "14:30",
+    "filmes": [
+      "ETV26",
+      "ETV31",
+      "ETV35"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "NOSSACOISA",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "13/04/2025",
+    "hora": "14:00",
+    "filmes": [
+      "ETV54"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "HORADO2",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "13/04/2025",
+    "hora": "11:00",
+    "filmes": [
+      "ETV76"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "COPAN2",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "12/04/2025",
+    "hora": "21:00",
+    "filmes": [
+      "ETV45"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "TRENS",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "12/04/2025",
+    "hora": "20:30",
+    "filmes": [
+      "ETV57"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "PAUDARCO",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "12/04/2025",
+    "hora": "18:30",
+    "filmes": [
+      "ETV56"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "EMBUSCADE",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "12/04/2025",
+    "hora": "18:00",
+    "filmes": [
+      "ETV02"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "CHAPLIN",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "12/04/2025",
+    "hora": "16:30",
+    "filmes": [
+      "ETV44"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "GIOCONDO",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "12/04/2025",
+    "hora": "16:00",
+    "filmes": [
+      "ETV17"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "OVELHO",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "12/04/2025",
+    "hora": "14:30",
+    "filmes": [
+      "ETV27"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "TOROBORO",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "12/04/2025",
+    "hora": "14:00",
+    "filmes": [
+      "ETV71"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "MUNDURUKUYU2",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "11/04/2025",
+    "hora": "21:00",
+    "filmes": [
+      "ETV52"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "COPAN",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "11/04/2025",
+    "hora": "20:30",
+    "filmes": [
+      "ETV45"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "SOBREUMHEROI",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "11/04/2025",
+    "hora": "18:30",
+    "filmes": [
+      "ETV40"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "A2000",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "11/04/2025",
+    "hora": "18:00",
+    "filmes": [
+      "ETV38"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "PETRAKELLY",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "11/04/2025",
+    "hora": "16:30",
+    "filmes": [
+      "ETV19"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "BR2.2",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "11/04/2025",
+    "hora": "16:00",
+    "filmes": [
+      "ETV67",
+      "ETV07",
+      "ETV39",
+      "ETV66"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "NOELFIELD",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "11/04/2025",
+    "hora": "14:30",
+    "filmes": [
+      "ETV53"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "KARUARA",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "11/04/2025",
+    "hora": "14:00",
+    "filmes": [
+      "ETV48"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "RUADOPESCADOR2",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "10/04/2025",
+    "hora": "21:00",
+    "filmes": [
+      "ETV65"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "MUNDURUKUYU",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "10/04/2025",
+    "hora": "20:30",
+    "filmes": [
+      "ETV52"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "HORADO",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "10/04/2025",
+    "hora": "18:30",
+    "filmes": [
+      "ETV76"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "CULPAR",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "10/04/2025",
+    "hora": "18:00",
+    "filmes": [
+      "ETV41"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "BR1.2",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "10/04/2025",
+    "hora": "16:00",
+    "filmes": [
+      "ETV36",
+      "ETV04",
+      "ETV03",
+      "ETV43",
+      "ETV20"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "CABRA",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "10/04/2025",
+    "hora": "14:30",
+    "filmes": [
+      "ETV77"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "UMASOMBRA",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "10/04/2025",
+    "hora": "14:00",
+    "filmes": [
+      "ETV21"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "UMOLHAR2",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "09/04/2025",
+    "hora": "21:00",
+    "filmes": [
+      "ETV72"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "RUADOPESCADOR",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "09/04/2025",
+    "hora": "20:30",
+    "filmes": [
+      "ETV65"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "BR2",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "09/04/2025",
+    "hora": "18:30",
+    "filmes": [
+      "ETV67",
+      "ETV07",
+      "ETV39",
+      "ETV66"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "ESCREVENDO",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "09/04/2025",
+    "hora": "18:00",
+    "filmes": [
+      "ETV75"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "HISTÓRIASDO",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "09/04/2025",
+    "hora": "16:30",
+    "filmes": [
+      "ETV78"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "INT3",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "09/04/2025",
+    "hora": "14:30",
+    "filmes": [
+      "ETV06",
+      "ETV58",
+      "ETV05"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "CONTERRANEOS",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "09/04/2025",
+    "hora": "14:00",
+    "filmes": [
+      "ETV14"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "BRUSCKY2",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "08/04/2025",
+    "hora": "21:00",
+    "filmes": [
+      "ETV42"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "UMOLHAR",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "08/04/2025",
+    "hora": "20:30",
+    "filmes": [
+      "ETV72"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "MINHATERRA2",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "08/04/2025",
+    "hora": "18:30",
+    "filmes": [
+      "ETV51"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "CRONICASDO",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "08/04/2025",
+    "hora": "18:00",
+    "filmes": [
+      "ETV46"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "ESPERANDOPOR",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "08/04/2025",
+    "hora": "16:30",
+    "filmes": [
+      "ETV79"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "CICERODIAS",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "08/04/2025",
+    "hora": "16:00",
+    "filmes": [
+      "ETV18"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "INT2",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "08/04/2025",
+    "hora": "14:30",
+    "filmes": [
+      "ETV70"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "HJ2",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "08/04/2025",
+    "hora": "14:00",
+    "filmes": [
+      "ETV28",
+      "ETV29",
+      "ETV30"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "LAN2",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "07/04/2025",
+    "hora": "21:00",
+    "filmes": [
+      "ETV49"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "BRUSCKY",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "07/04/2025",
+    "hora": "20:30",
+    "filmes": [
+      "ETV42"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "BR1",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "07/04/2025",
+    "hora": "18:30",
+    "filmes": [
+      "ETV36",
+      "ETV04",
+      "ETV03",
+      "ETV43",
+      "ETV20"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "SOBASBAND",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "07/04/2025",
+    "hora": "18:00",
+    "filmes": [
+      "ETV73"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "EUSOUSUA",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "07/04/2025",
+    "hora": "16:30",
+    "filmes": [
+      "ETV83"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "RETRATODE2",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "07/04/2025",
+    "hora": "16:00",
+    "filmes": [
+      "ETV62"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "INT1",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "07/04/2025",
+    "hora": "14:30",
+    "filmes": [
+      "ETV64"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "ROCKBRASILIA",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "07/04/2025",
+    "hora": "14:00",
+    "filmes": [
+      "ETV10"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "QUANDOO2",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "06/04/2025",
+    "hora": "21:00",
+    "filmes": [
+      "ETV60"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "LAN",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "06/04/2025",
+    "hora": "20:30",
+    "filmes": [
+      "ETV49"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "DEBATE",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "06/04/2025",
+    "hora": "18:30",
+    "filmes": [],
+    "evento": "",
+    "mostra": ""
+  },
+  {
+    "codigo": "OJARDINEIRO",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "06/04/2025",
+    "hora": "18:00",
+    "filmes": [
+      "ETV68"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "MINHATERRA",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "06/04/2025",
+    "hora": "16:30",
+    "filmes": [
+      "ETV51"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "RUMINANTES2",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "06/04/2025",
+    "hora": "16:00",
+    "filmes": [
+      "ETV55"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "OPAISDE",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "06/04/2025",
+    "hora": "14:30",
+    "filmes": [
+      "ETV11"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "BARRA68",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "06/04/2025",
+    "hora": "14:00",
+    "filmes": [
+      "ETV15"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "LIZA",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "05/04/2025",
+    "hora": "23:59",
+    "filmes": [
+      "ETV50"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "ESTRADAAZUL",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "05/04/2025",
+    "hora": "21:00",
+    "filmes": [
+      "ETV01"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "QUANDOO",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "05/04/2025",
+    "hora": "20:30",
+    "filmes": [
+      "ETV60"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "RUMINANTES",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "05/04/2025",
+    "hora": "18:30",
+    "filmes": [
+      "ETV55"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "OPROPAGANDIST",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "05/04/2025",
+    "hora": "18:00",
+    "filmes": [
+      "ETV47"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "RECONHECIDOS",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "05/04/2025",
+    "hora": "16:30",
+    "filmes": [
+      "ETV61"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "MEUSFANTASMA",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "05/04/2025",
+    "hora": "16:00",
+    "filmes": [
+      "ETV37"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "SESSAOCALIL",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "05/04/2025",
+    "hora": "14:30",
+    "filmes": [
+      "ETV81",
+      "ETV82"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "EVANGELHOSEGUNDO",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "05/04/2025",
+    "hora": "14:00",
+    "filmes": [
+      "ETV13"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "ALIBERDADE",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "04/04/2025",
+    "hora": "21:00",
+    "filmes": [
+      "ETV24"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "VIVAMARILIA2",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "04/04/2025",
+    "hora": "20:30",
+    "filmes": [
+      "ETV74"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "RETRATODE",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "04/04/2025",
+    "hora": "18:30",
+    "filmes": [
+      "ETV62"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "AINVASAO",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "04/04/2025",
+    "hora": "18:00",
+    "filmes": [
+      "ETV69"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "SRAPRESIDENTE",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "04/04/2025",
+    "hora": "16:30",
+    "filmes": [
+      "ETV59"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "OENGENHEIRODE",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "04/04/2025",
+    "hora": "16:00",
+    "filmes": [
+      "ETV16"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "HJ1",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "04/04/2025",
+    "hora": "14:30",
+    "filmes": [
+      "ETV08",
+      "ETV32",
+      "ETV33"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "OHOMEMDE",
+    "nome": "",
+    "cinema": "Estação Net Rio 5",
+    "dia": "04/04/2025",
+    "hora": "14:00",
+    "filmes": [
+      "ETV12"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "VIVAMARILIA",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "03/04/2025",
+    "hora": "20:30",
+    "filmes": [
+      "ETV74"
+    ],
+    "evento": "ETV2025",
+    "mostra": ""
+  },
+  {
+    "codigo": "Paula17",
+    "nome": "",
+    "cinema": "Caixa Cultural",
+    "dia": "16/03/2025",
+    "hora": "16:30",
+    "filmes": [
+      "PG09"
+    ],
+    "evento": "Paula Gaitan CC",
+    "mostra": ""
+  },
+  {
+    "codigo": "Paula16",
+    "nome": "",
+    "cinema": "Caixa Cultural",
+    "dia": "16/03/2025",
+    "hora": "14:30",
+    "filmes": [
+      "PG04"
+    ],
+    "evento": "Paula Gaitan CC",
+    "mostra": ""
+  },
+  {
+    "codigo": "Paula15",
+    "nome": "",
+    "cinema": "Caixa Cultural",
+    "dia": "15/03/2025",
+    "hora": "17:20",
+    "filmes": [
+      "PG22"
+    ],
+    "evento": "Paula Gaitan CC",
+    "mostra": ""
+  },
+  {
+    "codigo": "Paula14",
+    "nome": "",
+    "cinema": "Caixa Cultural",
+    "dia": "15/03/2025",
+    "hora": "15:00",
+    "filmes": [
+      "PG13",
+      "PG27",
+      "PG21",
+      "PG19"
+    ],
+    "evento": "Paula Gaitan CC",
+    "mostra": ""
+  },
+  {
+    "codigo": "Paula13",
+    "nome": "",
+    "cinema": "Caixa Cultural",
+    "dia": "14/03/2025",
+    "hora": "17:50",
+    "filmes": [
+      "PG02",
+      "PG03",
+      "PG17",
+      "PG28"
+    ],
+    "evento": "Paula Gaitan CC",
+    "mostra": ""
+  },
+  {
+    "codigo": "Paula12",
+    "nome": "",
+    "cinema": "Caixa Cultural",
+    "dia": "14/03/2025",
+    "hora": "15:00",
+    "filmes": [
+      "PG01"
+    ],
+    "evento": "Paula Gaitan CC",
+    "mostra": ""
+  },
+  {
+    "codigo": "Paula11",
+    "nome": "",
+    "cinema": "Caixa Cultural",
+    "dia": "13/03/2025",
+    "hora": "15:00",
+    "filmes": [
+      "PG32"
+    ],
+    "evento": "Paula Gaitan CC",
+    "mostra": ""
+  },
+  {
+    "codigo": "Paula10",
+    "nome": "",
+    "cinema": "Caixa Cultural",
+    "dia": "12/03/2025",
+    "hora": "18:20",
+    "filmes": [
+      "PG33"
+    ],
+    "evento": "Paula Gaitan CC",
+    "mostra": ""
+  },
+  {
+    "codigo": "Paula09",
+    "nome": "",
+    "cinema": "Caixa Cultural",
+    "dia": "12/03/2025",
+    "hora": "16:10",
+    "filmes": [
+      "PG12",
+      "PG16"
+    ],
+    "evento": "Paula Gaitan CC",
+    "mostra": ""
+  },
+  {
+    "codigo": "Paula08",
+    "nome": "",
+    "cinema": "Caixa Cultural",
+    "dia": "12/03/2025",
+    "hora": "14:00",
+    "filmes": [
+      "PG15",
+      "PG03",
+      "PG14"
+    ],
+    "evento": "Paula Gaitan CC",
+    "mostra": ""
+  },
+  {
+    "codigo": "Paula07",
+    "nome": "",
+    "cinema": "Caixa Cultural",
+    "dia": "11/03/2025",
+    "hora": "16:00",
+    "filmes": [
+      "PG01"
+    ],
+    "evento": "Paula Gaitan CC",
+    "mostra": ""
+  },
+  {
+    "codigo": "Paula06",
+    "nome": "",
+    "cinema": "Caixa Cultural",
+    "dia": "11/03/2025",
+    "hora": "14:00",
+    "filmes": [
+      "PG25",
+      "PG29",
+      "PG08"
+    ],
+    "evento": "Paula Gaitan CC",
+    "mostra": ""
+  },
+  {
+    "codigo": "Paula05",
+    "nome": "",
+    "cinema": "Caixa Cultural",
+    "dia": "09/03/2025",
+    "hora": "14:30",
+    "filmes": [
+      "PG10"
+    ],
+    "evento": "Paula Gaitan CC",
+    "mostra": ""
+  },
+  {
+    "codigo": "Paula04",
+    "nome": "",
+    "cinema": "Caixa Cultural",
+    "dia": "08/03/2025",
+    "hora": "15:00",
+    "filmes": [
+      "PG06"
+    ],
+    "evento": "Paula Gaitan CC",
+    "mostra": ""
+  },
+  {
+    "codigo": "Paula03",
+    "nome": "",
+    "cinema": "Caixa Cultural",
+    "dia": "07/03/2025",
+    "hora": "17:00",
+    "filmes": [
+      "PG07"
+    ],
+    "evento": "Paula Gaitan CC",
+    "mostra": ""
+  },
+  {
+    "codigo": "Paula02",
+    "nome": "",
+    "cinema": "Caixa Cultural",
+    "dia": "07/03/2025",
+    "hora": "15:20",
+    "filmes": [
+      "PG16"
+    ],
+    "evento": "Paula Gaitan CC",
+    "mostra": ""
+  },
+  {
+    "codigo": "Paula01",
+    "nome": "",
+    "cinema": "Caixa Cultural",
+    "dia": "07/03/2025",
+    "hora": "14:00",
+    "filmes": [
+      "PG26",
+      "PG09"
+    ],
+    "evento": "Paula Gaitan CC",
+    "mostra": ""
+  },
+  {
+    "codigo": "Paula00",
+    "nome": "",
+    "cinema": "Caixa Cultural",
+    "dia": "06/03/2025",
+    "hora": "17:30",
+    "filmes": [
+      "PG18",
+      "PG04"
+    ],
+    "evento": "Paula Gaitan CC",
+    "mostra": ""
+  },
+  {
+    "codigo": "25_19",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "25/10/2024",
+    "hora": "19:00",
+    "filmes": [
+      "CM3",
+      "N67",
+      "N126",
+      "N37",
+      "CM8",
+      "CB1",
+      "CB5"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  },
+  {
+    "codigo": "25_17",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "25/10/2024",
+    "hora": "17:00",
+    "filmes": [
+      "CB15"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  },
+  {
+    "codigo": "25_15",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "25/10/2024",
+    "hora": "15:00",
+    "filmes": [
+      "N59",
+      "N42",
+      "I28",
+      "I80",
+      "CM7",
+      "I46"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  },
+  {
+    "codigo": "25_13",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "25/10/2024",
+    "hora": "13:00",
+    "filmes": [
+      "N116",
+      "N253",
+      "CM9",
+      "N147",
+      "N110",
+      "CM5"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  },
+  {
+    "codigo": "24_19",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "24/10/2024",
+    "hora": "19:00",
+    "filmes": [
+      "I86",
+      "N124",
+      "I81",
+      "N178",
+      "N56"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  },
+  {
+    "codigo": "24_17",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "24/10/2024",
+    "hora": "17:00",
+    "filmes": [
+      "CM1",
+      "N181"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  },
+  {
+    "codigo": "24_15",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "24/10/2024",
+    "hora": "15:00",
+    "filmes": [
+      "N210",
+      "N11"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  },
+  {
+    "codigo": "24_13",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "24/10/2024",
+    "hora": "13:00",
+    "filmes": [
+      "N84",
+      "N177",
+      "N101",
+      "I4",
+      "CB14"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  },
+  {
+    "codigo": "23_21",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "23/10/2024",
+    "hora": "21:00",
+    "filmes": [
+      "N10",
+      "N105",
+      "I139",
+      "XX",
+      "CQ4",
+      "CQ5"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  },
+  {
+    "codigo": "23_19",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "23/10/2024",
+    "hora": "19:00",
+    "filmes": [
+      "N17",
+      "N76",
+      "I6",
+      "NI117",
+      "CV2"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  },
+  {
+    "codigo": "23_17",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "23/10/2024",
+    "hora": "17:00",
+    "filmes": [
+      "N103",
+      "N221",
+      "I138",
+      "N23",
+      "N64",
+      "N25"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  },
+  {
+    "codigo": "23_15",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "23/10/2024",
+    "hora": "15:00",
+    "filmes": [
+      "N228"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  },
+  {
+    "codigo": "23_13",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "23/10/2024",
+    "hora": "13:00",
+    "filmes": [
+      "CB3"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  },
+  {
+    "codigo": "23_10",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "23/10/2024",
+    "hora": "11:00",
+    "filmes": [],
+    "evento": "",
+    "mostra": ""
+  },
+  {
+    "codigo": "22_21",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "22/10/2024",
+    "hora": "21:00",
+    "filmes": [
+      "N43",
+      "N74",
+      "N58",
+      "I8",
+      "I10",
+      "I105",
+      "I117"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  },
+  {
+    "codigo": "22_19",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "22/10/2024",
+    "hora": "19:00",
+    "filmes": [
+      "I25",
+      "I63",
+      "I101",
+      "I141"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  },
+  {
+    "codigo": "22_17",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "22/10/2024",
+    "hora": "17:00",
+    "filmes": [
+      "CZ6",
+      "I5"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  },
+  {
+    "codigo": "22_15",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "22/10/2024",
+    "hora": "15:00",
+    "filmes": [
+      "N107",
+      "N202",
+      "N164"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  },
+  {
+    "codigo": "22_13",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "22/10/2024",
+    "hora": "13:00",
+    "filmes": [
+      "N155",
+      "N92",
+      "N191",
+      "N156",
+      "N183"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  },
+  {
+    "codigo": "22_10",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "22/10/2024",
+    "hora": "11:00",
+    "filmes": [],
+    "evento": "",
+    "mostra": ""
+  },
+  {
+    "codigo": "21_19",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "21/10/2024",
+    "hora": "19:00",
+    "filmes": [
+      "CM3",
+      "CZ1",
+      "CZ2",
+      "CZ3",
+      "CZ4",
+      "CZ5"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  },
+  {
+    "codigo": "21_17",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "21/10/2024",
+    "hora": "17:00",
+    "filmes": [
+      "CB11",
+      "CV1"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  },
+  {
+    "codigo": "21_15",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "21/10/2024",
+    "hora": "15:00",
+    "filmes": [],
+    "evento": "",
+    "mostra": ""
+  },
+  {
+    "codigo": "21_13",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "21/10/2024",
+    "hora": "13:00",
+    "filmes": [
+      "I146"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  },
+  {
+    "codigo": "20_21",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "20/10/2024",
+    "hora": "21:00",
+    "filmes": [
+      "CB1",
+      "N141",
+      "N149",
+      "N134"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  },
+  {
+    "codigo": "20_19",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "20/10/2024",
+    "hora": "19:00",
+    "filmes": [
+      "N31",
+      "N67",
+      "N126",
+      "CM10",
+      "I15"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  },
+  {
+    "codigo": "20_17",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "20/10/2024",
+    "hora": "17:00",
+    "filmes": [
+      "N80",
+      "N233",
+      "I83"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  },
+  {
+    "codigo": "20_15",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "20/10/2024",
+    "hora": "15:00",
+    "filmes": [
+      "N184",
+      "N248",
+      "N95",
+      "N220"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  },
+  {
+    "codigo": "20_13",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "20/10/2024",
+    "hora": "13:00",
+    "filmes": [
+      "N6",
+      "N83"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  },
+  {
+    "codigo": "20_11",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "20/10/2024",
+    "hora": "11:00",
+    "filmes": [
+      "N84",
+      "N177",
+      "N101",
+      "I4",
+      "CB14"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  },
+  {
+    "codigo": "19_21",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "19/10/2024",
+    "hora": "21:00",
+    "filmes": [
+      "I46",
+      "CB8"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  },
+  {
+    "codigo": "19_19",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "19/10/2024",
+    "hora": "19:00",
+    "filmes": [
+      "N37",
+      "N116",
+      "N253",
+      "CM9",
+      "N147",
+      "N110"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  },
+  {
+    "codigo": "19_17",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "19/10/2024",
+    "hora": "17:00",
+    "filmes": [
+      "CM6",
+      "N157",
+      "N172",
+      "N104"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  },
+  {
+    "codigo": "19_15",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "19/10/2024",
+    "hora": "15:00",
+    "filmes": [
+      "N244",
+      "I40",
+      "I69",
+      "I142"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  },
+  {
+    "codigo": "19_13",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "19/10/2024",
+    "hora": "13:00",
+    "filmes": [
+      "N206",
+      "N239"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  },
+  {
+    "codigo": "18_21",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "18/10/2024",
+    "hora": "21:00",
+    "filmes": [
+      "I2",
+      "CB2"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  },
+  {
+    "codigo": "18_19",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "18/10/2024",
+    "hora": "19:00",
+    "filmes": [
+      "CB5",
+      "N135",
+      "N218"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  },
+  {
+    "codigo": "18_17",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "18/10/2024",
+    "hora": "17:00",
+    "filmes": [
+      "N62",
+      "N122",
+      "N153",
+      "N167",
+      "N115"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  },
+  {
+    "codigo": "18_15",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "18/10/2024",
+    "hora": "15:00",
+    "filmes": [
+      "N106",
+      "N78",
+      "I147",
+      "N142"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  },
+  {
+    "codigo": "ABERTURA",
+    "nome": "",
+    "cinema": "ODEON",
+    "dia": "17/10/2024",
+    "hora": "19:00",
+    "filmes": [
+      "N17",
+      "CZ7",
+      "CM8"
+    ],
+    "evento": "ECNZB2024",
+    "mostra": ""
+  }
+]
