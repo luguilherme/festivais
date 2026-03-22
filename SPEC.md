@@ -1,654 +1,487 @@
 # OLGA Web — Especificação Técnica
-**Versão 1.1**
+**Versão 2.0**
 
 ---
 
 ## 1. Visão geral
 
-Sistema web de gestão de exibição para festivais de cinema, evoluindo o OLGA Suite (leitor local de XLSX) para uma plataforma online colaborativa com leitura e escrita em tempo real, autenticação por papel e controle de acesso por evento.
+Sistema web de gestão de exibição para festivais de cinema. Evolui o OLGA Suite (leitor local de XLSX) para uma plataforma online colaborativa com leitura e escrita em tempo real, controle de acesso por papel e evento, e exportação/importação XLSX para interoperabilidade com o fluxo de trabalho offline existente.
 
 **Stack:**
 - Frontend: HTML + CSS + JavaScript puro (sem framework)
-- Hospedagem: GitHub Pages (HTTPS estático)
-- Dados: Google Sheets (uma planilha permanente, multi-evento)
-- Auth: Google OAuth 2.0 (via Google Identity Services)
-- Proxy de escrita: Google Apps Script (Web App publicado)
+- Hospedagem: GitHub Pages — repositório `festivais`, branch `main`
+- Dados: arquivos JSON no próprio repositório (`/data/*.json`)
+- Auth: Personal Access Token (PAT) do GitHub, por usuário
+- Escrita: GitHub REST API (`PUT /repos/.../contents/data/*.json`)
+- URL de produção: `https://SEU-USUARIO.github.io/festivais`
+
+**Princípios de design:**
+- Zero dependência de serviços externos além do GitHub
+- JSON como formato de dado primário — legível, versionável, editável direto no browser
+- XLSX como formato de interoperabilidade — import/export a qualquer momento
+- Dado versionado: cada escrita gera um commit com histórico completo
 
 ---
 
-## 2. Estrutura da planilha
+## 2. Estrutura do repositório
 
-A planilha é única e permanente. Cada evento convive nas mesmas abas, identificado pela coluna `evento` presente em todas elas.
+```
+festivais/
+├── index.html          ← aplicação completa (SPA)
+├── README.md
+├── SPEC.md             ← este documento
+└── data/
+    ├── filmes.json
+    ├── sessoes.json
+    ├── cinemas.json
+    ├── equipe.json
+    └── config.json
+```
 
-### 2.1 Aba `filmes`
-
-Cada linha é um filme. A coluna A é a chave de segurança para filtragem por evento.
-
-| Col | Campo | Tipo | Papel que edita |
-|-----|-------|------|-----------------|
-| A | evento | texto | admin |
-| B | código festival | texto | admin / programacao |
-| C | HD | texto | admin |
-| D | título | texto | programacao / producao |
-| E | idioma | texto | programacao / producao |
-| F | leg DCP | texto | projecao |
-| G | mostra | texto | programacao / producao |
-| H | VF | texto | programacao / producao |
-| I | lente | texto | projecao |
-| J | som DCP | texto | projecao |
-| K | creator | texto | projecao |
-| L | kdm? | enum | programacao / producao (esperado) · projecao (sim, não) |
-| M | status | enum | projecao |
-| N | status legenda | enum | projecao · programacao / producao |
-| O | obs | texto livre | projecao |
-| P | CPL | texto | projecao |
-| Q | resolução DCP | texto | projecao |
-| T | duração DCP | hora (H:mm) | projecao |
-| V | dcpsize | número | projecao |
-| X | fps DCP | número | projecao |
-| Y | CPL DA OV | texto | projecao |
-| Z | LINK DCP | URL | admin · programacao / producao |
-| AB | legenda / transcrição | URL / texto | programacao / producao |
-
-**Colunas não utilizadas pelo site** (dados de arquivo local, não DCP):
-resolução arquivo (R), duração arquivo (S), filesize (U), fps arquivo (W), col AA — lidas somente, nunca escritas pelo site.
-
-#### Valores controlados (dropdowns)
-
-**status (col M):**
-- DCP OK
-- ERRO
-- LINK PARA DOWNLOAD
-- CANCELADO
-- *(vazio)*
-
-**status legenda (col N):**
-- OK
-- PRECISA DE ELETRÔNICA
-- *(vazio)*
-
-**kdm? (col L):**
-- `esperado` ← programacao / producao podem selecionar
-- `sim` ← projecao pode selecionar
-- `não` ← projecao pode selecionar
-- *(vazio)*
+Os arquivos JSON são arrays de objetos. Cada objeto é equivalente a uma linha da planilha original. O site lê via `fetch` público (GET sem auth) e escreve via GitHub API autenticada (PUT com PAT).
 
 ---
 
-### 2.2 Aba `sessões`
+## 3. Estrutura dos dados
 
-Cada linha é uma sessão. A coluna P é a chave de segurança para filtragem por evento.
+### 3.1 `filmes.json`
 
-| Col | Campo | Tipo | Observação |
-|-----|-------|------|------------|
-| A | código sessão | texto (10 chars, caixa alta) | chave primária |
-| B | cinema | texto | referência à col B de `cinemas` |
-| C | dia | data (dd/mm/yyyy) | |
-| D | hora | hora (HH:mm) | |
-| E | filme 1 | código | referência à col B de `filmes` |
-| F | filme 2 | código | |
-| G | filme 3 | código | |
-| H | filme 4 | código | |
-| I | filme 5 | código | |
-| J | filme 6 | código | |
-| K | filme 7 | código | |
-| L | filme 8 | código | |
-| M | filme 9 | código | |
-| N | filme 10 | código | |
-| O | total de filmes | fórmula COUNTA | o site nunca escreve nesta coluna |
-| P | evento | texto | chave de segurança — automático |
-| Q | mostra | texto | dropdown gerado da col G do evento ativo |
-| R | nome da sessão | texto livre | |
+Cada objeto é um filme. Espelha as colunas da planilha XLSX original.
 
-#### Código de sessão — geração automática
+| Campo | Coluna XLSX | Tipo | Papel que edita |
+|-------|-------------|------|-----------------|
+| evento | A | string | admin |
+| codigo | B | string | admin / programacao |
+| hd | C | string | admin |
+| titulo | D | string | programacao / producao |
+| idioma | E | string | programacao / producao |
+| legDCP | F | string | projecao |
+| mostra | G | string | programacao / producao |
+| vf | H | string | programacao / producao |
+| lente | I | string | projecao |
+| somDCP | J | string | projecao |
+| creator | K | string | projecao |
+| kdm | L | enum | programacao/producao (esperado) · projecao (sim, não) |
+| status | M | enum | projecao |
+| statusLeg | N | enum | projecao · programacao/producao |
+| obs | O | string | projecao |
+| cpl | P | string | projecao |
+| resolucao | Q | string | projecao |
+| duracao | T | string HH:mm | projecao |
+| dcpsize | V | number | projecao |
+| fps | X | number | projecao |
+| cplOV | Y | string | projecao |
+| linkDCP | Z | string | admin · programacao/producao |
+| legTrans | AB | string | programacao/producao |
 
-O site sugere um código seguindo o padrão:
+**Valores controlados:**
 
-```
-[PREFIXO DO EVENTO] + [SIGLA DO CINEMA] + [SEQUENCIAL 2 dígitos]
-ex: CC26MIS01 · ECN_CIN03
-```
+`status`: `DCP OK` · `DCP LG` · `ERRO` · `LINK PARA DOWNLOAD` · `AGUARDANDO` · `CANCELADO` · `CAIU` · *(vazio)*
 
-Regras de validação ao sair do campo:
-- Convertido automaticamente para caixa alta
-- Limitado a 10 caracteres
-- Verificado contra registros existentes do evento (duplicata rejeitada antes de salvar)
+`statusLeg`: `OK` · `PRECISA DE ELETRÔNICA` · *(vazio)*
 
-O programador pode editar livremente dentro dessas regras.
+`kdm`: `esperado` · `sim` · `não` · *(vazio)*
 
----
+**Lógica de bucket (dashboard):**
 
-### 2.3 Aba `cinemas`
-
-Cada linha é uma sala. Uma sala pode reaparecer em eventos diferentes (linhas distintas com o mesmo nome mas evento diferente).
-
-| Col | Campo | Tipo | Obrigatório |
-|-----|-------|------|-------------|
-| A | evento | texto | sim (automático) |
-| B | nome da sala | texto | **sim — único obrigatório** |
-| C | complexo | texto | não |
-| D | modelo do servidor | texto | não |
-| E | modelo do projetor | texto | não |
-| F | serial do servidor | texto | não |
-| G | contatos | texto livre | não |
-| H | datas de uso | texto serializado | não — ver formato abaixo |
-| I | horário funcionamento | texto | não — ex: "10h–23h" |
-| J | capacidade | número | não |
-| K | assentos acessíveis | número | não |
-| L | Cineassist | sim/não | não — sistema Dolby de acessibilidade |
-| M | monitores — nomes | texto livre | não |
-| N | monitores — contatos | texto livre | não |
-
-#### Formato de datas de uso (col H)
-
-Texto serializado com períodos separados por vírgula. Cada período é uma data única ou um intervalo:
-
-```
-03/10–05/10, 08/10, 11/10–14/10
-```
-
-O site apresenta como **chips editáveis** no formulário — cada chip é um período, clicável para editar e com `×` para remover. O botão "+ adicionar período" abre um mini-formulário com data início e data fim (fim opcional para dias únicos).
-
-O dashboard usa essa informação para alertar quando uma sessão está sendo agendada fora do período de uso da sala.
-
-#### Monitores (cols M e N)
-
-Múltiplos monitores são serializados com ` / ` como separador:
-
-```
-col M:  Ana Silva / Pedro Costa
-col N:  99999-0000 / 88888-1111
-```
-
-O formulário apresenta como linhas dinâmicas (nome + contato por linha). O campo nome tem autocomplete contra a aba `equipe` do evento ativo — ao selecionar uma sugestão, o campo de contato é preenchido automaticamente com o telefone da pessoa. O usuário pode ignorar as sugestões e preencher livremente.
+| Condição de status | Condição de legenda | Bucket |
+|--------------------|---------------------|--------|
+| `DCP OK` ou `DCP LG` | `OK` ou vazio | ✓ OK |
+| `DCP OK` ou `DCP LG` | qualquer outro valor | ⚠ Pendência |
+| vazio · `AGUARDANDO` · contém `DOWNLOAD` | — | ↓ Aguardando |
+| `CANCELADO` ou `CAIU` | — | ✕ Cancelados |
+| qualquer outro valor | — | ✗ Erro |
 
 ---
 
-### 2.4 Aba `equipe`
+### 3.2 `sessoes.json`
 
-Cada linha é um membro da equipe do evento. Alimentada pelo papel `producao`.
+Cada objeto é uma sessão.
 
-| Col | Campo | Tipo | Obrigatório |
-|-----|-------|------|-------------|
-| A | evento | texto | sim (automático) |
-| B | nome | texto | **sim** |
-| C | função | texto | não |
-| D | telefone | texto | não |
-| E | email | texto | não |
+| Campo | Tipo | Observação |
+|-------|------|------------|
+| codigo | string (10 chars, caixa alta) | chave primária |
+| nome | string | nome descritivo da sessão |
+| cinema | string | referência ao campo `nome` em cinemas.json |
+| dia | string dd/mm/yyyy | |
+| hora | string HH:mm | |
+| filmes | array de strings | até 10 códigos, referência ao campo `codigo` em filmes.json |
+| evento | string | chave de segurança |
+| mostra | string | |
 
-Lista editável no módulo de equipe — nova entrada via formulário, edição inline, deleção pelo papel `producao` ou `admin`.
-
-Os nomes da equipe alimentam o autocomplete do campo monitores em `cinemas`. O vínculo é apenas de conveniência — não há chave estrangeira real.
+**Geração do código:** o site sugere `[PREFIXO_EVENTO][SIGLA_CINEMA][SEQ_2_DIGITOS]`, ex: `CC26MIS01`. Limitado a 10 caracteres, sempre caixa alta, validado contra duplicatas antes de salvar.
 
 ---
 
-### 2.5 Aba `config`
+### 3.3 `cinemas.json`
 
-Controle de acesso. Cada linha é uma autorização. Uma pessoa pode ter múltiplas linhas (múltiplos eventos ou papéis).
+Cada objeto é uma sala. Uma sala pode ter entradas em múltiplos eventos.
 
-| Col | Campo | Exemplo |
-|-----|-------|---------|
-| A | email | joao@gmail.com |
-| B | papel | projecao |
-| C | evento | cc2026 |
+| Campo | Tipo | Obrigatório |
+|-------|------|-------------|
+| evento | string | sim (automático) |
+| nome | string | **sim — chave primária** |
+| complexo | string | não |
+| servidor | string | não |
+| projetor | string | não |
+| serial | string | não |
+| contatos | string | não — texto livre |
+| datas | string serializado | não — formato: `"03/10–05/10, 08/10"` |
+| horario | string | não — ex: `"10h–23h"` |
+| capacidade | number | não |
+| acessiveis | number | não |
+| cineassist | boolean | não — sistema Dolby de acessibilidade |
+| monitoresNomes | string | não — separador: ` / ` |
+| monitoresContatos | string | não — separador: ` / ` |
+
+**Datas de uso:** texto serializado com períodos separados por vírgula, cada um podendo ser data única ou intervalo com `–`. A UI apresenta como chips editáveis.
+
+**Admin pode duplicar sala para outro evento** — formulário abre pré-preenchido com dados da sala original, apenas campo `evento` muda para o destino.
+
+---
+
+### 3.4 `equipe.json`
+
+Cada objeto é um membro da equipe do evento.
+
+| Campo | Tipo | Obrigatório |
+|-------|------|-------------|
+| evento | string | sim (automático) |
+| nome | string | **sim** |
+| funcao | string | não |
+| telefone | string | não |
+| email | string | não |
+
+Os nomes da equipe alimentam o autocomplete do campo monitores em `cinemas.json`.
+
+---
+
+### 3.5 `config.json`
+
+Controle de acesso. Cada objeto é uma autorização. Uma pessoa pode ter múltiplos objetos (múltiplos eventos ou papéis).
+
+| Campo | Exemplo |
+|-------|---------|
+| email | joao@gmail.com |
+| papel | projecao |
+| evento | cc2026 |
 
 **Papéis válidos:**
 
 | Papel | Descrição |
 |-------|-----------|
-| `admin` | Acesso total a todos os eventos. Col C ignorada — usar `*` |
+| `admin` | Acesso total a todos os eventos. Campo `evento` ignorado — usar `*` |
 | `projecao` | Edita campos técnicos de DCP no evento autorizado |
 | `programacao` | Edita campos editoriais, sessões e cinemas no evento autorizado |
 | `producao` | Mesmos poderes de `programacao` + gestão da equipe |
 
 ---
 
-## 3. Modelo de permissões
+## 4. Autenticação — Personal Access Token
 
-### 3.1 Matriz papel × operação
+### 4.1 Configuração
+
+Cada usuário com permissão de escrita gera um PAT no GitHub com escopo `repo`. O token é inserido no site uma única vez e armazenado em `localStorage` (criptografado com a senha do usuário, ou em texto se o usuário aceitar o risco).
+
+O email declarado pelo usuário no primeiro acesso é cruzado com `config.json` para determinar papel e eventos autorizados.
+
+### 4.2 Fluxo de acesso
+
+```
+1. Usuário abre o site
+2. Se token salvo → valida via GET /user (GitHub API)
+3. Se inválido ou ausente → tela de configuração:
+   - Campo de email
+   - Campo de token GitHub
+4. Site lê config.json via fetch público
+5. Cruza email com config → monta perfil:
+   { email, papeis: [{papel, evento}] }
+6. 0 autorizações → "acesso não autorizado"
+7. 1 evento → entra direto
+8. 2+ eventos → pills de seleção de evento(s)
+9. Admin → vê todos os eventos, pode combinar
+```
+
+### 4.3 Leitura de dados
+
+Arquivos JSON são públicos — lidos via `fetch` sem auth:
+
+```javascript
+fetch('https://SEU-USUARIO.github.io/festivais/data/filmes.json')
+```
+
+### 4.4 Escrita de dados
+
+Via GitHub REST API com o PAT do usuário:
+
+```javascript
+// GET para obter SHA atual do arquivo (obrigatório para PUT)
+GET /repos/SEU-USUARIO/festivais/contents/data/filmes.json
+
+// PUT para sobrescrever com novo conteúdo
+PUT /repos/SEU-USUARIO/festivais/contents/data/filmes.json
+{
+  "message": "Atualiza filmes — cc2026 [usuário]",
+  "content": "<base64 do JSON atualizado>",
+  "sha": "<sha obtido no GET>"
+}
+```
+
+Cada escrita gera um commit com mensagem descritiva, criando histórico completo de todas as alterações.
+
+### 4.5 Validação de permissão (client-side)
+
+A validação de permissão é feita no frontend antes de qualquer escrita:
+
+1. O evento sendo escrito está nos eventos autorizados do usuário?
+2. O campo sendo editado está no escopo do papel do usuário?
+
+Se qualquer verificação falhar, a escrita não é enviada e o usuário vê uma mensagem de erro.
+
+*Nota: como não há servidor, a segurança depende de o PAT do usuário ter permissões restritas no repositório. Para maior segurança em produção, considerar branch protection e PATs com escopo limitado a conteúdo específico.*
+
+---
+
+## 5. Modelo de permissões
+
+### 5.1 Matriz papel × operação
 
 | Operação | admin | projecao | programacao | producao |
 |----------|:-----:|:--------:|:-----------:|:--------:|
 | Inserir filme | ✓ | ✓ | — | — |
 | Deletar filme | ✓ | — | — | — |
-| Editar campos de programação (D E G H N Z AB) | ✓ | — | ✓ | ✓ |
-| Editar campos de projeção (F I J K M O P Q T V X Y) | ✓ | ✓ | — | — |
+| Editar campos de programação | ✓ | — | ✓ | ✓ |
+| Editar campos de projeção | ✓ | ✓ | — | — |
 | Editar kdm "esperado" | ✓ | — | ✓ | ✓ |
 | Editar kdm "sim/não" | ✓ | ✓ | — | — |
 | Inserir sessão | ✓ | — | ✓ | ✓ |
 | Deletar sessão | ✓ | — | — | — |
-| Editar sessão (B C D E–N P Q R) | ✓ | — | ✓ | ✓ |
+| Editar sessão | ✓ | — | ✓ | ✓ |
 | Inserir / editar cinema | ✓ | — | ✓ | ✓ |
 | Deletar cinema | ✓ | — | — | — |
+| Duplicar cinema para outro evento | ✓ | — | — | — |
 | Inserir / editar / deletar equipe | ✓ | — | — | ✓ |
-| Trocar evento ativo | ✓ | — | — | — |
 | Ler / editar config | ✓ | — | — | — |
 
-### 3.2 Escopo por evento
+### 5.2 Escopo por evento
 
-Toda leitura e escrita é filtrada pelo evento ativo da sessão do usuário:
+Toda leitura e escrita é filtrada pelo(s) evento(s) ativo(s) da sessão do usuário. A filtragem usa o campo `evento` presente em todos os arquivos JSON.
 
-- `filmes` → col A
-- `sessões` → col P
-- `cinemas` → col A
-- `equipe` → col A
-
-Comportamento no login:
-
-```
-1 evento autorizado  →  entra direto
-2+ eventos           →  tela de seleção de evento
-0 eventos            →  tela "acesso não autorizado"
-Admin                →  seletor de evento sempre visível na UI
-```
-
-### 3.3 Segunda camada — validação no Apps Script
-
-Antes de qualquer escrita, o Apps Script verifica:
-
-1. Token Google do request (via tokeninfo)
-2. Email extraído consultado na aba `config`
-3. Evento da escrita comparado com o evento autorizado para o usuário
-4. Campo sendo escrito comparado com os campos permitidos para o papel
-
-Qualquer falha retorna HTTP 403 sem escrever.
+**Seleção de evento:** pills clicáveis na barra abaixo do header. Admin pode combinar múltiplos eventos. Não-admin vê só os eventos autorizados e pode combinar entre eles se tiver mais de um.
 
 ---
 
-## 4. Autenticação — Google OAuth 2.0
+## 6. Interoperabilidade XLSX
 
-### 4.1 Biblioteca
+### 6.1 Exportar XLSX
 
-Google Identity Services (GIS):
+Botão disponível em qualquer módulo. Gera um arquivo `.xlsx` com abas:
+- `filmes` — todos os filmes dos eventos visíveis, colunas na ordem original
+- `sessoes` — todas as sessões dos eventos visíveis
+- `cinemas` — todas as salas dos eventos visíveis
+- `equipe` — toda a equipe dos eventos visíveis
 
-```html
-<script src="https://accounts.google.com/gsi/client"></script>
+Formatos de data e hora preservados (`dd/mm/yyyy`, `HH:mm`). Compatível com o OLGA Suite offline.
+
+### 6.2 Importar XLSX
+
+Fluxo de importação pontual, disponível para admin:
+
+```
+1. Usuário carrega .xlsx
+2. Site lê e compara com JSON atual
+3. Exibe diff: "X filmes novos · Y modificados · Z sem alteração"
+4. Usuário revisa e confirma
+5. Site escreve só as diferenças nos JSONs via GitHub API
 ```
 
-### 4.2 Fluxo de login
+Permite incorporar trabalho feito offline (no XLSX local) para o banco compartilhado sem reescrever dados que já existem online.
 
-```
-1.  Página carrega → verifica token em sessionStorage
-2.  Token ausente ou expirado → exibe botão "Entrar com Google"
-3.  Usuário clica → popup Google OAuth
-4.  Callback recebe credential (JWT)
-5.  Site decodifica JWT (base64) → extrai email
-6.  Site lê aba config via Sheets API
-7.  Monta perfil: { email, papeis: [{papel, evento}] }
-8.  0 papéis → "acesso não autorizado"
-9.  1 evento  → entra direto
-10. 2+ eventos → tela de seleção de evento
-11. Armazena { credential, perfil, eventoAtivo } em sessionStorage
-```
+### 6.3 Edição direta do JSON no GitHub
 
-### 4.3 Configuração no Google Cloud Console
+Para quem preferir trabalhar no dado bruto:
+- Acessar `github.com/SEU-USUARIO/festivais/blob/main/data/filmes.json`
+- Clicar no ícone de lápis (editar)
+- Localizar o objeto pelo código, copiar, colar, inserir nova linha
+- Fazer commit
 
-- Projeto: `olga-web`
-- APIs ativadas: Google Sheets API
-- Credencial OAuth 2.0: tipo Aplicativo da Web
-- Origens JavaScript autorizadas: `https://SEU-USUARIO.github.io`
-- URIs de redirecionamento: não necessário (fluxo popup)
+Cada objeto JSON corresponde exatamente a uma linha da planilha. Operação de 30 segundos para quem já conhece o formato.
 
 ---
 
-## 5. Leitura de dados — Sheets API
+## 7. Módulos do frontend
 
-### 5.1 Autenticação
+### 7.1 Rotas (hash-based SPA)
 
-```javascript
-fetch(url, {
-  headers: { Authorization: `Bearer ${accessToken}` }
-})
-```
-
-### 5.2 Endpoints principais
-
-Base URL: `https://sheets.googleapis.com/v4/spreadsheets/{SPREADSHEET_ID}`
-
-| Operação | Range | Parâmetros |
-|----------|-------|------------|
-| Ler filmes | `filmes!A:AB` | `valueRenderOption=FORMATTED_VALUE` |
-| Ler sessões | `sessões!A:R` | `valueRenderOption=FORMATTED_VALUE` |
-| Ler cinemas | `cinemas!A:N` | `valueRenderOption=FORMATTED_VALUE` |
-| Ler equipe | `equipe!A:E` | `valueRenderOption=FORMATTED_VALUE` |
-| Ler config | `config!A:C` | |
-
-### 5.3 Filtragem por evento no cliente
-
-A API retorna a aba inteira. Filtragem por evento acontece no JavaScript:
-
-```javascript
-const filmes  = rows.filter(r => r[0]  === eventoAtivo);
-const sessoes = rows.filter(r => r[15] === eventoAtivo); // col P = índice 15
-const cinemas = rows.filter(r => r[0]  === eventoAtivo);
-const equipe  = rows.filter(r => r[0]  === eventoAtivo);
-```
-
----
-
-## 6. Escrita de dados — Apps Script proxy
-
-### 6.1 Estrutura do script
-
-```javascript
-// Publicado como Web App:
-// Executar como: conta admin
-// Acesso: qualquer pessoa com conta Google
-
-function doPost(e) {
-  const body = JSON.parse(e.postData.contents);
-  const { token, aba, operacao, dados, eventoAlvo } = body;
-
-  const email = verificarToken(token);
-  if (!email) return erro(401, 'Token inválido');
-
-  const perfil = buscarPerfil(email);
-  if (!perfil) return erro(403, 'Acesso não autorizado');
-
-  if (perfil.papel !== 'admin' && perfil.evento !== eventoAlvo)
-    return erro(403, 'Evento fora do escopo autorizado');
-
-  if (!camposPermitidos(perfil.papel, aba, dados))
-    return erro(403, 'Campo fora do escopo do papel');
-
-  return executar(aba, operacao, dados);
-}
-```
-
-### 6.2 Operações suportadas
-
-| operacao | Descrição |
-|----------|-----------|
-| `UPDATE_CELL` | Atualiza célula por chave primária |
-| `INSERT_ROW` | Insere nova linha |
-| `DELETE_ROW` | Deleta linha por chave primária (admin only para filmes/sessões/cinemas) |
-
-### 6.3 Payload padrão
-
-```javascript
-{
-  token: "eyJ...",
-  aba: "filmes",              // filmes · sessoes · cinemas · equipe
-  operacao: "UPDATE_CELL",
-  eventoAlvo: "cc2026",
-  dados: {
-    chave: "PB08",            // código do filme, sessão, nome da sala etc.
-    campo: "M",               // coluna da planilha
-    valor: "DCP OK"
-  }
-}
-```
-
----
-
-## 7. Datas e horas — garantia de formato
-
-### 7.1 Estratégia de escrita
-
-O Apps Script usa `valueInputOption: "USER_ENTERED"`. As colunas já têm formato definido na planilha — o Sheets interpreta a string no locale pt-BR.
-
-| Campo | Formato de escrita | Exemplo |
-|-------|--------------------|---------|
-| dia (sessões C) | `"dd/mm/yyyy"` | `"03/10/2026"` |
-| hora (sessões D) | `"HH:mm"` | `"19:30"` |
-| duração DCP (filmes T) | `"H:mm"` | `"1:42"` |
-| datas de uso (cinemas H) | texto serializado | `"03/10–05/10, 08/10"` |
-
-### 7.2 Leitura
-
-Sempre com `valueRenderOption=FORMATTED_VALUE`. O parser atual do OLGA Suite é reaproveitado sem modificações.
-
----
-
-## 8. Módulos do frontend
-
-### 8.1 Rotas (hash-based SPA)
-
-| Hash | Módulo | Papéis com acesso |
-|------|--------|-------------------|
-| `#dashboard` | Dashboard do evento | todos |
-| `#acervo` | Filmes — busca e edição | todos (escrita: projecao, programacao, producao) |
-| `#sessoes` | Sessões — grade + formulário | programacao, producao, admin |
-| `#cinemas` | Cinemas — lista + formulário | programacao, producao, admin |
-| `#equipe` | Equipe — lista + formulário | producao, admin |
-| `#grade` | Grade visual (leitura) | todos |
-| `#ficha` | Ficha composta | todos |
+| Hash | Módulo | Papéis com acesso de escrita |
+|------|--------|------------------------------|
+| `#dashboard` | Dashboard do evento | — (só leitura) |
+| `#acervo` | Filmes — busca e edição | projecao, programacao, producao |
+| `#sessoes` | Sessões — lista + formulário | programacao, producao |
+| `#cinemas` | Cinemas — lista + formulário | programacao, producao |
+| `#equipe` | Equipe — lista + formulário | producao |
+| `#grade` | Grade visual (3 modos) | — (só leitura) |
+| `#ficha` | Ficha composta | — (só leitura + impressão) |
 | `#config` | Gestão de usuários | admin |
+| `#import` | Import/export XLSX | admin (import) · todos (export) |
 
----
+### 7.2 Dashboard
 
-### 8.2 Dashboard (`#dashboard`)
+**Buckets de status** — leitura combinada `status × statusLeg` (ver seção 3.1).
 
-#### Buckets de status — leitura combinada cols M × N
+**Alertas:**
+- KDM "esperado" sem confirmação de projeção
+- Filmes em sessões sem registro no acervo (código órfão)
+- Sessão agendada fora do período de uso da sala
 
-| Bucket | Condição | Cor |
-|--------|----------|-----|
-| ✓ OK | M = "DCP OK" e N = "OK" | verde |
-| ⚠ Pendência de legenda | M = "DCP OK" e N = "PRECISA DE ELETRÔNICA" | amarelo |
-| ✗ Erro | M = "ERRO" | vermelho |
-| ↓ Aguardando | M = "LINK PARA DOWNLOAD" ou M vazio | cinza azulado |
+**Filtros:** por cinema (dropdown filtrado pelo evento ativo).
 
-#### Alertas adicionais
-
-- KDM esperado sem confirmação: col L = "esperado"
-- Filmes na programação sem registro em `filmes` (código órfão)
-- Sessão agendada fora do período de uso da sala (cruzamento com col H de `cinemas`)
-
-#### Filtros
-
-- Por mostra (col G de `filmes`)
-- Por cinema (via `sessões`)
-- Por complexo (via `cinemas` col C)
-
----
-
-### 8.3 Acervo (`#acervo`)
-
-Busca e edição de filmes. Herda a lógica de busca atual (título, código, CPL, idioma, obs). Adiciona:
-
-- Campos editáveis inline conforme papel do usuário (campos fora do escopo aparecem desabilitados)
-- Formulário de inserção de novo filme
-- Ingestão via pasta DCP (File System Access API)
-
----
-
-### 8.4 Sessões (`#sessoes`)
-
-Acesso duplo aos registros:
-
-**Grade de programação** (modo edição)
-- Mesma visualização da grade atual
-- Cada bloco é clicável e abre o formulário pré-preenchido
-- Indicador visual diferencia modo leitura do modo edição
-
-**Lista filtrada**
-- Filtrável por dia, cinema e mostra
-- Cada linha tem botão de edição
-- Botão "+ Nova sessão" fixo no topo
-
-#### Formulário de sessão
-
-```
-Código *    [CC26MIS01  ]  ← sugerido, editável, 10 chars max, caixa alta
-Nome        [           ]
-Cinema *    [▼          ]  ← lista dos cinemas do evento ativo
-Dia *       [📅         ]
-Hora *      [⏰         ]
-Mostra      [▼          ]  ← gerado dos valores únicos da col G do evento
-Evento      [cc2026     ]  ← readonly, automático da sessão
-
-Filmes
-  1. [      ]  ← autocomplete por código ou título (3 chars)
-  2. [      ]
-  ...          ← [+ adicionar] até 10 · [× remover]
-
-[Cancelar]  [Salvar]
-```
-
----
-
-### 8.5 Cinemas (`#cinemas`)
-
-Lista de salas do evento com botão de edição por linha e "+ Nova sala".
-
-#### Formulário de cinema
-
-```
-Nome da sala *  [              ]  ← único campo obrigatório
-Complexo        [              ]
-Servidor        [              ]
-Projetor        [              ]
-Serial          [              ]
-Contatos        [              ]  ← textarea livre
-Cineassist      [ ] sim
-Horário         [              ]  ← ex: "10h–23h"
-Capacidade      [              ]
-Acessíveis      [              ]
-
-Datas de uso
-  [03/10–05/10 ×]  [08/10 ×]  [+ adicionar período]
-
-Monitores
-  Nome [          ]  Contato [          ]  ← autocomplete contra equipe
-  Nome [          ]  Contato [          ]
-  [+ adicionar monitor]
-
-[Cancelar]  [Salvar]
-```
-
----
-
-### 8.6 Equipe (`#equipe`)
-
-Lista editável. Cada linha: nome, função, telefone, email. Edição inline, nova entrada via formulário simples.
-
-Os nomes alimentam o autocomplete de monitores em `cinemas`. Ao selecionar uma sugestão, o campo de contato é preenchido automaticamente com o telefone registrado. O usuário pode ignorar e preencher livremente.
-
----
-
-### 8.7 Grade (`#grade`)
-
-Três modos de visualização:
+### 7.3 Grade — três modos
 
 | Modo | Descrição |
 |------|-----------|
-| Grid | Visualização atual — sala × horário, por dia |
-| Por cinema | Todas as sessões de uma sala, todos os dias |
-| Tabela | Lista ordenada por data/hora, imprimível |
+| Grid | Visualização sala × horário por dia. Começa na hora da primeira sessão. |
+| Tabela | Lista ordenada cronologicamente, imprimível. |
+| Por cinema | Todas as sessões de uma sala em todos os dias. |
 
----
+O painel de grade tem altura fixa (`100vh` menos os elementos acima) e rola internamente nos dois eixos. Cabeçalho de colunas sincronizado com scroll horizontal.
 
-### 8.8 Ficha (`#ficha`)
-
-#### Filtros em cascata
+### 7.4 Ficha — filtros em cascata
 
 ```
-[ Tipo de ficha ▼ ]  →  [ filtros dependentes ]  →  [ Gerar ]
+[ Tipo ] → [ filtros ] → [ Gerar automático ou botão ]
 
-Sessão única     →  [ sessão ▼ ]
+Sessão única     →  [ sessão ▼ ]  ← gera automaticamente ao selecionar
 Dia × Sala       →  [ dia ▼ ] [ sala ▼ ]
 Dia × Complexo   →  [ dia ▼ ] [ complexo ▼ ]
 Dia inteiro      →  [ dia ▼ ]
-Evento inteiro   →  (sem filtro extra)
+Evento inteiro   →  (sem filtro)
 ```
 
-"Dia × Complexo" gera ficha com todas as salas do complexo no dia selecionado, ordenadas por sala e horário. Inclui opcionalmente os monitores e contatos de cada sala.
+Impressão: A4 paisagem, `page-break-inside: avoid` por sessão. Inclui monitores da sala quando disponível.
 
-#### Impressão
-
-Cada sessão tem `page-break-inside: avoid`. Para fichas compostas (dia, complexo, evento), a quebra de página ocorre entre sessões automaticamente. O usuário vê prévia na tela e imprime quando quiser.
-
----
-
-### 8.9 Config (`#config`)
-
-Visível apenas para admin. Exibe e edita a aba `config` — lista de usuários com papel e evento. Permite adicionar e remover autorizações.
-
----
-
-## 9. Ingestão via pasta DCP
-
-Usa a **File System Access API** (`showDirectoryPicker()`). Disponível em Chrome/Edge. Fallback para Safari/Firefox: upload de arquivo individual.
-
-#### Campos extraídos do CPL XML
-
-| Campo XML | Campo planilha | Col |
-|-----------|----------------|-----|
-| `Id` (UUID do CPL) | CPL | P |
-| `EditRate` + `Duration` | duração DCP | T |
-| `ScreenAspectRatio` | resolução DCP | Q |
-| `ContentTitleText` | — (comparação com título existente) | — |
-
-#### Fluxo
+### 7.5 Formulário de sessão
 
 ```
-1. Usuário abre pasta DCP via botão
-2. Site percorre arquivos procurando *_cpl.xml
-3. Extrai campos, apresenta formulário de confirmação
-4. Usuário revisa e confirma
-5. Apps Script escreve na planilha
+Código *    [CC26MIS01  ]  ← sugerido, 10 chars, caixa alta, validado
+Nome        [           ]
+Cinema *    [▼          ]  ← dropdown das salas do evento ativo
+Dia *       [📅         ]
+Hora *      [⏰         ]
+Mostra      [▼          ]  ← valores únicos do campo mostra do evento
+Evento      [cc2026     ]  ← readonly, automático
+
+Filmes      (até 10, autocomplete por código ou título)
 ```
 
 ---
 
-## 10. Fases de desenvolvimento
+## 8. Fluxo de escrita — GitHub API
+
+### 8.1 Padrão de operação
+
+Toda escrita segue o mesmo padrão:
+
+```javascript
+// 1. Ler arquivo atual + obter SHA
+const res = await fetch(
+  'https://api.github.com/repos/SEU-USUARIO/festivais/contents/data/filmes.json',
+  { headers: { Authorization: `token ${PAT}` } }
+);
+const { content, sha } = await res.json();
+const dados = JSON.parse(atob(content));
+
+// 2. Modificar o array em memória
+dados.push(novoFilme); // ou splice, ou find+assign
+
+// 3. Escrever de volta
+await fetch(
+  'https://api.github.com/repos/SEU-USUARIO/festivais/contents/data/filmes.json',
+  {
+    method: 'PUT',
+    headers: { Authorization: `token ${PAT}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      message: `Insere ${novoFilme.codigo} — ${novoFilme.evento} [${email}]`,
+      content: btoa(JSON.stringify(dados, null, 2)),
+      sha
+    })
+  }
+);
+```
+
+### 8.2 Mensagens de commit
+
+Padrão: `[operação] [identificador] — [evento] [usuário]`
+
+Exemplos:
+- `Insere PB08 — cc2026 [luiz@...]`
+- `Atualiza status PB08 — cc2026 [joao@...]`
+- `Insere sessão CC26MIS01 — cc2026 [ana@...]`
+- `Importa 12 filmes — cc2026 [luiz@...]`
+
+---
+
+## 9. Fases de desenvolvimento
 
 ### Fase 1 — Leitura online
-- Setup Google Cloud (OAuth + Sheets API)
-- Login Google + filtragem por evento
-- Módulos ficha, grade e busca funcionando com dados online
+- Configuração do repositório e arquivos JSON
+- Autenticação via PAT + leitura de `config.json`
+- Módulos ficha, grade e acervo funcionando com dados do repositório
+- Seleção de evento por pills
 - Sem escrita
 
 ### Fase 2 — Dashboard
-- Buckets de status (M × N)
+- Buckets de status
 - Alertas de KDM, filmes órfãos, sessões fora do período de sala
-- Filtros por mostra, cinema e complexo
+- Filtro por cinema
 
 ### Fase 3 — Ficha composta
-- Filtros em cascata
+- Filtros em cascata completos
 - Modo Dia × Complexo com monitores opcionais
-- CSS de impressão multipágina
+- CSS de impressão multipágina A4 paisagem
 
 ### Fase 4 — Escrita
-- Apps Script (setup + deploy)
 - Edição inline de filmes no Acervo
 - Formulário de sessões (criação e edição)
-- Formulário de cinemas com chips de datas e monitores com autocomplete
+- Formulário de cinemas com chips de datas e autocomplete de monitores
 - Formulário de equipe
-- Ingestão via pasta DCP
+- Ingestão via pasta DCP (File System Access API)
 
-### Fase 5 — Grade expandida e Config
-- Modo por cinema
-- Modo tabela
-- Módulo Config (gestão de usuários)
+### Fase 5 — Import/export e Config
+- Exportação XLSX
+- Importação XLSX com diff
+- Módulo Config (gestão de usuários via `config.json`)
+- Grade expandida — modo tabela e por cinema refinados
 
 ---
 
-## 11. Repositório e deploy
+## 10. Variáveis de configuração
 
-```
-olga-web/
-├── index.html          ← aplicação completa
-├── README.md
-├── SPEC.md             ← este documento
-└── apps-script/
-    └── codigo.gs       ← código do Apps Script (referência)
-```
-
-**Deploy:** push para branch `main` → GitHub Pages publica automaticamente em `https://SEU-USUARIO.github.io/olga-web/`
-
-**Variáveis de configuração** (no topo do `index.html`):
+Três constantes no topo do `index.html`:
 
 ```javascript
 const CONFIG = {
-  SPREADSHEET_ID:   "1abc...xyz",
-  GOOGLE_CLIENT_ID: "123456-abc.apps.googleusercontent.com",
-  APPS_SCRIPT_URL:  "https://script.google.com/macros/s/.../exec"
+  GITHUB_USER:  "SEU-USUARIO",
+  GITHUB_REPO:  "festivais",
+  DATA_BRANCH:  "main"
 };
 ```
 
-Estas três constantes são os únicos valores que mudam entre ambientes. Nenhuma delas é um segredo — a segurança da planilha é garantida pelas permissões do Google, não pela obscuridade das URLs.
+O PAT não fica no código — é inserido pelo usuário no primeiro acesso e armazenado em `localStorage`.
 
 ---
 
-*Versão 1.1 — inclui papéis producao e programacao, aba equipe, aba cinemas com datas serializadas e monitores com autocomplete, aba sessões com cols Q e R, modelo de ficha por complexo e matriz de permissões atualizada.*
+## 11. Notas sobre segurança
+
+O modelo PAT em frontend tem limitações conhecidas:
+
+- O PAT fica em `localStorage` — acessível para quem tiver acesso físico ao dispositivo
+- Não há validação server-side das permissões — a segurança depende da disciplina dos PATs
+- Para mitigar: usar PATs com escopo mínimo (`contents` read+write, sem admin do repo)
+- O histórico de commits do GitHub serve como auditoria — toda escrita tem autor e timestamp
+
+Para o contexto de uso (equipe pequena, ambiente de festival), esse modelo é suficiente. Uma evolução futura poderia introduzir um proxy serverless (Cloudflare Worker ou Netlify Function) para validação server-side sem adicionar infraestrutura significativa.
+
+---
+
+*Versão 2.0 — arquitetura migrada de Google Sheets + Apps Script para GitHub JSON + REST API. Eliminação de dependências externas ao ecossistema GitHub.*
