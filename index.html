@@ -829,30 +829,31 @@ function applyConfig(config){
     return(c.email||'').toLowerCase()===email;
   });
   if(!matches.length){
-    // email not in config — keep admin for now (offline-like)
     currentUser.papel='admin';
     currentUser.eventos=[];
     return;
   }
-  // check for admin
   var isAdmin=matches.some(function(c){return c.papel==='admin';});
   if(isAdmin){
     currentUser.papel='admin';
     currentUser.eventos=[];
   } else {
     currentUser.papel=matches[0].papel;
-    currentUser.eventos=matches.map(function(c){return c.evento;}).filter(Boolean);
+    // '*' means all events — store as empty array (same as admin behaviour)
+    var hasWildcard=matches.some(function(c){return c.evento==='*';});
+    currentUser.eventos=hasWildcard
+      ? []
+      : matches.map(function(c){return c.evento;}).filter(Boolean);
   }
   applyRole(currentUser.papel);
-  // restrict eventosAtivos to authorized events for non-admin
   if(currentUser.papel!=='admin'&&currentUser.eventos.length){
     eventosAtivos=new Set(currentUser.eventos);
   }
 }
 
 async function fetchJSON(filename){
-  // use cache-busted URL to always get fresh data
-  var url=GH.base+'/'+filename+'?t='+Date.now();
+  // raw.githubusercontent.com bypasses GitHub Pages CDN cache
+  var url='https://raw.githubusercontent.com/'+GH.user+'/'+GH.repo+'/'+GH.branch+'/data/'+filename+'?t='+Date.now();
   var r=await fetch(url);
   if(!r.ok)throw new Error('Erro ao carregar '+filename+' ('+r.status+')');
   return r.json();
