@@ -547,6 +547,30 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
 .login-btn:hover{opacity:0.85;}
 .login-btn:disabled{opacity:0.4;cursor:not-allowed;}
 .login-error{font-family:var(--mono);font-size:10px;color:var(--err);margin-top:12px;display:none;padding:8px 10px;background:var(--err-bg);border-left:2px solid var(--err);}
+/* ── INLINE FORM (shared by equipe, cinemas, sessões) ── */
+.form-panel{background:var(--surface2);border:1px solid var(--accent);padding:24px 28px;margin:16px 24px;position:relative;}
+.form-panel-title{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:20px;display:flex;align-items:center;gap:10px;}
+.form-panel-title::after{content:'';flex:1;height:1px;background:rgba(232,160,32,0.2);}
+.form-close{position:absolute;top:16px;right:20px;background:none;border:none;font-size:18px;color:var(--text-muted);cursor:pointer;line-height:1;padding:0;}
+.form-close:hover{color:var(--text-dim);}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px 20px;}
+.form-field{display:flex;flex-direction:column;gap:5px;}
+.form-field.wide{grid-column:1/-1;}
+.form-label{font-family:var(--mono);font-size:8px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);}
+.form-label span{color:var(--err);margin-left:2px;}
+.form-input,.form-select{font-family:var(--mono);font-size:12px;background:var(--surface);color:var(--text);border:1px solid var(--border2);padding:7px 10px;outline:none;transition:border-color 0.15s;width:100%;}
+.form-input:focus,.form-select:focus{border-color:var(--accent);}
+.form-input::placeholder{color:var(--text-muted);}
+.form-select option{background:var(--surface);}
+.form-actions{display:flex;align-items:center;gap:10px;margin-top:20px;padding-top:16px;border-top:1px solid var(--border);}
+.form-save-btn{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:8px 20px;background:var(--accent);color:#000;border:none;cursor:pointer;transition:opacity 0.15s;}
+.form-save-btn:hover{opacity:0.85;}
+.form-save-btn:disabled{opacity:0.4;cursor:not-allowed;}
+.form-cancel-btn{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:8px 16px;background:transparent;color:var(--text-dim);border:1px solid var(--border);cursor:pointer;transition:all 0.15s;}
+.form-cancel-btn:hover{border-color:var(--text-dim);}
+.form-status{font-family:var(--mono);font-size:10px;color:var(--text-dim);margin-left:auto;}
+.form-status.err{color:var(--err);}
+.form-status.ok{color:var(--ok);}
 </style>
 </head>
 <body>
@@ -653,6 +677,7 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
   <select class="bar-select" id="equipeFuncaoFilter" style="min-width:140px;" onchange="renderEquipe()"><option value="">— todas funções —</option></select>
   <select class="bar-select" id="equipeCinemaFilter" style="min-width:180px;" onchange="renderEquipe()"><option value="">— todos cinemas —</option></select>
   <span class="result-count" id="equipeCount"></span>
+  <button class="print-btn" onclick="openEquipeForm(null)" style="margin-left:auto;">+ Novo membro</button>
   <button class="print-btn" onclick="printModule()">⎙ Imprimir</button>
   <button class="print-btn print-btn-pb" onclick="printModulePB()">⎙ PB</button>
 </div>
@@ -749,6 +774,48 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
 
   <!-- EQUIPE -->
   <div class="mode-panel" id="equipe-panel">
+    <!-- FORM -->
+    <div id="equipeForm" style="display:none;">
+      <div class="form-panel">
+        <div class="form-panel-title" id="equipeFormTitle">Novo membro</div>
+        <button class="form-close" onclick="closeEquipeForm()">×</button>
+        <div class="form-grid">
+          <div class="form-field">
+            <label class="form-label">Evento<span>*</span></label>
+            <select class="form-select" id="efEvento" onchange="equipeEventoChanged()">
+              <option value="">— selecionar —</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label class="form-label">Nome<span>*</span></label>
+            <input class="form-input" id="efNome" type="text" placeholder="Nome completo">
+          </div>
+          <div class="form-field">
+            <label class="form-label">Função</label>
+            <input class="form-input" id="efFuncao" type="text" placeholder="ex: projeção, monitor">
+          </div>
+          <div class="form-field">
+            <label class="form-label">Cinema</label>
+            <select class="form-select" id="efCinema">
+              <option value="">— selecionar evento primeiro —</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label class="form-label">Telefone</label>
+            <input class="form-input" id="efTelefone" type="text" placeholder="xx 9xxxx-xxxx">
+          </div>
+          <div class="form-field">
+            <label class="form-label">Email</label>
+            <input class="form-input" id="efEmail" type="email" placeholder="email@exemplo.com">
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="form-save-btn" id="equipeFormSaveBtn" onclick="saveEquipeMembro()">Salvar</button>
+          <button class="form-cancel-btn" onclick="closeEquipeForm()">Cancelar</button>
+          <span class="form-status" id="equipeFormStatus"></span>
+        </div>
+      </div>
+    </div>
     <div id="equipeContent">
       <div class="empty-state"><div class="icon">◎</div><p>Carregando equipe…</p></div>
     </div>
@@ -1428,11 +1495,13 @@ function renderEquipe(){
     return;
   }
   var html='<table class="equipe-table"><thead><tr>'
-    +'<th>Nome</th><th>Função</th><th>Cinema</th><th>Telefone</th><th>Email</th><th>Evento</th>'
+    +'<th>Nome</th><th>Função</th><th>Cinema</th><th>Telefone</th><th>Email</th><th>Evento</th><th></th>'
     +'</tr></thead><tbody>';
-  filtered.forEach(function(p){
+  filtered.forEach(function(p,idx){
     var col=eventColors[p.evento]||null;
     var evBadge=col?'<span class="eq-evento" style="background:'+col.bg+';color:'+col.text+';">'+p.evento+'</span>':p.evento||'—';
+    // find original index in equipeArr
+    var origIdx=equipeArr.indexOf(p);
     html+='<tr>';
     html+='<td class="eq-nome">'+p.nome+'</td>';
     html+='<td class="eq-funcao">'+(p.funcao||'—')+'</td>';
@@ -1440,6 +1509,7 @@ function renderEquipe(){
     html+='<td class="eq-contato">'+(p.telefone||'—')+'</td>';
     html+='<td class="eq-contato">'+(p.email||'—')+'</td>';
     html+='<td>'+evBadge+'</td>';
+    html+='<td><button class="form-cancel-btn" style="padding:3px 10px;font-size:9px;" onclick="openEquipeForm('+origIdx+')">Editar</button></td>';
     html+='</tr>';
   });
   html+='</tbody></table>';
@@ -2095,7 +2165,123 @@ function applyRole(role, skipEventosReset){
   applyEventoFilter();
 }
 
-// ── PRINT ──
+// ── EQUIPE FORM ──
+var _equipeEditIdx=null; // null = new, number = edit index in equipeArr
+
+function openEquipeForm(idx){
+  _equipeEditIdx=idx;
+  var isNew=(idx===null);
+  document.getElementById('equipeFormTitle').textContent=isNew?'Novo membro':'Editar membro';
+  document.getElementById('equipeFormStatus').textContent='';
+  document.getElementById('equipeFormStatus').className='form-status';
+
+  // populate evento dropdown — only events user has access to
+  var sel=document.getElementById('efEvento');
+  var evts=currentUser.papel==='admin'||!currentUser.eventos.length
+    ? Object.keys(eventColors)
+    : currentUser.eventos.filter(function(e){return eventColors[e];});
+  sel.innerHTML='<option value="">— selecionar —</option>';
+  evts.forEach(function(e){
+    var col=eventColors[e];
+    sel.innerHTML+='<option value="'+e+'">'+e+'</option>';
+  });
+
+  if(!isNew){
+    var p=equipeArr[idx];
+    sel.value=p.evento||'';
+    equipeEventoChanged();
+    document.getElementById('efNome').value=p.nome||'';
+    document.getElementById('efFuncao').value=p.funcao||'';
+    document.getElementById('efTelefone').value=p.telefone||'';
+    document.getElementById('efEmail').value=p.email||'';
+    // cinema set after dropdown built
+    setTimeout(function(){document.getElementById('efCinema').value=p.cinema||'';},50);
+  } else {
+    // pre-select first active event if only one
+    if(evts.length===1)sel.value=evts[0];
+    equipeEventoChanged();
+    document.getElementById('efNome').value='';
+    document.getElementById('efFuncao').value='';
+    document.getElementById('efTelefone').value='';
+    document.getElementById('efEmail').value='';
+  }
+
+  document.getElementById('equipeForm').style.display='block';
+  document.getElementById('efNome').focus();
+  // scroll form into view
+  document.getElementById('equipeForm').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function closeEquipeForm(){
+  document.getElementById('equipeForm').style.display='none';
+  _equipeEditIdx=null;
+}
+
+function equipeEventoChanged(){
+  var evento=document.getElementById('efEvento').value;
+  var sel=document.getElementById('efCinema');
+  sel.innerHTML='<option value="">— nenhum —</option>';
+  if(evento){
+    var salas=cinemesArr.filter(function(c){return c.evento===evento;}).map(function(c){return c.nome;}).sort();
+    salas.forEach(function(s){sel.innerHTML+='<option value="'+s+'">'+s+'</option>';});
+  }
+}
+
+async function saveEquipeMembro(){
+  var btn=document.getElementById('equipeFormSaveBtn');
+  var status=document.getElementById('equipeFormStatus');
+  var evento=document.getElementById('efEvento').value.trim();
+  var nome=document.getElementById('efNome').value.trim();
+  if(!evento||!nome){
+    status.textContent='Evento e nome são obrigatórios.';
+    status.className='form-status err';
+    return;
+  }
+  var membro={
+    evento:evento,
+    nome:nome,
+    funcao:document.getElementById('efFuncao').value.trim(),
+    cinema:document.getElementById('efCinema').value.trim(),
+    telefone:document.getElementById('efTelefone').value.trim(),
+    email:document.getElementById('efEmail').value.trim(),
+  };
+  btn.disabled=true;
+  status.textContent='Salvando…';
+  status.className='form-status';
+  try{
+    // read current file + SHA
+    var r=await fetch('https://api.github.com/repos/'+GH.user+'/'+GH.repo+'/contents/data/equipe.json',
+      {headers:{Authorization:'token '+currentUser.token}});
+    if(!r.ok)throw new Error('Erro ao ler equipe.json ('+r.status+')');
+    var meta=await r.json();
+    var current=JSON.parse(atob(meta.content.replace(/\n/g,'')));
+    // apply edit or add
+    if(_equipeEditIdx!==null){
+      current[_equipeEditIdx]=membro;
+    } else {
+      current.push(membro);
+    }
+    // write back
+    var msg=(_equipeEditIdx!==null?'Atualiza ':'Insere ')+nome+' — '+evento+' ['+currentUser.email+']';
+    var w=await fetch('https://api.github.com/repos/'+GH.user+'/'+GH.repo+'/contents/data/equipe.json',{
+      method:'PUT',
+      headers:{Authorization:'token '+currentUser.token,'Content-Type':'application/json'},
+      body:JSON.stringify({message:msg,content:btoa(unescape(encodeURIComponent(JSON.stringify(current,null,2)))),sha:meta.sha})
+    });
+    if(w.status===409)throw new Error('Dados desatualizados — clique em ↻ e tente novamente.');
+    if(!w.ok)throw new Error('Erro ao salvar ('+w.status+')');
+    // update local array
+    equipeArr=current;
+    status.textContent='✓ Salvo';
+    status.className='form-status ok';
+    setTimeout(closeEquipeForm,800);
+    renderEquipe();
+  }catch(e){
+    status.textContent=e.message||'Erro ao salvar.';
+    status.className='form-status err';
+  }
+  btn.disabled=false;
+}
 // A4 landscape at 96dpi with 8mm margins ≈ 1106 x 779px, after CSS zoom:0.78 → effective page ≈ 1420 x 1000
 // JS adds extra zoom only for sessions that are still too tall after CSS zoom
 var CSS_ZOOM=0.78;
