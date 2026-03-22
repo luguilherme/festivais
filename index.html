@@ -644,14 +644,12 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
   <button class="print-btn print-btn-pb" onclick="printModulePB()">⎙ PB</button>
 </div>
 <div class="mode-bar hidden" id="barCinemas">
-  <select class="bar-select" id="cinemasEventoFilter" style="min-width:140px;" onchange="renderCinemas()"><option value="">— todos eventos —</option></select>
   <select class="bar-select" id="cinemasComplexoFilter" style="min-width:160px;" onchange="renderCinemas()"><option value="">— todos complexos —</option></select>
   <span class="result-count" id="cinemasCount"></span>
   <button class="print-btn" onclick="printModule()">⎙ Imprimir</button>
   <button class="print-btn print-btn-pb" onclick="printModulePB()">⎙ PB</button>
 </div>
 <div class="mode-bar hidden" id="barEquipe">
-  <select class="bar-select" id="equipeEventoFilter" style="min-width:140px;" onchange="renderEquipe()"><option value="">— todos eventos —</option></select>
   <select class="bar-select" id="equipeFuncaoFilter" style="min-width:140px;" onchange="renderEquipe()"><option value="">— todas funções —</option></select>
   <select class="bar-select" id="equipeCinemaFilter" style="min-width:180px;" onchange="renderEquipe()"><option value="">— todos cinemas —</option></select>
   <span class="result-count" id="equipeCount"></span>
@@ -678,10 +676,6 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
     <option value="evento">Evento inteiro</option>
   </select>
   <div id="fichaFilters" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;"></div>
-  <label style="display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;color:var(--text-dim);cursor:pointer;white-space:nowrap;margin-left:4px;">
-    <input type="checkbox" id="fichaShowMonitor" checked style="accent-color:var(--accent);width:13px;height:13px;">
-    Monitor
-  </label>
   <button class="print-btn" id="fichaGerarBtn" disabled onclick="gerarFicha()">Gerar</button>
   <button class="print-btn" id="printBtn" disabled onclick="printModule()">⎙ Imprimir</button>
   <button class="print-btn print-btn-pb" id="printBtnPB" disabled onclick="printModulePB()">⎙ PB</button>
@@ -1329,13 +1323,7 @@ function renderSessoes(){
 
 // ── CINEMAS ──
 function buildCinemasFilters(){
-  var evts=uniqueSorted(cinemesArr.filter(function(c){return eventoVisible(c.evento);}).map(function(c){return c.evento;}));
   var comps=uniqueSorted(cinemesArr.filter(function(c){return eventoVisible(c.evento);}).map(function(c){return c.complexo;}).filter(Boolean));
-  var selEv=document.getElementById('cinemasEventoFilter');
-  var prevEv=selEv.value;
-  selEv.innerHTML='<option value="">— todos eventos —</option>';
-  evts.forEach(function(e){selEv.innerHTML+='<option value="'+e+'">'+e+'</option>';});
-  if(prevEv&&evts.indexOf(prevEv)>=0)selEv.value=prevEv;
   var selCo=document.getElementById('cinemasComplexoFilter');
   var prevCo=selCo.value;
   selCo.innerHTML='<option value="">— todos complexos —</option>';
@@ -1345,11 +1333,9 @@ function buildCinemasFilters(){
 
 function renderCinemas(){
   buildCinemasFilters();
-  var evF=document.getElementById('cinemasEventoFilter').value;
   var coF=document.getElementById('cinemasComplexoFilter').value;
   var filtered=cinemesArr.filter(function(c){
     if(!eventoVisible(c.evento))return false;
-    if(evF&&c.evento!==evF)return false;
     if(coF&&c.complexo!==coF)return false;
     return true;
   });
@@ -1410,14 +1396,10 @@ function toggleCinemaCard(idx){
 
 // ── EQUIPE ──
 function buildEquipeFilters(){
-  var evts=uniqueSorted(equipeArr.filter(function(p){return eventoVisible(p.evento);}).map(function(p){return p.evento;}));
-  var funcoes=uniqueSorted(equipeArr.filter(function(p){return eventoVisible(p.evento);}).map(function(p){return p.funcao;}).filter(Boolean));
+  // normalize funcao to lowercase for case-insensitive grouping
+  var funcoes=uniqueSorted(equipeArr.filter(function(p){return eventoVisible(p.evento);})
+    .map(function(p){return(p.funcao||'').toLowerCase();}).filter(Boolean));
   var cinemas=uniqueSorted(equipeArr.filter(function(p){return eventoVisible(p.evento);}).map(function(p){return p.cinema;}).filter(Boolean));
-  var selEv=document.getElementById('equipeEventoFilter');
-  var prevEv=selEv.value;
-  selEv.innerHTML='<option value="">— todos eventos —</option>';
-  evts.forEach(function(e){selEv.innerHTML+='<option value="'+e+'">'+e+'</option>';});
-  if(prevEv&&evts.indexOf(prevEv)>=0)selEv.value=prevEv;
   var selFu=document.getElementById('equipeFuncaoFilter');
   var prevFu=selFu.value;
   selFu.innerHTML='<option value="">— todas funções —</option>';
@@ -1432,13 +1414,11 @@ function buildEquipeFilters(){
 
 function renderEquipe(){
   buildEquipeFilters();
-  var evF=document.getElementById('equipeEventoFilter').value;
   var fuF=document.getElementById('equipeFuncaoFilter').value;
   var ciF=document.getElementById('equipeCinemaFilter').value;
   var filtered=equipeArr.filter(function(p){
     if(!eventoVisible(p.evento))return false;
-    if(evF&&p.evento!==evF)return false;
-    if(fuF&&p.funcao!==fuF)return false;
+    if(fuF&&(p.funcao||'').toLowerCase()!==fuF)return false;
     if(ciF&&p.cinema!==ciF)return false;
     return true;
   });
@@ -1909,9 +1889,9 @@ function renderFichaBlock(nome,s,addBreak){
     return'<tr><td class="film-num">'+(idx+1)+'</td><td><div class="film-title">'+titulo+(hdTag?' '+hdTag:'')+'</div><div class="film-sub"><span class="film-code">'+f.codigo+'</span></div></td><td>'+idiomaCell+'</td><td>'+legCell+'</td><td class="center">'+lenteBadge(lente)+'</td><td class="center">'+somBadge(som)+'</td><td class="center">'+kdmFichaBadge(kdm)+'</td><td class="mono center">'+durCell+'</td>'+cplCell+'<td class="center">'+fpsgbCell+'</td><td><div class="obs-text">'+(obs||'')+'</div></td></tr>';
   });
   var monInfo='';
-  var showMon=document.getElementById('fichaShowMonitor');
-  if(showMon&&showMon.checked&&cinemesArr.length){
-    var cinInfo=cinemesArr.find(function(c){return c.nome===s.cinema;});
+  if(cinemesArr.length){
+    var cinInfo=cinemesArr.find(function(c){return c.nome===s.cinema&&c.evento===s.evento;})
+      ||cinemesArr.find(function(c){return c.nome===s.cinema;});
     if(cinInfo&&cinInfo.monitoresNomes){
       var monContato=cinInfo.monitoresContatos?'<div class="meta-value" style="font-size:10px;font-weight:400;color:var(--text-dim);">'+cinInfo.monitoresContatos+'</div>':'';
       monInfo='<div class="meta-item"><div class="meta-label">Monitor</div><div class="meta-value">'+cinInfo.monitoresNomes+'</div>'+monContato+'</div>';
