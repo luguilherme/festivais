@@ -1024,5 +1024,24 @@
     "monitoresNomes": "Beatriz",
     "monitoresContatos": "21 998351920",
     "obs": ""
+  },
+  {
+    "evento": "CC2025",
+    "nome": "Estação Net Botafogo 1",
+    "complexo": "Estação Net Botafogo",
+    "servidor": "IMS2000",
+    "projetor": "DP2K-19B",
+    "serial": "314601",
+    "somSistema": "7.1",
+    "proporcao": "2.3",
+    "capacidade": "250",
+    "acessiveis": "",
+    "cineassist": false,
+    "horario": "",
+    "datas": "",
+    "contatos": "",
+    "monitoresNomes": "Beatriz",
+    "monitoresContatos": "21 98142-6764",
+    "obs": "conta com gaveta CRU"
   }
 ]
