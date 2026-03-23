@@ -2167,17 +2167,23 @@ function applyRole(role, skipEventosReset){
 }
 
 async function ghReadFile(filename){
-  // Get SHA via API (needed for writes)
+  // Single request: SHA + raw content via Accept header
   var r=await fetch('https://api.github.com/repos/'+GH.user+'/'+GH.repo+'/contents/data/'+filename,
-    {headers:{Authorization:'token '+currentUser.token}});
+    {headers:{
+      Authorization:'token '+currentUser.token,
+      Accept:'application/vnd.github.v3.json'
+    }});
   if(!r.ok)throw new Error('Erro ao ler '+filename+' ('+r.status+')');
   var meta=await r.json();
   var sha=meta.sha;
-  // Get content via raw URL — always returns full file, no size limit
-  var raw=await fetch('https://raw.githubusercontent.com/'+GH.user+'/'+GH.repo+'/'+GH.branch+'/data/'+filename+'?t='+Date.now(),
-    {headers:{Authorization:'token '+currentUser.token}});
-  if(!raw.ok)throw new Error('Erro ao ler conteúdo de '+filename);
-  var content=await raw.json();
+  // Fetch raw content separately using raw accept type
+  var r2=await fetch('https://api.github.com/repos/'+GH.user+'/'+GH.repo+'/contents/data/'+filename,
+    {headers:{
+      Authorization:'token '+currentUser.token,
+      Accept:'application/vnd.github.v3.raw'
+    }});
+  if(!r2.ok)throw new Error('Erro ao ler conteúdo de '+filename+' ('+r2.status+')');
+  var content=await r2.json();
   return{sha:sha,content:content};
 }
 
