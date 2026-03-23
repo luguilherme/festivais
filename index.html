@@ -788,7 +788,7 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
           </div>
           <div class="form-field">
             <label class="form-label">Complexo</label>
-            <input class="form-input" id="cfComplexo" type="text" placeholder="ex: Estação Net">
+            <input class="form-input" id="cfComplexo" type="text" placeholder="ex: Estação Net" onchange="populateCinemaMonitorDropdown()">
           </div>
           <div class="form-field">
             <label class="form-label">Servidor</label>
@@ -830,22 +830,23 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
             <input class="form-input" id="cfHorario" type="text" placeholder="ex: 10h–23h">
           </div>
           <div class="form-field wide">
-            <label class="form-label">Datas de uso</label>
-            <input class="form-input" id="cfDatas" type="text" placeholder="ex: 03/10–05/10, 08/10">
-          </div>
-          <div class="form-field wide">
             <label class="form-label">Contatos</label>
             <input class="form-input" id="cfContatos" type="text" placeholder="Nome ou telefone de contato da sala">
           </div>
           <div class="form-field wide">
+            <label class="form-label">Monitor</label>
+            <select class="form-select" id="cfMonitorSelect" onchange="cinemaMonitorSelected()">
+              <option value="">— selecionar evento/complexo primeiro —</option>
+            </select>
+            <div style="font-family:var(--mono);font-size:9px;color:var(--text-muted);margin-top:3px;">Filtrado por complexo da sala</div>
+          </div>
+          <div class="form-field wide">
             <label class="form-label">Monitores — nomes</label>
-            <input class="form-input" id="cfMonitoresNomes" type="text" placeholder="ex: Ana / Carlos" list="cfMonitoresNomesList">
-            <datalist id="cfMonitoresNomesList"></datalist>
-            <div style="font-family:var(--mono);font-size:9px;color:var(--text-muted);margin-top:3px;">Separar múltiplos com " / "</div>
+            <input class="form-input" id="cfMonitoresNomes" type="text" placeholder="Preenchido ao selecionar monitor acima">
           </div>
           <div class="form-field wide">
             <label class="form-label">Monitores — contatos</label>
-            <input class="form-input" id="cfMonitoresContatos" type="text" placeholder="ex: 21 99999-9999 / 21 88888-8888">
+            <input class="form-input" id="cfMonitoresContatos" type="text" placeholder="Preenchido automaticamente">
           </div>
           <div class="form-field wide">
             <label class="form-label">Observações</label>
@@ -887,8 +888,8 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
             <input class="form-input" id="efFuncao" type="text" placeholder="ex: projeção, monitor">
           </div>
           <div class="form-field">
-            <label class="form-label">Cinema</label>
-            <select class="form-select" id="efCinema">
+            <label class="form-label">Complexo</label>
+            <select class="form-select" id="efComplexo">
               <option value="">— selecionar evento primeiro —</option>
             </select>
           </div>
@@ -1563,7 +1564,7 @@ function buildEquipeFilters(){
   // normalize funcao to lowercase for case-insensitive grouping
   var funcoes=uniqueSorted(equipeArr.filter(function(p){return eventoVisible(p.evento);})
     .map(function(p){return(p.funcao||'').toLowerCase();}).filter(Boolean));
-  var cinemas=uniqueSorted(equipeArr.filter(function(p){return eventoVisible(p.evento);}).map(function(p){return p.cinema;}).filter(Boolean));
+  var cinemas=uniqueSorted(equipeArr.filter(function(p){return eventoVisible(p.evento);}).map(function(p){return p.complexo||p.cinema;}).filter(Boolean));
   var selFu=document.getElementById('equipeFuncaoFilter');
   var prevFu=selFu.value;
   selFu.innerHTML='<option value="">— todas funções —</option>';
@@ -1583,7 +1584,7 @@ function renderEquipe(){
   var filtered=equipeArr.filter(function(p){
     if(!eventoVisible(p.evento))return false;
     if(fuF&&(p.funcao||'').toLowerCase()!==fuF)return false;
-    if(ciF&&p.cinema!==ciF)return false;
+    if(ciF&&(p.complexo||p.cinema)!==ciF)return false;
     return true;
   });
   document.getElementById('equipeCount').textContent=filtered.length+' membro'+(filtered.length!==1?'s':'');
@@ -1592,17 +1593,16 @@ function renderEquipe(){
     return;
   }
   var html='<table class="equipe-table"><thead><tr>'
-    +'<th>Nome</th><th>Função</th><th>Cinema</th><th>Telefone</th><th>Email</th><th>Evento</th><th></th>'
+    +'<th>Nome</th><th>Função</th><th>Complexo</th><th>Telefone</th><th>Email</th><th>Evento</th><th></th>'
     +'</tr></thead><tbody>';
   filtered.forEach(function(p,idx){
     var col=eventColors[p.evento]||null;
     var evBadge=col?'<span class="eq-evento" style="background:'+col.bg+';color:'+col.text+';">'+p.evento+'</span>':p.evento||'—';
-    // find original index in equipeArr
     var origIdx=equipeArr.indexOf(p);
     html+='<tr>';
     html+='<td class="eq-nome">'+p.nome+'</td>';
     html+='<td class="eq-funcao">'+(p.funcao||'—')+'</td>';
-    html+='<td class="eq-cinema">'+(p.cinema||'—')+'</td>';
+    html+='<td class="eq-cinema">'+(p.complexo||p.cinema||'—')+'</td>';
     html+='<td class="eq-contato">'+(p.telefone||'—')+'</td>';
     html+='<td class="eq-contato">'+(p.email||'—')+'</td>';
     html+='<td>'+evBadge+'</td>';
@@ -1622,10 +1622,12 @@ function buildGradeDays(){
   var datesMap={};
   sessFilt.forEach(function(s){if(s.date){var k=s.date.getTime();if(!datesMap[k])datesMap[k]=s;}});
   days=Object.values(datesMap).sort(function(a,b){return a.date-b.date;});
-  currentDay=days.length?days[0].date:null;
+  // default to most recent date
+  currentDay=days.length?days[days.length-1].date:null;
   var container=document.getElementById('dayTabs');container.innerHTML='';
   var byYear={};days.forEach(function(d){var y=d.date.getFullYear();if(!byYear[y])byYear[y]=[];byYear[y].push(d);});
   var years=Object.keys(byYear).sort();
+  var mostRecentYear=years.length?years[years.length-1]:null;
   if(years.length>1){
     years.forEach(function(y){
       var yBtn=document.createElement('button');
@@ -1639,10 +1641,17 @@ function buildGradeDays(){
         btn.dataset.ts=d.date.getTime();
         btn.textContent=d.date.toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'2-digit'});
         btn.onclick=function(){selectDay(d.date);};
+        // hide non-recent years by default
+        btn.style.display=(y===mostRecentYear)?'inline-flex':'none';
         container.appendChild(btn);
       });
+      // open most recent year by default
+      if(y===mostRecentYear){
+        yBtn.classList.add('open');
+        window._gradeYearsOpen=y;
+      }
     });
-    if(days.length>0)selectDay(days[0].date);
+    if(days.length>0)selectDay(days[days.length-1].date);
   }else{
     days.forEach(function(d){
       var btn=document.createElement('button');
@@ -1651,7 +1660,7 @@ function buildGradeDays(){
       btn.onclick=function(){selectDay(d.date);};
       container.appendChild(btn);
     });
-    if(days.length>0)selectDay(days[0].date);
+    if(days.length>0)selectDay(days[days.length-1].date);
   }
 }
 function toggleYear(y){
@@ -2316,13 +2325,38 @@ function closeCinemaForm(){
 }
 
 function cinemaEventoChanged(){
+  populateCinemaMonitorDropdown();
+}
+
+function populateCinemaMonitorDropdown(){
   var evento=document.getElementById('cfEvento').value;
-  var dl=document.getElementById('cfMonitoresNomesList');
-  dl.innerHTML='';
-  if(evento){
-    equipeArr.filter(function(p){return p.evento===evento;}).forEach(function(p){
-      var opt=document.createElement('option');opt.value=p.nome;dl.appendChild(opt);
+  var complexo=document.getElementById('cfComplexo').value;
+  var sel=document.getElementById('cfMonitorSelect');
+  sel.innerHTML='<option value="">— sem monitor —</option>';
+  if(evento&&complexo){
+    // get equipe members linked to this complexo+evento
+    equipeArr.filter(function(p){
+      return p.evento===evento&&p.complexo===complexo;
+    }).forEach(function(p){
+      sel.innerHTML+='<option value="'+p.nome+'" data-tel="'+(p.telefone||'')+'">'+p.nome+(p.funcao?' ('+p.funcao+')':'')+'</option>';
     });
+  } else if(evento){
+    // fallback: all equipe of the event
+    equipeArr.filter(function(p){return p.evento===evento;}).forEach(function(p){
+      sel.innerHTML+='<option value="'+p.nome+'" data-tel="'+(p.telefone||'')+'">'+p.nome+(p.funcao?' ('+p.funcao+')':'')+'</option>';
+    });
+  }
+}
+
+function cinemaMonitorSelected(){
+  var sel=document.getElementById('cfMonitorSelect');
+  var opt=sel.options[sel.selectedIndex];
+  if(opt&&opt.value){
+    document.getElementById('cfMonitoresNomes').value=opt.value;
+    document.getElementById('cfMonitoresContatos').value=opt.getAttribute('data-tel')||'';
+  } else {
+    document.getElementById('cfMonitoresNomes').value='';
+    document.getElementById('cfMonitoresContatos').value='';
   }
 }
 
@@ -2460,8 +2494,7 @@ function openEquipeForm(idx){
     document.getElementById('efFuncao').value=p.funcao||'';
     document.getElementById('efTelefone').value=p.telefone||'';
     document.getElementById('efEmail').value=p.email||'';
-    // cinema set after dropdown built
-    setTimeout(function(){document.getElementById('efCinema').value=p.cinema||'';},50);
+    setTimeout(function(){document.getElementById('efComplexo').value=p.complexo||p.cinema||'';},50);
   } else {
     // pre-select first active event if only one
     if(evts.length===1)sel.value=evts[0];
@@ -2485,11 +2518,19 @@ function closeEquipeForm(){
 
 function equipeEventoChanged(){
   var evento=document.getElementById('efEvento').value;
-  var sel=document.getElementById('efCinema');
+  var sel=document.getElementById('efComplexo');
   sel.innerHTML='<option value="">— nenhum —</option>';
   if(evento){
-    var salas=cinemesArr.filter(function(c){return c.evento===evento;}).map(function(c){return c.nome;}).sort();
-    salas.forEach(function(s){sel.innerHTML+='<option value="'+s+'">'+s+'</option>';});
+    // get unique complexos for this event from cinemesArr
+    var complexos=uniqueSorted(cinemesArr
+      .filter(function(c){return c.evento===evento&&c.complexo;})
+      .map(function(c){return c.complexo;}));
+    complexos.forEach(function(cx){sel.innerHTML+='<option value="'+cx+'">'+cx+'</option>';});
+    // also add sala names that have no complexo
+    var semComplexo=uniqueSorted(cinemesArr
+      .filter(function(c){return c.evento===evento&&!c.complexo;})
+      .map(function(c){return c.nome;}));
+    semComplexo.forEach(function(n){sel.innerHTML+='<option value="'+n+'">'+n+' (sem complexo)</option>';});
   }
 }
 
@@ -2503,7 +2544,7 @@ function duplicateEquipeMembro(idx){
     setTimeout(function(){
       document.getElementById('efNome').value=p.nome||'';
       document.getElementById('efFuncao').value=p.funcao||'';
-      document.getElementById('efCinema').value=p.cinema||'';
+      document.getElementById('efComplexo').value=p.complexo||p.cinema||'';
       document.getElementById('efTelefone').value=p.telefone||'';
       document.getElementById('efEmail').value=p.email||'';
       document.getElementById('equipeFormTitle').textContent='Duplicar membro';
@@ -2525,7 +2566,7 @@ async function saveEquipeMembro(){
     evento:evento,
     nome:nome,
     funcao:document.getElementById('efFuncao').value.trim(),
-    cinema:document.getElementById('efCinema').value.trim(),
+    complexo:document.getElementById('efComplexo').value.trim(),
     telefone:document.getElementById('efTelefone').value.trim(),
     email:document.getElementById('efEmail').value.trim(),
   };
