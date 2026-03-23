@@ -2300,7 +2300,7 @@ function openCinemaForm(idx){
     document.getElementById('cfAcessiveis').value=c.acessiveis||'';
     document.getElementById('cfCineassist').value=c.cineassist?'true':'false';
     document.getElementById('cfHorario').value=c.horario||'';
-    document.getElementById('cfDatas').value=c.datas||'';
+    
     document.getElementById('cfContatos').value=c.contatos||'';
     document.getElementById('cfMonitoresNomes').value=c.monitoresNomes||'';
     document.getElementById('cfMonitoresContatos').value=c.monitoresContatos||'';
@@ -2309,7 +2309,7 @@ function openCinemaForm(idx){
     if(evts.length===1)sel.value=evts[0];
     cinemaEventoChanged();
     ['cfNome','cfComplexo','cfServidor','cfProjetor','cfSerial','cfSom','cfProporcao',
-     'cfHorario','cfDatas','cfContatos','cfMonitoresNomes','cfMonitoresContatos','cfObs']
+     'cfHorario','cfContatos','cfMonitoresNomes','cfMonitoresContatos','cfObs']
     .forEach(function(id){document.getElementById(id).value='';});
     document.getElementById('cfCapacidade').value='';
     document.getElementById('cfAcessiveis').value='';
@@ -2378,7 +2378,7 @@ function duplicateCinema(idx){
       document.getElementById('cfAcessiveis').value=c.acessiveis||'';
       document.getElementById('cfCineassist').value=c.cineassist?'true':'false';
       document.getElementById('cfHorario').value=c.horario||'';
-      document.getElementById('cfDatas').value=c.datas||'';
+      
       document.getElementById('cfContatos').value=c.contatos||'';
       document.getElementById('cfMonitoresNomes').value=c.monitoresNomes||'';
       document.getElementById('cfMonitoresContatos').value=c.monitoresContatos||'';
@@ -2406,7 +2406,7 @@ async function saveCinema(){
     acessiveis:document.getElementById('cfAcessiveis').value||'',
     cineassist:document.getElementById('cfCineassist').value==='true',
     horario:document.getElementById('cfHorario').value.trim(),
-    datas:document.getElementById('cfDatas').value.trim(),
+    datas:'',
     contatos:document.getElementById('cfContatos').value.trim(),
     monitoresNomes:document.getElementById('cfMonitoresNomes').value.trim(),
     monitoresContatos:document.getElementById('cfMonitoresContatos').value.trim(),
