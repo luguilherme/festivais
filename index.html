@@ -655,6 +655,8 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
   <button class="print-btn print-btn-pb" onclick="printModulePB()">⎙ PB</button>
 </div>
 <div class="mode-bar hidden" id="barAcervo">
+  <button class="print-btn" id="btnNovoFilme" onclick="openFilmeForm(null)" style="display:none;">+ Novo filme</button>
+  <div class="bar-sep" id="acervoNewSep" style="display:none;"></div>
   <div class="search-wrap">
     <input type="text" id="searchInput" placeholder="título, código, CPL, idioma…" disabled>
     <button class="search-clear" id="searchClear">×</button>
@@ -766,6 +768,134 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
 
   <!-- ACERVO -->
   <div class="mode-panel" id="acervo-panel">
+    <!-- FORM -->
+    <div id="filmeForm" style="display:none;">
+      <div class="form-panel">
+        <div class="form-panel-title" id="filmeFormTitle">Novo filme</div>
+        <button class="form-close" onclick="closeFilmeForm()">×</button>
+        <div class="form-grid">
+          <!-- ADMIN ONLY: evento + codigo -->
+          <div class="form-field" id="ffEventoField">
+            <label class="form-label">Evento</label>
+            <select class="form-select" id="ffEvento"><option value="">— selecionar —</option></select>
+          </div>
+          <div class="form-field" id="ffCodigoField">
+            <label class="form-label">Código<span>*</span></label>
+            <input class="form-input" id="ffCodigo" type="text" placeholder="ex: PB08" style="text-transform:uppercase;" oninput="this.value=this.value.toUpperCase()">
+          </div>
+          <!-- PROG/PROD + ADMIN: título -->
+          <div class="form-field" id="ffTituloField">
+            <label class="form-label">Título</label>
+            <input class="form-input" id="ffTitulo" type="text" placeholder="Título do filme">
+          </div>
+          <!-- ADMIN only: HD -->
+          <div class="form-field" id="ffHdField">
+            <label class="form-label">HD</label>
+            <input class="form-input" id="ffHd" type="text" placeholder="ex: CANCELADO">
+          </div>
+          <!-- EVERYONE: idioma, legDCP, mostra, vf, linkDCP, legTrans, kdm -->
+          <div class="form-field" id="ffIdiomaField">
+            <label class="form-label">Idioma</label>
+            <input class="form-input" id="ffIdioma" type="text" placeholder="ex: Português">
+          </div>
+          <div class="form-field" id="ffLegDCPField">
+            <label class="form-label">Leg DCP</label>
+            <input class="form-input" id="ffLegDCP" type="text" placeholder="ex: Português">
+          </div>
+          <div class="form-field" id="ffMostraField">
+            <label class="form-label">Mostra</label>
+            <input class="form-input" id="ffMostra" type="text" placeholder="ex: Competição">
+          </div>
+          <div class="form-field" id="ffVfField">
+            <label class="form-label">VF</label>
+            <input class="form-input" id="ffVf" type="text" placeholder="ex: Espanhol">
+          </div>
+          <div class="form-field" id="ffKdmField">
+            <label class="form-label">KDM</label>
+            <select class="form-select" id="ffKdm">
+              <option value="">—</option>
+              <option value="esperado">Esperado</option>
+              <option value="sim">Sim</option>
+              <option value="não">Não</option>
+            </select>
+          </div>
+          <div class="form-field wide" id="ffLinkDCPField">
+            <label class="form-label">Link DCP</label>
+            <input class="form-input" id="ffLinkDCP" type="text" placeholder="URL ou localização">
+          </div>
+          <div class="form-field wide" id="ffLegTransField">
+            <label class="form-label">Legenda / Transcrição</label>
+            <input class="form-input" id="ffLegTrans" type="text" placeholder="Caminho ou info da legenda">
+          </div>
+          <!-- PROJEÇÃO + ADMIN: campos técnicos -->
+          <div class="form-field" id="ffStatusField">
+            <label class="form-label">Status</label>
+            <select class="form-select" id="ffStatus">
+              <option value=""></option>
+              <option>DCP OK</option><option>DCP LG</option>
+              <option>AGUARDANDO</option><option>LINK PARA DOWNLOAD</option>
+              <option>ERRO</option><option>CANCELADO</option><option>CAIU</option>
+            </select>
+          </div>
+          <div class="form-field" id="ffStatusLegField">
+            <label class="form-label">Status Legenda</label>
+            <select class="form-select" id="ffStatusLeg">
+              <option value=""></option>
+              <option>OK</option>
+              <option>PRECISA DE ELETRÔNICA</option>
+            </select>
+          </div>
+          <div class="form-field" id="ffLenteField">
+            <label class="form-label">Lente</label>
+            <select class="form-select" id="ffLente">
+              <option value=""></option>
+              <option>FLAT</option><option>SCOPE</option>
+            </select>
+          </div>
+          <div class="form-field" id="ffSomField">
+            <label class="form-label">Som DCP</label>
+            <input class="form-input" id="ffSom" type="text" placeholder="ex: 5.1, 7.1, Atmos">
+          </div>
+          <div class="form-field" id="ffResolucaoField">
+            <label class="form-label">Resolução</label>
+            <input class="form-input" id="ffResolucao" type="text" placeholder="ex: 2K, 4K">
+          </div>
+          <div class="form-field" id="ffFpsField">
+            <label class="form-label">FPS</label>
+            <input class="form-input" id="ffFps" type="text" placeholder="ex: 24, 48">
+          </div>
+          <div class="form-field" id="ffDuracaoField">
+            <label class="form-label">Duração</label>
+            <input class="form-input" id="ffDuracao" type="text" placeholder="ex: 1:45">
+          </div>
+          <div class="form-field" id="ffGbField">
+            <label class="form-label">Tamanho (GB)</label>
+            <input class="form-input" id="ffGb" type="text" placeholder="ex: 180">
+          </div>
+          <div class="form-field" id="ffCreatorField">
+            <label class="form-label">Creator</label>
+            <input class="form-input" id="ffCreator" type="text" placeholder="ex: DCP-o-matic">
+          </div>
+          <div class="form-field wide" id="ffCplField">
+            <label class="form-label">CPL</label>
+            <input class="form-input" id="ffCpl" type="text" placeholder="Nome do CPL">
+          </div>
+          <div class="form-field wide" id="ffCplOVField">
+            <label class="form-label">CPL OV</label>
+            <input class="form-input" id="ffCplOV" type="text" placeholder="Nome do CPL OV">
+          </div>
+          <div class="form-field wide" id="ffObsField">
+            <label class="form-label">Observações</label>
+            <input class="form-input" id="ffObs" type="text" placeholder="Informações adicionais">
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="form-save-btn" id="filmeFormSaveBtn" onclick="saveFilme()">Salvar</button>
+          <button class="form-cancel-btn" onclick="closeFilmeForm()">Cancelar</button>
+          <span class="form-status" id="filmeFormStatus"></span>
+        </div>
+      </div>
+    </div>
     <div class="empty-state" id="buscaEmpty"><div class="icon">🎬</div><p>Digite para buscar filmes.</p></div>
     <div class="empty-state" id="buscaLoading" style="display:none"><div class="icon" style="animation:spin 1s linear infinite;display:inline-block">⟳</div><p>Carregando…</p></div>
     <div id="busca-results" style="display:none"></div>
@@ -1354,6 +1484,7 @@ function switchMode(mode){
   });
   if(mode==='dashboard')renderDashboard();
   if(mode==='acervo'){
+    updateAcervoButtons();
     var bl=document.getElementById('buscaLoading'),be=document.getElementById('buscaEmpty'),br=document.getElementById('busca-results');
     bl.style.display='flex';be.style.display='none';br.style.display='none';
     document.getElementById('searchInput').focus();
@@ -2211,7 +2342,8 @@ function renderBuscaResults(){
     var cplPanel=cpl?'<div class="card-cpl"><div class="cpl-label">CPL</div><div class="cpl-value">'+hl(cpl,acervoQuery)+'</div><div class="cpl-sub">'+(fps?fps+'fps ':'')+(gb?gb+' GB':'')+'</div>'+cplOVRow+'</div>':cplOV?'<div class="card-cpl"><div class="cpl-ov-row" style="margin:0;padding:0;border:none"><div class="cpl-ov-label">CPL OV</div><div class="cpl-ov-value">'+hl(cplOV,acervoQuery)+'</div></div></div>':'';
     var sessRow=sess.length?'<div class="card-sessions"><span class="sessions-label">Sessões&nbsp;</span>'+sess.map(function(sn){return'<span class="session-tag" onclick="goToFicha(\''+sn.replace(/'/g,"\\'")+'\')" title="Ficha: '+sn+'">'+sn+'</span>';}).join('')+'</div>':'';
     var mostraTag=f.mostra?'<span class="card-evento" style="background:rgba(255,255,255,0.07);color:var(--text-dim);">'+f.mostra+'</span>':'';
-    return'<div class="film-card" id="bcard-'+idx+'" style="border-left-color:'+(col?col.bg:'var(--border)')+'"><div><div class="card-main"><div class="card-top"><span class="card-titulo-wrap" onclick="toggleExpand('+idx+')"><span class="card-titulo">'+hl(f.titulo||f.codigo,acervoQuery)+'</span><span class="expand-toggle">▶</span></span><span class="card-codigo">'+hl(f.codigo,acervoQuery)+'</span>'+(f.evento&&col?'<span class="card-evento" style="background:'+col.bg+';color:'+col.text+'">'+f.evento+'</span>':'')+mostraTag+statusBadge(f.status)+kdmTag+'</div><div class="card-meta">'+lenteBadge(clean(f.lente))+' '+somBadge(clean(f.som))+(hd?'<div class="meta-tag"><span class="label">HD</span>'+hl(hd,acervoQuery)+'</div>':'')+(f.idioma?'<div class="meta-tag"><span class="label">Idioma</span>'+hl(f.idioma,acervoQuery)+'</div>':'')+(legStr?'<div class="meta-tag"><span class="label">Leg</span>'+hl(legStr,acervoQuery)+'</div>':'')+(dur&&dur!=='—'?'<div class="meta-tag"><span class="label">Dur</span>'+dur+'</div>':'')+resTag+'</div>'+(obs?'<div class="card-obs">'+hl(obs,acervoQuery)+'</div>':'')+'</div>'+sessRow+'<div class="card-expand" data-lazy="1"></div></div>'+cplPanel+'</div>';
+    var editBtn='<button class="form-cancel-btn" style="padding:3px 10px;font-size:9px;margin-left:auto;flex-shrink:0;" onclick="event.stopPropagation();openFilmeForm(\''+f.codigo.replace(/'/g,"\\'")+'\')" >Editar</button>';
+    return'<div class="film-card" id="bcard-'+idx+'" style="border-left-color:'+(col?col.bg:'var(--border)')+'"><div><div class="card-main"><div class="card-top"><span class="card-titulo-wrap" onclick="toggleExpand('+idx+')"><span class="card-titulo">'+hl(f.titulo||f.codigo,acervoQuery)+'</span><span class="expand-toggle">▶</span></span><span class="card-codigo">'+hl(f.codigo,acervoQuery)+'</span>'+(f.evento&&col?'<span class="card-evento" style="background:'+col.bg+';color:'+col.text+'">'+f.evento+'</span>':'')+mostraTag+statusBadge(f.status)+kdmTag+editBtn+'</div><div class="card-meta">'+lenteBadge(clean(f.lente))+' '+somBadge(clean(f.som))+(hd?'<div class="meta-tag"><span class="label">HD</span>'+hl(hd,acervoQuery)+'</div>':'')+(f.idioma?'<div class="meta-tag"><span class="label">Idioma</span>'+hl(f.idioma,acervoQuery)+'</div>':'')+(legStr?'<div class="meta-tag"><span class="label">Leg</span>'+hl(legStr,acervoQuery)+'</div>':'')+(dur&&dur!=='—'?'<div class="meta-tag"><span class="label">Dur</span>'+dur+'</div>':'')+resTag+'</div>'+(obs?'<div class="card-obs">'+hl(obs,acervoQuery)+'</div>':'')+'</div>'+sessRow+'<div class="card-expand" data-lazy="1"></div></div>'+cplPanel+'</div>';
   }).join('');
 }
 
@@ -2349,6 +2481,183 @@ function applyRole(role, skipEventosReset){
   }
   buildEventosPills();
   applyEventoFilter();
+}
+
+// ── FILME FORM ──
+var _filmeEditCodigo=null; // null = new
+
+// campos editáveis por papel na EDIÇÃO
+var FILME_PERM={
+  admin:    ['evento','codigo','hd','titulo','idioma','legDCP','mostra','vf','kdm','linkDCP','legTrans','lente','som','creator','status','statusLeg','obs','cpl','resolucao','duracao','gb','fps','cplOV'],
+  projecao: ['hd','idioma','legDCP','mostra','vf','kdm','linkDCP','legTrans','lente','som','creator','status','statusLeg','obs','cpl','resolucao','duracao','gb','fps','cplOV'],
+  programacao:['titulo','idioma','legDCP','mostra','vf','kdm','linkDCP','legTrans'],
+  producao:   ['titulo','idioma','legDCP','mostra','vf','kdm','linkDCP','legTrans'],
+};
+
+function canCreateFilme(){return currentRole==='admin'||currentRole==='programacao'||currentRole==='producao';}
+
+function applyFilmePermissions(isNew){
+  var allowed=isNew?Object.keys(filmePerm_allFields()):( FILME_PERM[currentRole]||[]);
+  var allFields=['evento','codigo','hd','titulo','idioma','legDCP','mostra','vf','kdm','linkDCP','legTrans','lente','som','creator','status','statusLeg','obs','cpl','resolucao','duracao','gb','fps','cplOV'];
+  allFields.forEach(function(k){
+    var el=document.getElementById('ff'+k.charAt(0).toUpperCase()+k.slice(1));
+    var field=document.getElementById('ff'+k.charAt(0).toUpperCase()+k.slice(1)+'Field');
+    var editable=isNew?canCreateFilme():allowed.indexOf(k)>=0;
+    if(el){el.disabled=!editable;el.style.opacity=editable?'1':'0.45';}
+    // hide evento+codigo fields for non-admin, never show codigo as editable in edit mode
+    if(k==='evento'||k==='codigo'){
+      var show=(currentRole==='admin')||(isNew&&canCreateFilme());
+      if(field)field.style.display=show?'':'none';
+    }
+    if(k==='hd'&&field)field.style.display=(currentRole==='admin'||currentRole==='projecao'||isNew)?'':'none';
+    if(field&&(k==='lente'||k==='som'||k==='creator'||k==='status'||k==='statusLeg'||k==='obs'||k==='cpl'||k==='resolucao'||k==='duracao'||k==='gb'||k==='fps'||k==='cplOV')){
+      if(!isNew)field.style.display=(currentRole==='admin'||currentRole==='projecao')?'':'none';
+      else field.style.display='';
+    }
+  });
+}
+
+function filmePerm_allFields(){
+  return {evento:1,codigo:1,hd:1,titulo:1,idioma:1,legDCP:1,mostra:1,vf:1,kdm:1,linkDCP:1,legTrans:1,lente:1,som:1,creator:1,status:1,statusLeg:1,obs:1,cpl:1,resolucao:1,duracao:1,gb:1,fps:1,cplOV:1};
+}
+
+function openFilmeForm(codigo){
+  _filmeEditCodigo=codigo;
+  var isNew=(codigo===null);
+  if(!isNew&&!canEditFilme())return;
+  if(isNew&&!canCreateFilme())return;
+  document.getElementById('filmeFormTitle').textContent=isNew?'Novo filme':'Editar filme';
+  document.getElementById('filmeFormStatus').textContent='';
+  document.getElementById('filmeFormStatus').className='form-status';
+
+  // populate evento dropdown
+  var sel=document.getElementById('ffEvento');
+  var evts=currentUser.papel==='admin'||!currentUser.eventos.length?Object.keys(eventColors):currentUser.eventos.filter(function(e){return eventColors[e];});
+  sel.innerHTML='<option value="">— selecionar —</option>';
+  evts.forEach(function(e){sel.innerHTML+='<option value="'+e+'">'+e+'</option>';});
+
+  if(!isNew){
+    var f=filmesMap[codigo];
+    if(!f)return;
+    document.getElementById('ffEvento').value=f.evento||'';
+    document.getElementById('ffCodigo').value=f.codigo||'';
+    document.getElementById('ffTitulo').value=f.titulo||'';
+    document.getElementById('ffHd').value=f.hd||'';
+    document.getElementById('ffIdioma').value=f.idioma||'';
+    document.getElementById('ffLegDCP').value=f.legenda||'';
+    document.getElementById('ffMostra').value=f.mostra||'';
+    document.getElementById('ffVf').value=f.vf||'';
+    document.getElementById('ffKdm').value=f.kdm||'';
+    document.getElementById('ffLinkDCP').value=f.linkDCP||'';
+    document.getElementById('ffLegTrans').value=f.legTrans||'';
+    document.getElementById('ffLente').value=f.lente||'';
+    document.getElementById('ffSom').value=f.som||'';
+    document.getElementById('ffCreator').value=f.creator||'';
+    document.getElementById('ffStatus').value=f.status||'';
+    document.getElementById('ffStatusLeg').value=f.statusLeg||'';
+    document.getElementById('ffObs').value=f.obs||'';
+    document.getElementById('ffCpl').value=f.cpl||'';
+    document.getElementById('ffResolucao').value=f.resolucao||'';
+    document.getElementById('ffDuracao').value=f.duracao||'';
+    document.getElementById('ffGb').value=f.gb||'';
+    document.getElementById('ffFps').value=f.fps||'';
+    document.getElementById('ffCplOV').value=f.cplOV||'';
+  } else {
+    ['ffCodigo','ffTitulo','ffHd','ffIdioma','ffLegDCP','ffMostra','ffVf','ffLinkDCP','ffLegTrans','ffLente','ffSom','ffCreator','ffObs','ffCpl','ffResolucao','ffDuracao','ffGb','ffFps','ffCplOV'].forEach(function(id){document.getElementById(id).value='';});
+    document.getElementById('ffKdm').value='';
+    document.getElementById('ffStatus').value='';
+    document.getElementById('ffStatusLeg').value='';
+    if(evts.length===1)sel.value=evts[0];
+  }
+
+  applyFilmePermissions(isNew);
+  document.getElementById('filmeForm').style.display='block';
+  document.getElementById('filmeForm').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function canEditFilme(){return true;} // all roles can edit (permissions applied per field)
+
+function closeFilmeForm(){
+  document.getElementById('filmeForm').style.display='none';
+  _filmeEditCodigo=null;
+}
+
+async function saveFilme(){
+  var btn=document.getElementById('filmeFormSaveBtn');
+  var status=document.getElementById('filmeFormStatus');
+  var isNew=(_filmeEditCodigo===null);
+  var codigo=(isNew?document.getElementById('ffCodigo').value:_filmeEditCodigo).trim().toUpperCase();
+  if(!codigo){status.textContent='Código é obrigatório.';status.className='form-status err';return;}
+  if(isNew&&filmesMap[codigo]){status.textContent='Código "'+codigo+'" já existe.';status.className='form-status err';return;}
+
+  // build updated film — start from existing if editing
+  var base=isNew?{}:Object.assign({},filmesMap[codigo]);
+  var allowed=isNew?Object.keys(filmePerm_allFields()):(FILME_PERM[currentRole]||[]);
+
+  function fv(id){return document.getElementById(id).value.trim();}
+  var updates={
+    evento:fv('ffEvento'),codigo:codigo,hd:fv('ffHd'),titulo:fv('ffTitulo'),
+    idioma:fv('ffIdioma'),legenda:fv('ffLegDCP'),mostra:fv('ffMostra'),vf:fv('ffVf'),
+    kdm:fv('ffKdm'),linkDCP:fv('ffLinkDCP'),legTrans:fv('ffLegTrans'),
+    lente:fv('ffLente'),som:fv('ffSom'),creator:fv('ffCreator'),
+    status:fv('ffStatus'),statusLeg:fv('ffStatusLeg'),obs:fv('ffObs'),
+    cpl:fv('ffCpl'),resolucao:fv('ffResolucao'),duracao:fv('ffDuracao'),
+    gb:fv('ffGb'),fps:fv('ffFps'),cplOV:fv('ffCplOV'),
+  };
+
+  // build final object respecting permissions
+  var filme=Object.assign({},base);
+  Object.keys(updates).forEach(function(k){
+    if(isNew||allowed.indexOf(k)>=0||k==='codigo')filme[k]=updates[k];
+  });
+  // map internal names back to JSON field names
+  var jsonFilme={
+    evento:filme.evento||'',codigo:filme.codigo||'',hd:filme.hd||'',titulo:filme.titulo||'',
+    idioma:filme.idioma||'',legDCP:filme.legenda||'',mostra:filme.mostra||'',vf:filme.vf||'',
+    lente:filme.lente||'',somDCP:filme.som||'',creator:filme.creator||'',kdm:filme.kdm||'',
+    status:filme.status||'',statusLeg:filme.statusLeg||'',obs:filme.obs||'',cpl:filme.cpl||'',
+    resolucao:filme.resolucao||'',duracao:filme.duracao||'',dcpsize:filme.gb||'',
+    fps:filme.fps||'',cplOV:filme.cplOV||'',linkDCP:filme.linkDCP||'',legTrans:filme.legTrans||'',
+  };
+
+  btn.disabled=true;status.textContent='Salvando…';status.className='form-status';
+  try{
+    var file=await ghReadFile('filmes.json');
+    if(isNew){
+      file.content.push(jsonFilme);
+    } else {
+      var idx=file.content.findIndex(function(f){return f.codigo===codigo;});
+      if(idx>=0)file.content[idx]=jsonFilme;else file.content.push(jsonFilme);
+    }
+    var msg=(isNew?'Insere ':'Atualiza ')+codigo+' — '+(jsonFilme.evento||'')+ ' ['+currentUser.email+']';
+    await ghWriteFile('filmes.json',file.content,file.sha,msg);
+    // update local
+    var localFilme={
+      evento:jsonFilme.evento,codigo:jsonFilme.codigo,hd:jsonFilme.hd,titulo:jsonFilme.titulo,
+      idioma:jsonFilme.idioma,legenda:jsonFilme.legDCP,mostra:jsonFilme.mostra,vf:jsonFilme.vf,
+      lente:jsonFilme.lente,som:jsonFilme.somDCP,creator:jsonFilme.creator,kdm:jsonFilme.kdm,
+      status:jsonFilme.status,statusLeg:jsonFilme.statusLeg,obs:jsonFilme.obs,cpl:jsonFilme.cpl,
+      resolucao:jsonFilme.resolucao,duracao:jsonFilme.duracao,gb:jsonFilme.dcpsize,
+      fps:jsonFilme.fps,cplOV:jsonFilme.cplOV,linkDCP:jsonFilme.linkDCP,legTrans:jsonFilme.legTrans,
+    };
+    filmesMap[codigo]=localFilme;
+    if(isNew)filmesArr.push(localFilme);
+    status.textContent='✓ Salvo';status.className='form-status ok';
+    setTimeout(closeFilmeForm,800);
+    renderBuscaResults();
+  }catch(e){
+    status.textContent=e.message||'Erro ao salvar.';status.className='form-status err';
+  }
+  btn.disabled=false;
+}
+
+// show/hide novo filme button based on role
+function updateAcervoButtons(){
+  var show=canCreateFilme();
+  var btn=document.getElementById('btnNovoFilme');
+  var sep=document.getElementById('acervoNewSep');
+  if(btn)btn.style.display=show?'inline-flex':'none';
+  if(sep)sep.style.display=show?'block':'none';
 }
 
 // ── SESSAO FORM ──
