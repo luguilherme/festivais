@@ -119,12 +119,12 @@ select.bar-select:disabled{opacity:0.35;cursor:not-allowed;}
 .mode-tab.active{background:var(--accent);color:#000;border-color:var(--accent);}
 
 /* ── LANDING ── */
-#landing{height:calc(100vh - 72px - 58px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 40px;overflow:hidden;}
-.landing-badge{font-family:var(--mono);font-size:8px;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;border:1px solid rgba(232,160,32,0.3);padding:4px 14px;}
-.landing-title{font-family:var(--mono);font-size:44px;font-weight:600;color:var(--text);letter-spacing:-0.02em;line-height:1;margin-bottom:4px;text-align:center;}
-.landing-version{font-family:var(--mono);font-size:9px;letter-spacing:0.2em;color:var(--text-muted);text-align:center;margin-bottom:6px;}
-.landing-sub{font-family:var(--sans);font-size:12px;font-weight:300;color:var(--text-dim);text-align:center;line-height:1.6;margin-bottom:24px;max-width:400px;}
-.landing-drop{border:1px dashed rgba(232,160,32,0.35);background:var(--accent-glow);padding:18px 40px;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;transition:all 0.2s;margin-bottom:24px;min-width:320px;}
+#landing{height:calc(100vh - 72px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px 40px;overflow:hidden;}
+.landing-badge{font-family:var(--mono);font-size:8px;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;border:1px solid rgba(232,160,32,0.3);padding:4px 14px;}
+.landing-title{font-family:var(--mono);font-size:44px;font-weight:600;color:var(--text);letter-spacing:-0.02em;line-height:1;margin-bottom:3px;text-align:center;}
+.landing-version{font-family:var(--mono);font-size:9px;letter-spacing:0.2em;color:var(--text-muted);text-align:center;margin-bottom:4px;}
+.landing-sub{font-family:var(--sans);font-size:12px;font-weight:300;color:var(--text-dim);text-align:center;line-height:1.6;margin-bottom:14px;max-width:400px;}
+.landing-drop{border:1px dashed rgba(232,160,32,0.35);background:var(--accent-glow);padding:14px 36px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;transition:all 0.2s;margin-bottom:16px;min-width:300px;}
 .landing-drop:hover:not(.loaded){border-color:rgba(232,160,32,0.65);background:var(--accent-dim);}
 .landing-drop.drag-over{border-color:var(--accent);background:var(--accent-dim);}
 .landing-drop.loaded{border-style:solid;border-color:rgba(61,186,110,0.45);background:rgba(61,186,110,0.06);cursor:default;}
@@ -132,7 +132,7 @@ select.bar-select:disabled{opacity:0.35;cursor:not-allowed;}
 .drop-label{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);}
 .drop-sub{font-family:var(--mono);font-size:9px;color:var(--text-muted);}
 .landing-modules{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;width:100%;max-width:760px;border:1px solid var(--border);}
-.module-card{background:var(--surface);padding:18px;display:flex;flex-direction:column;gap:5px;cursor:pointer;transition:background 0.15s;}
+.module-card{background:var(--surface);padding:14px 16px;display:flex;flex-direction:column;gap:4px;cursor:pointer;transition:background 0.15s;}
 .module-card+.module-card{border-left:1px solid var(--border);}
 .module-card:hover:not(.disabled){background:var(--surface2);}
 .module-card.disabled{opacity:0.3;cursor:not-allowed;}
@@ -1218,7 +1218,7 @@ function setLandingState(state,label,detail){
     spinner.textContent='✓';
     lbl.style.color='var(--ok)';
     var sub=document.getElementById('landingSub');
-    if(sub)sub.textContent='Selecione um módulo abaixo';
+    if(sub)sub.textContent='Selecione um módulo para começar';
   } else {
     spinner.style.animation='none';
     spinner.textContent='✗';
@@ -1873,20 +1873,14 @@ function renderGrade(){
     cinemasSet[cinema].forEach(function(s){
       var evtCol=eventColors[s.evento]||{bg:'#555',text:'#fff'};
       var topPx=((s.time.h-minH)*60+s.time.m)*PX_PER_MIN;
-      // calculate real duration — only count films that have duration data
-      var knownMins=0,knownCount=0;
-      s.filmes.forEach(function(c){var f=filmesMap[c];if(!f)return;var d=f.duracao||'';if(/^\d{1,2}:\d{2}/.test(d)){var p=d.split(':').map(Number);knownMins+=p[0]*60+p[1];knownCount++;}});
-      var totalDurMin;
-      if(knownCount>0){
-        // use known duration + estimate unknown films from average
-        var avg=knownMins/knownCount;
-        totalDurMin=knownMins+(s.filmes.length-knownCount)*avg;
-      } else {
-        // no duration data at all — use 80min as neutral estimate per film
-        totalDurMin=s.filmes.length*80;
+      var durStr=calcTotalDur(s); // e.g. "1h20" or ""
+      var totalDurMin=30; // default 30min
+      if(durStr){
+        var hm=durStr.match(/(\d+)h(\d+)/);
+        if(hm)totalDurMin=parseInt(hm[1])*60+parseInt(hm[2]);
+        else{var honly=durStr.match(/(\d+)h/);if(honly)totalDurMin=parseInt(honly[1])*60;}
       }
-      if(totalDurMin<20)totalDurMin=20;
-      var hPx=Math.max(30,Math.round(totalDurMin*PX_PER_MIN));
+      var hPx=Math.round(totalDurMin*PX_PER_MIN);
       var blk=document.createElement('div');blk.className='session-block';
       blk.style.top=topPx+'px';blk.style.height=hPx+'px';
       blk.style.background=evtCol.bg;blk.style.color=evtCol.text;
