@@ -668,9 +668,11 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
   <button class="print-btn print-btn-pb" onclick="printModulePB()">⎙ PB</button>
 </div>
 <div class="mode-bar hidden" id="barCinemas">
+  <button class="print-btn" onclick="openCinemaForm(null)">+ Nova sala</button>
+  <div class="bar-sep"></div>
   <select class="bar-select" id="cinemasComplexoFilter" style="min-width:160px;" onchange="renderCinemas()"><option value="">— todos complexos —</option></select>
   <span class="result-count" id="cinemasCount"></span>
-  <button class="print-btn" onclick="printModule()">⎙ Imprimir</button>
+  <button class="print-btn" onclick="printModule()" style="margin-left:auto;">⎙ Imprimir</button>
   <button class="print-btn print-btn-pb" onclick="printModulePB()">⎙ PB</button>
 </div>
 <div class="mode-bar hidden" id="barEquipe">
@@ -767,7 +769,96 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
   </div>
 
   <!-- CINEMAS -->
-  <div class="mode-panel" id="cinemas-panel">
+  <div class="mode-panel" id="cinemas-panel" style="overflow-y:auto;padding-bottom:40px;">
+    <!-- FORM -->
+    <div id="cinemaForm" style="display:none;">
+      <div class="form-panel">
+        <div class="form-panel-title" id="cinemaFormTitle">Nova sala</div>
+        <button class="form-close" onclick="closeCinemaForm()">×</button>
+        <div class="form-grid">
+          <div class="form-field">
+            <label class="form-label">Evento<span>*</span></label>
+            <select class="form-select" id="cfEvento" onchange="cinemaEventoChanged()">
+              <option value="">— selecionar —</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label class="form-label">Nome da sala<span>*</span></label>
+            <input class="form-input" id="cfNome" type="text" placeholder="ex: MIS, CineSanta">
+          </div>
+          <div class="form-field">
+            <label class="form-label">Complexo</label>
+            <input class="form-input" id="cfComplexo" type="text" placeholder="ex: Estação Net">
+          </div>
+          <div class="form-field">
+            <label class="form-label">Servidor</label>
+            <input class="form-input" id="cfServidor" type="text" placeholder="ex: Doremi, SR-1000">
+          </div>
+          <div class="form-field">
+            <label class="form-label">Projetor</label>
+            <input class="form-input" id="cfProjetor" type="text" placeholder="ex: DP2K-15C">
+          </div>
+          <div class="form-field">
+            <label class="form-label">Serial</label>
+            <input class="form-input" id="cfSerial" type="text" placeholder="ex: A39211">
+          </div>
+          <div class="form-field">
+            <label class="form-label">Som</label>
+            <input class="form-input" id="cfSom" type="text" placeholder="ex: 7.1, 5.1">
+          </div>
+          <div class="form-field">
+            <label class="form-label">Proporção de tela</label>
+            <input class="form-input" id="cfProporcao" type="text" placeholder="ex: ~2.39, 1.85">
+          </div>
+          <div class="form-field">
+            <label class="form-label">Capacidade</label>
+            <input class="form-input" id="cfCapacidade" type="number" placeholder="ex: 250">
+          </div>
+          <div class="form-field">
+            <label class="form-label">Lugares acessíveis</label>
+            <input class="form-input" id="cfAcessiveis" type="number" placeholder="ex: 4">
+          </div>
+          <div class="form-field">
+            <label class="form-label">Cineassist</label>
+            <select class="form-select" id="cfCineassist">
+              <option value="false">Não</option>
+              <option value="true">Sim</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label class="form-label">Horário de funcionamento</label>
+            <input class="form-input" id="cfHorario" type="text" placeholder="ex: 10h–23h">
+          </div>
+          <div class="form-field wide">
+            <label class="form-label">Datas de uso</label>
+            <input class="form-input" id="cfDatas" type="text" placeholder="ex: 03/10–05/10, 08/10">
+          </div>
+          <div class="form-field wide">
+            <label class="form-label">Contatos</label>
+            <input class="form-input" id="cfContatos" type="text" placeholder="Nome ou telefone de contato da sala">
+          </div>
+          <div class="form-field wide">
+            <label class="form-label">Monitores — nomes</label>
+            <input class="form-input" id="cfMonitoresNomes" type="text" placeholder="ex: Ana / Carlos" list="cfMonitoresNomesList">
+            <datalist id="cfMonitoresNomesList"></datalist>
+            <div style="font-family:var(--mono);font-size:9px;color:var(--text-muted);margin-top:3px;">Separar múltiplos com " / "</div>
+          </div>
+          <div class="form-field wide">
+            <label class="form-label">Monitores — contatos</label>
+            <input class="form-input" id="cfMonitoresContatos" type="text" placeholder="ex: 21 99999-9999 / 21 88888-8888">
+          </div>
+          <div class="form-field wide">
+            <label class="form-label">Observações</label>
+            <input class="form-input" id="cfObs" type="text" placeholder="Informações adicionais">
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="form-save-btn" id="cinemaFormSaveBtn" onclick="saveCinema()">Salvar</button>
+          <button class="form-cancel-btn" onclick="closeCinemaForm()">Cancelar</button>
+          <span class="form-status" id="cinemaFormStatus"></span>
+        </div>
+      </div>
+    </div>
     <div id="cinemesContent">
       <div class="empty-state"><div class="icon">▣</div><p>Carregando cinemas…</p></div>
     </div>
@@ -1423,6 +1514,7 @@ function renderCinemas(){
       ?'<div class="cinema-sessions-title">Sessões ('+sessoes.length+')</div><div class="cinema-session-tags">'+sessoes.map(function(s){return'<span class="cinema-session-tag" onclick="goToFicha(\''+s.nome.replace(/'/g,"\\'")+'\')" title="'+s.dia+' '+s.hora+'">'+s.nome+(s.nomeSessao?' · '+s.nomeSessao:'')+'</span>';}).join('')+'</div>'
       :'<div style="font-family:var(--mono);font-size:10px;color:var(--text-muted);">Nenhuma sessão cadastrada.</div>';
     html+='<div class="cinema-card" id="ccard-'+idx+'">';
+    var origIdx=cinemesArr.indexOf(c);
     html+='<div class="cinema-card-top">';
     html+='<div class="cinema-card-main">';
     if(c.complexo)html+='<div class="cinema-complexo">'+c.complexo+'</div>';
@@ -1439,6 +1531,10 @@ function renderCinemas(){
     html+='</div>';
     html+='</div></div>';
     html+='<button class="cinema-expand-toggle" onclick="toggleCinemaCard('+idx+')">▶</button>';
+    html+='<div style="display:flex;gap:6px;margin-left:8px;">';
+    html+='<button class="form-cancel-btn" style="padding:3px 10px;font-size:9px;" onclick="openCinemaForm('+origIdx+')">Editar</button>';
+    html+='<button class="form-cancel-btn" style="padding:3px 10px;font-size:9px;" onclick="duplicateCinema('+origIdx+')">Duplicar</button>';
+    html+='</div>';
     html+='</div>';
     // expanded section
     html+='<div class="cinema-expand">';
@@ -2164,6 +2260,138 @@ function applyRole(role, skipEventosReset){
   }
   buildEventosPills();
   applyEventoFilter();
+}
+
+// ── CINEMA FORM ──
+var _cinemaEditIdx=null;
+
+function openCinemaForm(idx){
+  _cinemaEditIdx=idx;
+  var isNew=(idx===null);
+  document.getElementById('cinemaFormTitle').textContent=isNew?'Nova sala':'Editar sala';
+  document.getElementById('cinemaFormStatus').textContent='';
+  document.getElementById('cinemaFormStatus').className='form-status';
+  var sel=document.getElementById('cfEvento');
+  var evts=currentUser.papel==='admin'||!currentUser.eventos.length
+    ? Object.keys(eventColors)
+    : currentUser.eventos.filter(function(e){return eventColors[e];});
+  sel.innerHTML='<option value="">— selecionar —</option>';
+  evts.forEach(function(e){sel.innerHTML+='<option value="'+e+'">'+e+'</option>';});
+  if(!isNew){
+    var c=cinemesArr[idx];
+    sel.value=c.evento||'';cinemaEventoChanged();
+    document.getElementById('cfNome').value=c.nome||'';
+    document.getElementById('cfComplexo').value=c.complexo||'';
+    document.getElementById('cfServidor').value=c.servidor||'';
+    document.getElementById('cfProjetor').value=c.projetor||'';
+    document.getElementById('cfSerial').value=c.serial||'';
+    document.getElementById('cfSom').value=c.somSistema||'';
+    document.getElementById('cfProporcao').value=c.proporcao||'';
+    document.getElementById('cfCapacidade').value=c.capacidade||'';
+    document.getElementById('cfAcessiveis').value=c.acessiveis||'';
+    document.getElementById('cfCineassist').value=c.cineassist?'true':'false';
+    document.getElementById('cfHorario').value=c.horario||'';
+    document.getElementById('cfDatas').value=c.datas||'';
+    document.getElementById('cfContatos').value=c.contatos||'';
+    document.getElementById('cfMonitoresNomes').value=c.monitoresNomes||'';
+    document.getElementById('cfMonitoresContatos').value=c.monitoresContatos||'';
+    document.getElementById('cfObs').value=c.obs||'';
+  } else {
+    if(evts.length===1)sel.value=evts[0];
+    cinemaEventoChanged();
+    ['cfNome','cfComplexo','cfServidor','cfProjetor','cfSerial','cfSom','cfProporcao',
+     'cfHorario','cfDatas','cfContatos','cfMonitoresNomes','cfMonitoresContatos','cfObs']
+    .forEach(function(id){document.getElementById(id).value='';});
+    document.getElementById('cfCapacidade').value='';
+    document.getElementById('cfAcessiveis').value='';
+    document.getElementById('cfCineassist').value='false';
+  }
+  document.getElementById('cinemaForm').style.display='block';
+  document.getElementById('cinemaForm').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function closeCinemaForm(){
+  document.getElementById('cinemaForm').style.display='none';
+  _cinemaEditIdx=null;
+}
+
+function cinemaEventoChanged(){
+  var evento=document.getElementById('cfEvento').value;
+  var dl=document.getElementById('cfMonitoresNomesList');
+  dl.innerHTML='';
+  if(evento){
+    equipeArr.filter(function(p){return p.evento===evento;}).forEach(function(p){
+      var opt=document.createElement('option');opt.value=p.nome;dl.appendChild(opt);
+    });
+  }
+}
+
+function duplicateCinema(idx){
+  openCinemaForm(null);
+  var c=cinemesArr[idx];
+  setTimeout(function(){
+    document.getElementById('cfEvento').value=c.evento||'';
+    cinemaEventoChanged();
+    setTimeout(function(){
+      document.getElementById('cfNome').value=c.nome||'';
+      document.getElementById('cfComplexo').value=c.complexo||'';
+      document.getElementById('cfServidor').value=c.servidor||'';
+      document.getElementById('cfProjetor').value=c.projetor||'';
+      document.getElementById('cfSerial').value=c.serial||'';
+      document.getElementById('cfSom').value=c.somSistema||'';
+      document.getElementById('cfProporcao').value=c.proporcao||'';
+      document.getElementById('cfCapacidade').value=c.capacidade||'';
+      document.getElementById('cfAcessiveis').value=c.acessiveis||'';
+      document.getElementById('cfCineassist').value=c.cineassist?'true':'false';
+      document.getElementById('cfHorario').value=c.horario||'';
+      document.getElementById('cfDatas').value=c.datas||'';
+      document.getElementById('cfContatos').value=c.contatos||'';
+      document.getElementById('cfMonitoresNomes').value=c.monitoresNomes||'';
+      document.getElementById('cfMonitoresContatos').value=c.monitoresContatos||'';
+      document.getElementById('cfObs').value=c.obs||'';
+      document.getElementById('cinemaFormTitle').textContent='Duplicar sala';
+    },80);
+  },30);
+}
+
+async function saveCinema(){
+  var btn=document.getElementById('cinemaFormSaveBtn');
+  var status=document.getElementById('cinemaFormStatus');
+  var evento=document.getElementById('cfEvento').value.trim();
+  var nome=document.getElementById('cfNome').value.trim();
+  if(!evento||!nome){status.textContent='Evento e nome são obrigatórios.';status.className='form-status err';return;}
+  var sala={
+    evento:evento,nome:nome,
+    complexo:document.getElementById('cfComplexo').value.trim(),
+    servidor:document.getElementById('cfServidor').value.trim(),
+    projetor:document.getElementById('cfProjetor').value.trim(),
+    serial:document.getElementById('cfSerial').value.trim(),
+    somSistema:document.getElementById('cfSom').value.trim(),
+    proporcao:document.getElementById('cfProporcao').value.trim(),
+    capacidade:document.getElementById('cfCapacidade').value||'',
+    acessiveis:document.getElementById('cfAcessiveis').value||'',
+    cineassist:document.getElementById('cfCineassist').value==='true',
+    horario:document.getElementById('cfHorario').value.trim(),
+    datas:document.getElementById('cfDatas').value.trim(),
+    contatos:document.getElementById('cfContatos').value.trim(),
+    monitoresNomes:document.getElementById('cfMonitoresNomes').value.trim(),
+    monitoresContatos:document.getElementById('cfMonitoresContatos').value.trim(),
+    obs:document.getElementById('cfObs').value.trim(),
+  };
+  btn.disabled=true;status.textContent='Salvando…';status.className='form-status';
+  try{
+    var file=await ghReadFile('cinemas.json');
+    if(_cinemaEditIdx!==null){file.content[_cinemaEditIdx]=sala;}
+    else{file.content.push(sala);}
+    var msg=(_cinemaEditIdx!==null?'Atualiza ':'Insere ')+nome+' — '+evento+' ['+currentUser.email+']';
+    await ghWriteFile('cinemas.json',file.content,file.sha,msg);
+    cinemesArr=file.content;
+    status.textContent='✓ Salvo';status.className='form-status ok';
+    setTimeout(closeCinemaForm,800);renderCinemas();
+  }catch(e){
+    status.textContent=e.message||'Erro ao salvar.';status.className='form-status err';
+  }
+  btn.disabled=false;
 }
 
 async function ghReadFile(filename){
