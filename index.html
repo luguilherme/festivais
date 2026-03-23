@@ -660,11 +660,13 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
   <button class="print-btn print-btn-pb" onclick="printModulePB()">⎙ PB</button>
 </div>
 <div class="mode-bar hidden" id="barSessoes">
+  <button class="print-btn" onclick="openSessaoForm(null)">+ Nova sessão</button>
+  <div class="bar-sep"></div>
   <select class="bar-select" id="sessDiaFilter" style="min-width:160px;" onchange="renderSessoes()"><option value="">— todos os dias —</option></select>
   <select class="bar-select" id="sessCinemaFilter" style="min-width:180px;" onchange="renderSessoes()"><option value="">— todos os cinemas —</option></select>
   <select class="bar-select" id="sessMostraFilter" style="min-width:160px;" onchange="renderSessoes()"><option value="">— todas as mostras —</option></select>
   <span class="result-count" id="sessCount"></span>
-  <button class="print-btn" onclick="printModule()">⎙ Imprimir</button>
+  <button class="print-btn" onclick="printModule()" style="margin-left:auto;">⎙ Imprimir</button>
   <button class="print-btn print-btn-pb" onclick="printModulePB()">⎙ PB</button>
 </div>
 <div class="mode-bar hidden" id="barCinemas">
@@ -767,6 +769,63 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
 
   <!-- SESSÕES -->
   <div class="mode-panel" id="sessoes-panel">
+    <!-- FORM -->
+    <div id="sessaoForm" style="display:none;">
+      <div class="form-panel">
+        <div class="form-panel-title" id="sessaoFormTitle">Nova sessão</div>
+        <button class="form-close" onclick="closeSessaoForm()">×</button>
+        <div class="form-grid">
+          <div class="form-field">
+            <label class="form-label">Evento<span>*</span></label>
+            <select class="form-select" id="sfEvento" onchange="sessaoEventoChanged()">
+              <option value="">— selecionar —</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label class="form-label">Código<span>*</span></label>
+            <input class="form-input" id="sfCodigo" type="text" placeholder="ex: CC26MIS01" style="text-transform:uppercase;" oninput="this.value=this.value.toUpperCase()">
+          </div>
+          <div class="form-field">
+            <label class="form-label">Cinema<span>*</span></label>
+            <select class="form-select" id="sfCinema">
+              <option value="">— selecionar evento primeiro —</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label class="form-label">Dia<span>*</span></label>
+            <input class="form-input" id="sfDia" type="date">
+          </div>
+          <div class="form-field">
+            <label class="form-label">Hora<span>*</span></label>
+            <input class="form-input" id="sfHora" type="time">
+          </div>
+          <div class="form-field">
+            <label class="form-label">Mostra</label>
+            <input class="form-input" id="sfMostra" type="text" placeholder="ex: Competição, Especial" list="sfMostraList">
+            <datalist id="sfMostraList"></datalist>
+          </div>
+          <div class="form-field wide">
+            <label class="form-label">Nome da sessão</label>
+            <input class="form-input" id="sfNome" type="text" placeholder="Nome descritivo (opcional)">
+          </div>
+        </div>
+        <!-- Films list -->
+        <div style="margin-top:18px;">
+          <div style="font-family:var(--mono);font-size:8px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;">Filmes <span style="color:var(--text-dim);font-weight:400;">(até 10)</span></div>
+          <div id="sfFilmesList" style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px;"></div>
+          <div style="display:flex;gap:8px;align-items:center;" id="sfAddFilmeRow">
+            <input class="form-input" id="sfFilmeInput" type="text" placeholder="código ou título…" list="sfFilmeOptions" style="max-width:320px;" onkeydown="if(event.key==='Enter'){event.preventDefault();addFilmeToSessao();}">
+            <datalist id="sfFilmeOptions"></datalist>
+            <button class="form-cancel-btn" onclick="addFilmeToSessao()" style="white-space:nowrap;">+ Adicionar</button>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="form-save-btn" id="sessaoFormSaveBtn" onclick="saveSessao()">Salvar</button>
+          <button class="form-cancel-btn" onclick="closeSessaoForm()">Cancelar</button>
+          <span class="form-status" id="sessaoFormStatus"></span>
+        </div>
+      </div>
+    </div>
     <div id="sessoesContent">
       <div class="empty-state"><div class="icon">◈</div><p>Carregando sessões…</p></div>
     </div>
@@ -1467,18 +1526,20 @@ function renderSessoes(){
   });
   document.getElementById('sessCount').textContent=filtered.length+(filtered.length!==1?' sessões':' sessão');
   if(!filtered.length){document.getElementById('sessoesContent').innerHTML='<div class="empty-state"><div class="icon">◈</div><p>Nenhuma sessão encontrada.</p></div>';return;}
-  var html='<div class="sessoes-list"><table class="sessoes-table"><thead><tr><th>Hora</th><th>Cinema</th><th>Código</th><th>Nome</th><th>Filmes</th><th>Mostra</th><th>#</th></tr></thead><tbody>';
+  var html='<div class="sessoes-list"><table class="sessoes-table"><thead><tr><th>Dia · Hora</th><th>Cinema</th><th>Código</th><th>Nome</th><th>Filmes</th><th>Mostra</th><th>#</th><th></th></tr></thead><tbody>';
   filtered.forEach(function(s){
     var col=eventColors[s.evento]||null;
     var filmTitles=s.filmes.map(function(c){return filmesMap[c]?filmesMap[c].titulo||c:c;}).join(', ');
+    var origIdx=sessoesArr.indexOf(s);
     html+='<tr>';
     html+='<td><div class="sess-dia">'+s.dia+'</div><div class="sess-hora">'+s.hora+'</div></td>';
     html+='<td class="sess-cinema" style="border-left:3px solid '+(col?col.bg:'var(--border)')+'">'+s.cinema+'</td>';
-    html+='<td class="sess-code">'+s.nome+'</td>';
+    html+='<td class="sess-code" style="cursor:pointer;" onclick="goToFicha(\''+s.nome.replace(/'/g,"\\'")+'\')" title="Ver ficha">'+s.nome+'</td>';
     html+='<td class="sess-nome">'+(s.nomeSessao||'—')+'</td>';
     html+='<td class="sess-filmes" title="'+filmTitles+'">'+filmTitles+'</td>';
     html+='<td>'+(s.mostra?'<span class="sess-mostra">'+s.mostra+'</span>':'<span style="color:var(--text-muted)">—</span>')+'</td>';
     html+='<td class="sess-count">'+s.filmes.length+'</td>';
+    html+='<td><button class="form-cancel-btn" style="padding:3px 10px;font-size:9px;" onclick="openSessaoForm('+origIdx+')">Editar</button></td>';
     html+='</tr>';
   });
   html+='</tbody></table></div>';
@@ -2278,6 +2339,199 @@ function applyRole(role, skipEventosReset){
   }
   buildEventosPills();
   applyEventoFilter();
+}
+
+// ── SESSAO FORM ──
+var _sessaoEditIdx=null;
+var _sessaoFilmes=[]; // array of film codes currently in form
+
+function openSessaoForm(idx){
+  _sessaoEditIdx=idx;
+  var isNew=(idx===null);
+  document.getElementById('sessaoFormTitle').textContent=isNew?'Nova sessão':'Editar sessão';
+  document.getElementById('sessaoFormStatus').textContent='';
+  document.getElementById('sessaoFormStatus').className='form-status';
+
+  // populate evento dropdown
+  var sel=document.getElementById('sfEvento');
+  var evts=currentUser.papel==='admin'||!currentUser.eventos.length
+    ? Object.keys(eventColors)
+    : currentUser.eventos.filter(function(e){return eventColors[e];});
+  sel.innerHTML='<option value="">— selecionar —</option>';
+  evts.forEach(function(e){sel.innerHTML+='<option value="'+e+'">'+e+'</option>';});
+
+  if(!isNew){
+    var s=sessoesArr[idx];
+    sel.value=s.evento||'';
+    sessaoEventoChanged();
+    setTimeout(function(){
+      document.getElementById('sfCinema').value=s.cinema||'';
+      document.getElementById('sfMostra').value=s.mostra||'';
+    },50);
+    document.getElementById('sfCodigo').value=s.nome||'';
+    // convert dd/mm/yyyy to yyyy-mm-dd for date input
+    var dParts=(s.dia||'').split('/');
+    document.getElementById('sfDia').value=dParts.length===3?dParts[2]+'-'+dParts[1]+'-'+dParts[0]:'';
+    document.getElementById('sfHora').value=s.hora||'';
+    document.getElementById('sfNome').value=s.nomeSessao||'';
+    _sessaoFilmes=s.filmes.slice();
+  } else {
+    if(evts.length===1)sel.value=evts[0];
+    sessaoEventoChanged();
+    document.getElementById('sfCodigo').value='';
+    document.getElementById('sfDia').value='';
+    document.getElementById('sfHora').value='';
+    document.getElementById('sfMostra').value='';
+    document.getElementById('sfNome').value='';
+    _sessaoFilmes=[];
+  }
+  renderSessaoFilmesList();
+
+  document.getElementById('sessaoForm').style.display='block';
+  document.getElementById('sessaoForm').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function closeSessaoForm(){
+  document.getElementById('sessaoForm').style.display='none';
+  _sessaoEditIdx=null;_sessaoFilmes=[];
+}
+
+function sessaoEventoChanged(){
+  var evento=document.getElementById('sfEvento').value;
+  // cinema dropdown
+  var selC=document.getElementById('sfCinema');
+  selC.innerHTML='<option value="">— selecionar —</option>';
+  if(evento){
+    var salas=uniqueSorted(cinemesArr.filter(function(c){return c.evento===evento;}).map(function(c){return c.nome;}));
+    // also include cinemas from sessoes not in cinemas.json
+    sessoesArr.filter(function(s){return s.evento===evento&&s.cinema;}).forEach(function(s){
+      if(salas.indexOf(s.cinema)<0)salas.push(s.cinema);
+    });
+    salas.sort().forEach(function(s){selC.innerHTML+='<option value="'+s+'">'+s+'</option>';});
+  }
+  // mostra datalist
+  var dl=document.getElementById('sfMostraList');
+  dl.innerHTML='';
+  var mostras=uniqueSorted(sessoesArr.filter(function(s){return s.evento===evento&&s.mostra;}).map(function(s){return s.mostra;}));
+  mostras.forEach(function(m){var o=document.createElement('option');o.value=m;dl.appendChild(o);});
+  // filme autocomplete datalist
+  var dfl=document.getElementById('sfFilmeOptions');
+  dfl.innerHTML='';
+  filmesArr.filter(function(f){return!evento||f.evento===evento;}).forEach(function(f){
+    var o=document.createElement('option');
+    o.value=f.codigo;
+    o.label=(f.titulo||f.codigo)+' ('+f.codigo+')';
+    dfl.appendChild(o);
+  });
+}
+
+function renderSessaoFilmesList(){
+  var container=document.getElementById('sfFilmesList');
+  container.innerHTML='';
+  _sessaoFilmes.forEach(function(codigo,i){
+    var f=filmesMap[codigo];
+    var titulo=f?f.titulo||codigo:codigo;
+    var div=document.createElement('div');
+    div.style.cssText='display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);padding:6px 10px;';
+    div.innerHTML='<span style="font-family:var(--mono);font-size:10px;color:var(--accent);min-width:80px;">'+codigo+'</span>'
+      +'<span style="font-family:var(--sans);font-size:11px;flex:1;color:var(--text-dim);">'+titulo+'</span>'
+      +'<span style="font-family:var(--mono);font-size:10px;color:var(--text-muted);">'+(i+1)+'/'+_sessaoFilmes.length+'</span>'
+      +'<button onclick="removeSessaoFilme('+i+')" style="background:none;border:none;color:var(--err);cursor:pointer;font-size:14px;padding:0 4px;line-height:1;">×</button>';
+    container.appendChild(div);
+  });
+  document.getElementById('sfAddFilmeRow').style.display=_sessaoFilmes.length>=10?'none':'flex';
+}
+
+function addFilmeToSessao(){
+  var input=document.getElementById('sfFilmeInput');
+  var val=input.value.trim().toUpperCase();
+  if(!val)return;
+  // accept code or find by title
+  var codigo=val;
+  if(!filmesMap[val]){
+    var match=filmesArr.find(function(f){return(f.titulo||'').toUpperCase()===val||(f.codigo||'').toUpperCase()===val;});
+    if(match)codigo=match.codigo;
+  }
+  if(_sessaoFilmes.indexOf(codigo)>=0){input.value='';return;}
+  if(_sessaoFilmes.length>=10)return;
+  _sessaoFilmes.push(codigo);
+  renderSessaoFilmesList();
+  input.value='';
+  input.focus();
+}
+
+function removeSessaoFilme(i){
+  _sessaoFilmes.splice(i,1);
+  renderSessaoFilmesList();
+}
+
+async function saveSessao(){
+  var btn=document.getElementById('sessaoFormSaveBtn');
+  var status=document.getElementById('sessaoFormStatus');
+  var evento=document.getElementById('sfEvento').value.trim();
+  var codigo=document.getElementById('sfCodigo').value.trim().toUpperCase();
+  var cinema=document.getElementById('sfCinema').value.trim();
+  var diaRaw=document.getElementById('sfDia').value; // yyyy-mm-dd
+  var hora=document.getElementById('sfHora').value.trim();
+  if(!evento||!codigo||!cinema||!diaRaw||!hora){
+    status.textContent='Evento, código, cinema, dia e hora são obrigatórios.';
+    status.className='form-status err';
+    return;
+  }
+  // convert yyyy-mm-dd to dd/mm/yyyy
+  var dp=diaRaw.split('-');
+  var dia=dp[2]+'/'+dp[1]+'/'+dp[0];
+  var sessao={
+    codigo:codigo,
+    nome:document.getElementById('sfNome').value.trim(),
+    cinema:cinema,
+    dia:dia,
+    hora:hora,
+    filmes:_sessaoFilmes.slice(),
+    evento:evento,
+    mostra:document.getElementById('sfMostra').value.trim(),
+  };
+  // check for duplicate code (only on new)
+  if(_sessaoEditIdx===null&&sessoesArr.some(function(s){return s.nome===codigo;})){
+    status.textContent='Código "'+codigo+'" já existe.';
+    status.className='form-status err';
+    return;
+  }
+  btn.disabled=true;status.textContent='Salvando…';status.className='form-status';
+  try{
+    var file=await ghReadFile('sessoes.json');
+    if(_sessaoEditIdx!==null){
+      file.content[_sessaoEditIdx]=sessao;
+    } else {
+      file.content.push(sessao);
+    }
+    var msg=(_sessaoEditIdx!==null?'Atualiza ':'Insere sessão ')+codigo+' — '+evento+' ['+currentUser.email+']';
+    await ghWriteFile('sessoes.json',file.content,file.sha,msg);
+    // update local array and rebuild session map
+    var newSessao={
+      nome:sessao.codigo, nomeSessao:sessao.nome, cinema:sessao.cinema,
+      dia:sessao.dia, hora:sessao.hora, filmes:sessao.filmes,
+      evento:sessao.evento, mostra:sessao.mostra,
+      date:parseDate(sessao.dia), time:parseTimeStr(sessao.hora)
+    };
+    if(_sessaoEditIdx!==null){
+      sessoesArr[_sessaoEditIdx]=newSessao;
+    } else {
+      sessoesArr.push(newSessao);
+    }
+    sessoesMap[newSessao.nome]=newSessao;
+    // rebuild reverse index
+    newSessao.filmes.forEach(function(c){
+      if(!buscaReverseSessoes[c])buscaReverseSessoes[c]=[];
+      if(buscaReverseSessoes[c].indexOf(newSessao.nome)<0)buscaReverseSessoes[c].push(newSessao.nome);
+    });
+    status.textContent='✓ Salvo';status.className='form-status ok';
+    setTimeout(closeSessaoForm,800);
+    buildSessoesFilters();buildGradeDays();renderSessoes();
+  }catch(e){
+    status.textContent=e.message||'Erro ao salvar.';status.className='form-status err';
+  }
+  btn.disabled=false;
 }
 
 // ── CINEMA FORM ──
