@@ -1005,5 +1005,24 @@
     "contatos": "",
     "monitoresNomes": "",
     "monitoresContatos": ""
+  },
+  {
+    "evento": "CC2025",
+    "nome": "Minha casa",
+    "complexo": "Edificio Bandeirante",
+    "servidor": "cineminha",
+    "projetor": "",
+    "serial": "",
+    "somSistema": "o que tem",
+    "proporcao": "",
+    "capacidade": "500",
+    "acessiveis": "2",
+    "cineassist": true,
+    "horario": "",
+    "datas": "03/10-05/10, 08/10",
+    "contatos": "AAAAA",
+    "monitoresNomes": "Beatriz",
+    "monitoresContatos": "21 998351920",
+    "obs": ""
   }
 ]
