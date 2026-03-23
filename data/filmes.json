@@ -24773,5 +24773,30 @@
     "cplOV": "",
     "linkDCP": "",
     "legTrans": ""
+  },
+  {
+    "evento": "CC2025",
+    "codigo": "7766A2",
+    "hd": "121",
+    "titulo": "Luiz Guilherme",
+    "idioma": "Português",
+    "legDCP": "qbp",
+    "mostra": "Todas",
+    "vf": "en",
+    "lente": "",
+    "somDCP": "",
+    "creator": "",
+    "kdm": "sim",
+    "status": "",
+    "statusLeg": "",
+    "obs": "",
+    "cpl": "",
+    "resolucao": "",
+    "duracao": "",
+    "dcpsize": "",
+    "fps": "",
+    "cplOV": "",
+    "linkDCP": "",
+    "legTrans": ""
   }
 ]
