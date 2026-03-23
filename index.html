@@ -2173,13 +2173,12 @@ async function ghReadFile(filename){
   );
   if(!r.ok)throw new Error('Erro ao ler '+filename+' (HTTP '+r.status+')');
   var meta=await r.json();
-  // decode base64 in chunks to handle large files
-  var b64=(meta.content||'').replace(/\n/g,'');
-  var binary='';
-  for(var i=0;i<b64.length;i+=8192){
-    binary+=atob(b64.slice(i,i+8192));
-  }
-  var json=decodeURIComponent(escape(binary));
+  // decode base64 → Uint8Array → UTF-8 string (handles accented chars correctly)
+  var b64=(meta.content||'').replace(/\s/g,'');
+  var binary=atob(b64);
+  var bytes=new Uint8Array(binary.length);
+  for(var i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);
+  var json=new TextDecoder('utf-8').decode(bytes);
   return{sha:meta.sha,content:JSON.parse(json)};
 }
 
