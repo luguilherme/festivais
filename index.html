@@ -670,6 +670,10 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
 <div class="mode-bar hidden" id="barCinemas">
   <button class="print-btn" onclick="openCinemaForm(null)">+ Nova sala</button>
   <div class="bar-sep"></div>
+  <div class="search-wrap" style="max-width:240px;">
+    <input type="text" id="cinemasSearchInput" placeholder="buscar sala…" oninput="renderCinemas()">
+    <button class="search-clear" id="cinemasSearchClear" onclick="document.getElementById('cinemasSearchInput').value='';renderCinemas();" style="display:none;">×</button>
+  </div>
   <select class="bar-select" id="cinemasComplexoFilter" style="min-width:160px;" onchange="renderCinemas()"><option value="">— todos complexos —</option></select>
   <span class="result-count" id="cinemasCount"></span>
   <button class="print-btn" onclick="printModule()" style="margin-left:auto;">⎙ Imprimir</button>
@@ -1494,9 +1498,14 @@ function buildCinemasFilters(){
 function renderCinemas(){
   buildCinemasFilters();
   var coF=document.getElementById('cinemasComplexoFilter').value;
+  var searchEl=document.getElementById('cinemasSearchInput');
+  var q=(searchEl?searchEl.value:'').toLowerCase().trim();
+  var clearBtn=document.getElementById('cinemasSearchClear');
+  if(clearBtn)clearBtn.style.display=q?'block':'none';
   var filtered=cinemesArr.filter(function(c){
     if(!eventoVisible(c.evento))return false;
     if(coF&&c.complexo!==coF)return false;
+    if(q&&!(c.nome||'').toLowerCase().includes(q)&&!(c.complexo||'').toLowerCase().includes(q))return false;
     return true;
   });
   document.getElementById('cinemasCount').textContent=filtered.length+' sala'+(filtered.length!==1?'s':'');
