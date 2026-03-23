@@ -38,5 +38,13 @@
     "cinema": "Estação Net Rio 5",
     "telefone": "21 98142-6764",
     "email": "beatriznleonardo@gmail.com"
+  },
+  {
+    "evento": "KINO36",
+    "nome": "Beatriz",
+    "funcao": "operadora",
+    "complexo": "Bar Soberano",
+    "telefone": "21 98142-6764",
+    "email": "beatriznleonardo@gmail.com"
   }
 ]
