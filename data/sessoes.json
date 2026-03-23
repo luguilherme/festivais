@@ -5020,5 +5020,20 @@
     ],
     "evento": "ECNZB2024",
     "mostra": ""
+  },
+  {
+    "codigo": "NOVANOVA1",
+    "nome": "",
+    "cinema": "Bar Soberano",
+    "dia": "23/04/2026",
+    "hora": "20:00",
+    "filmes": [
+      "BR_12_2",
+      "E_ZITA_7",
+      "E_DOGMA2_3",
+      "LAT_5_4"
+    ],
+    "evento": "KINO36",
+    "mostra": "NOVIDADES"
   }
 ]
