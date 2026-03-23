@@ -238,7 +238,7 @@ select.bar-select:disabled{opacity:0.35;cursor:not-allowed;}
 .cinema-session-tag:hover{border-color:var(--accent);color:var(--accent);}
 
 /* ── EQUIPE ── */
-#equipe-panel{padding-bottom:40px;}
+#equipe-panel{padding-bottom:40px;overflow-y:auto;}
 .equipe-table{width:100%;border-collapse:collapse;margin:0;}
 .equipe-table th{font-family:var(--mono);font-size:8px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);padding:9px 16px;text-align:left;border-bottom:1px solid var(--accent);background:rgba(232,160,32,0.05);white-space:nowrap;}
 .equipe-table td{font-family:var(--sans);font-size:12px;color:var(--text);padding:10px 16px;border-bottom:1px solid var(--border);vertical-align:middle;}
@@ -674,11 +674,12 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
   <button class="print-btn print-btn-pb" onclick="printModulePB()">⎙ PB</button>
 </div>
 <div class="mode-bar hidden" id="barEquipe">
+  <button class="print-btn" onclick="openEquipeForm(null)">+ Novo membro</button>
+  <div class="bar-sep"></div>
   <select class="bar-select" id="equipeFuncaoFilter" style="min-width:140px;" onchange="renderEquipe()"><option value="">— todas funções —</option></select>
   <select class="bar-select" id="equipeCinemaFilter" style="min-width:180px;" onchange="renderEquipe()"><option value="">— todos cinemas —</option></select>
   <span class="result-count" id="equipeCount"></span>
-  <button class="print-btn" onclick="openEquipeForm(null)" style="margin-left:auto;">+ Novo membro</button>
-  <button class="print-btn" onclick="printModule()">⎙ Imprimir</button>
+  <button class="print-btn" onclick="printModule()" style="margin-left:auto;">⎙ Imprimir</button>
   <button class="print-btn print-btn-pb" onclick="printModulePB()">⎙ PB</button>
 </div>
 <div class="mode-bar hidden" id="barGrade">
@@ -2166,20 +2167,18 @@ function applyRole(role, skipEventosReset){
 }
 
 async function ghReadFile(filename){
+  // Get SHA via API (needed for writes)
   var r=await fetch('https://api.github.com/repos/'+GH.user+'/'+GH.repo+'/contents/data/'+filename,
     {headers:{Authorization:'token '+currentUser.token}});
   if(!r.ok)throw new Error('Erro ao ler '+filename+' ('+r.status+')');
   var meta=await r.json();
-  var content;
-  if(meta.content){
-    content=JSON.parse(atob(meta.content.replace(/\n/g,'')));
-  } else if(meta.download_url){
-    var dr=await fetch(meta.download_url,{headers:{Authorization:'token '+currentUser.token}});
-    content=await dr.json();
-  } else {
-    throw new Error('Não foi possível ler '+filename);
-  }
-  return{sha:meta.sha,content:content};
+  var sha=meta.sha;
+  // Get content via raw URL — always returns full file, no size limit
+  var raw=await fetch('https://raw.githubusercontent.com/'+GH.user+'/'+GH.repo+'/'+GH.branch+'/data/'+filename+'?t='+Date.now(),
+    {headers:{Authorization:'token '+currentUser.token}});
+  if(!raw.ok)throw new Error('Erro ao ler conteúdo de '+filename);
+  var content=await raw.json();
+  return{sha:sha,content:content};
 }
 
 async function ghWriteFile(filename,content,sha,message){
