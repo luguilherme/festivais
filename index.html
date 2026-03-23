@@ -2168,14 +2168,22 @@ function applyRole(role, skipEventosReset){
 
 async function ghReadFile(filename){
   var url='https://api.github.com/repos/'+GH.user+'/'+GH.repo+'/contents/data/'+filename;
-  var r=await fetch(url,{headers:{
+  // Request 1: JSON metadata for SHA
+  var rJson=await fetch(url,{headers:{
+    Authorization:'token '+currentUser.token,
+    Accept:'application/vnd.github.v3.json'
+  }});
+  if(!rJson.ok)throw new Error('Erro ao ler '+filename+' (HTTP '+rJson.status+')');
+  var meta=await rJson.json();
+  var sha=meta.sha;
+  if(!sha)throw new Error('SHA não encontrado para '+filename);
+  // Request 2: raw content
+  var rRaw=await fetch(url,{headers:{
     Authorization:'token '+currentUser.token,
     Accept:'application/vnd.github.v3.raw'
   }});
-  if(!r.ok)throw new Error('Erro ao ler '+filename+' (HTTP '+r.status+')');
-  // SHA comes in the response header
-  var sha=r.headers.get('x-github-blob-sha');
-  var content=await r.json();
+  if(!rRaw.ok)throw new Error('Erro ao ler conteúdo de '+filename+' (HTTP '+rRaw.status+')');
+  var content=await rRaw.json();
   return{sha:sha,content:content};
 }
 
