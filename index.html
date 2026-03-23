@@ -2167,17 +2167,18 @@ function applyRole(role, skipEventosReset){
 }
 
 async function ghReadFile(filename){
-  // Step 1: get file metadata (SHA + download_url) from API
-  var r=await fetch(
-    'https://api.github.com/repos/'+GH.user+'/'+GH.repo+'/contents/data/'+filename,
-    {headers:{Authorization:'token '+currentUser.token}}
-  );
-  if(!r.ok)throw new Error('Erro ao ler '+filename+' (HTTP '+r.status+')');
-  var meta=await r.json();
-  // Step 2: fetch raw content from download_url — public repo, no auth needed, no CORS
-  var r2=await fetch(meta.download_url+'?t='+Date.now());
-  if(!r2.ok)throw new Error('Erro ao baixar '+filename+' (HTTP '+r2.status+')');
-  var content=await r2.json();
+  var baseUrl='https://api.github.com/repos/'+GH.user+'/'+GH.repo+'/contents/data/'+filename;
+  // Get SHA via JSON response
+  var rMeta=await fetch(baseUrl,{headers:{Authorization:'token '+currentUser.token}});
+  if(!rMeta.ok)throw new Error('Erro ao ler '+filename+' (HTTP '+rMeta.status+')');
+  var meta=await rMeta.json();
+  // Get raw content via Accept header (proven to work)
+  var rRaw=await fetch(baseUrl,{headers:{
+    Authorization:'token '+currentUser.token,
+    Accept:'application/vnd.github.v3.raw'
+  }});
+  if(!rRaw.ok)throw new Error('Erro ao ler conteúdo de '+filename+' (HTTP '+rRaw.status+')');
+  var content=await rRaw.json();
   return{sha:meta.sha,content:content};
 }
 
