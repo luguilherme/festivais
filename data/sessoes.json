@@ -5035,5 +5035,18 @@
     ],
     "evento": "KINO36",
     "mostra": "NOVIDADES"
+  },
+  {
+    "codigo": "NAC12121",
+    "nome": "Nacional 8",
+    "cinema": "Estação Net Botafogo 1",
+    "dia": "24/03/2026",
+    "hora": "18:25",
+    "filmes": [
+      "7766A2",
+      "IZ6"
+    ],
+    "evento": "CC2025",
+    "mostra": "Nacional"
   }
 ]
