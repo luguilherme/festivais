@@ -119,12 +119,12 @@ select.bar-select:disabled{opacity:0.35;cursor:not-allowed;}
 .mode-tab.active{background:var(--accent);color:#000;border-color:var(--accent);}
 
 /* ── LANDING ── */
-#landing{min-height:calc(100vh - 52px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 40px;}
-.landing-badge{font-family:var(--mono);font-size:8px;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--accent);margin-bottom:24px;border:1px solid rgba(232,160,32,0.3);padding:4px 14px;}
-.landing-title{font-family:var(--mono);font-size:48px;font-weight:600;color:var(--text);letter-spacing:-0.02em;line-height:1;margin-bottom:6px;text-align:center;}
-.landing-version{font-family:var(--mono);font-size:9px;letter-spacing:0.2em;color:var(--text-muted);text-align:center;margin-bottom:8px;}
-.landing-sub{font-family:var(--sans);font-size:13px;font-weight:300;color:var(--text-dim);text-align:center;line-height:1.6;margin-bottom:40px;max-width:400px;}
-.landing-drop{border:1px dashed rgba(232,160,32,0.35);background:var(--accent-glow);padding:32px 52px;display:flex;flex-direction:column;align-items:center;gap:10px;cursor:pointer;transition:all 0.2s;margin-bottom:40px;min-width:360px;}
+#landing{height:calc(100vh - 72px - 58px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 40px;overflow:hidden;}
+.landing-badge{font-family:var(--mono);font-size:8px;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;border:1px solid rgba(232,160,32,0.3);padding:4px 14px;}
+.landing-title{font-family:var(--mono);font-size:44px;font-weight:600;color:var(--text);letter-spacing:-0.02em;line-height:1;margin-bottom:4px;text-align:center;}
+.landing-version{font-family:var(--mono);font-size:9px;letter-spacing:0.2em;color:var(--text-muted);text-align:center;margin-bottom:6px;}
+.landing-sub{font-family:var(--sans);font-size:12px;font-weight:300;color:var(--text-dim);text-align:center;line-height:1.6;margin-bottom:24px;max-width:400px;}
+.landing-drop{border:1px dashed rgba(232,160,32,0.35);background:var(--accent-glow);padding:18px 40px;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;transition:all 0.2s;margin-bottom:24px;min-width:320px;}
 .landing-drop:hover:not(.loaded){border-color:rgba(232,160,32,0.65);background:var(--accent-dim);}
 .landing-drop.drag-over{border-color:var(--accent);background:var(--accent-dim);}
 .landing-drop.loaded{border-style:solid;border-color:rgba(61,186,110,0.45);background:rgba(61,186,110,0.06);cursor:default;}
@@ -215,7 +215,11 @@ select.bar-select:disabled{opacity:0.35;cursor:not-allowed;}
 .cinema-card-top{display:flex;align-items:flex-start;gap:12px;}
 .cinema-card-main{flex:1;min-width:0;}
 .cinema-complexo{font-family:var(--mono);font-size:8px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px;}
-.cinema-nome{font-family:var(--mono);font-size:14px;font-weight:600;color:var(--text);margin-bottom:8px;}
+.cinema-nome{font-family:var(--mono);font-size:14px;font-weight:600;color:var(--text);margin-bottom:8px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;}
+.cinema-nome:hover{color:var(--accent);}
+.cinema-card.expanded .cinema-nome{color:var(--accent);}
+.cinema-expand-toggle{font-family:var(--mono);font-size:10px;color:var(--text-muted);background:none;border:none;cursor:pointer;padding:0 4px;flex-shrink:0;transition:transform 0.2s;}
+.cinema-card.expanded .cinema-expand-toggle{transform:rotate(90deg);color:var(--accent);}
 .cinema-meta-row{display:flex;gap:16px;flex-wrap:wrap;align-items:center;}
 .cinema-field{display:flex;gap:6px;align-items:baseline;}
 .cinema-field-label{font-family:var(--mono);font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);white-space:nowrap;}
@@ -720,7 +724,7 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
   <div class="landing-badge">sistema de gestão de exibição</div>
   <div class="landing-title">OLGA Web</div>
   <div class="landing-version">festivais · online</div>
-  <p class="landing-sub" id="landingSub">Carregando dados do repositório…</p>
+  <p class="landing-sub" id="landingSub"></p>
   <div class="landing-drop loaded" id="landingDrop">
     <div class="drop-icon" style="opacity:1;animation:spin 1s linear infinite;display:inline-block" id="landingSpinner">⟳</div>
     <div class="drop-label" id="landingLabel">Conectando ao GitHub</div>
@@ -1213,6 +1217,8 @@ function setLandingState(state,label,detail){
     spinner.style.animation='none';
     spinner.textContent='✓';
     lbl.style.color='var(--ok)';
+    var sub=document.getElementById('landingSub');
+    if(sub)sub.textContent='Selecione um módulo abaixo';
   } else {
     spinner.style.animation='none';
     spinner.textContent='✗';
@@ -1589,7 +1595,7 @@ function renderCinemas(){
     html+='<div class="cinema-card-top">';
     html+='<div class="cinema-card-main">';
     if(c.complexo)html+='<div class="cinema-complexo">'+c.complexo+'</div>';
-    html+='<div class="cinema-nome">'+c.nome+'</div>';
+    html+='<div class="cinema-nome" onclick="toggleCinemaCard('+idx+')">'+c.nome+'<span class="cinema-expand-toggle">▶</span></div>';
     html+='<div class="cinema-meta-row">';
     if(c.servidor)html+='<div class="cinema-field"><span class="cinema-field-label">Servidor</span><span class="cinema-field-value">'+c.servidor+'</span></div>';
     if(c.projetor)html+='<div class="cinema-field"><span class="cinema-field-label">Projetor</span><span class="cinema-field-value">'+c.projetor+'</span></div>';
@@ -1601,8 +1607,7 @@ function renderCinemas(){
     if(c.cineassist)html+='<span class="cinema-tag ok">Cineassist</span>';
     html+='</div>';
     html+='</div></div>';
-    html+='<button class="cinema-expand-toggle" onclick="toggleCinemaCard('+idx+')">▶</button>';
-    html+='<div style="display:flex;gap:6px;margin-left:8px;">';
+    html+='<div style="display:flex;gap:6px;margin-left:auto;align-self:flex-start;">';
     html+='<button class="form-cancel-btn" style="padding:3px 10px;font-size:9px;" onclick="openCinemaForm('+origIdx+')">Editar</button>';
     html+='<button class="form-cancel-btn" style="padding:3px 10px;font-size:9px;" onclick="duplicateCinema('+origIdx+')">Duplicar</button>';
     html+='</div>';
@@ -1868,9 +1873,20 @@ function renderGrade(){
     cinemasSet[cinema].forEach(function(s){
       var evtCol=eventColors[s.evento]||{bg:'#555',text:'#fff'};
       var topPx=((s.time.h-minH)*60+s.time.m)*PX_PER_MIN;
-      var totalDurMin=s.filmes.reduce(function(acc,c){var f=filmesMap[c];if(!f)return acc+90;var d=f.duracao||'';if(/^\d{1,2}:\d{2}/.test(d)){var p=d.split(':').map(Number);return acc+p[0]*60+p[1];}return acc+90;},0);
-      if(totalDurMin<30)totalDurMin=60;
-      var hPx=Math.max(40,totalDurMin*PX_PER_MIN);
+      // calculate real duration — only count films that have duration data
+      var knownMins=0,knownCount=0;
+      s.filmes.forEach(function(c){var f=filmesMap[c];if(!f)return;var d=f.duracao||'';if(/^\d{1,2}:\d{2}/.test(d)){var p=d.split(':').map(Number);knownMins+=p[0]*60+p[1];knownCount++;}});
+      var totalDurMin;
+      if(knownCount>0){
+        // use known duration + estimate unknown films from average
+        var avg=knownMins/knownCount;
+        totalDurMin=knownMins+(s.filmes.length-knownCount)*avg;
+      } else {
+        // no duration data at all — use 80min as neutral estimate per film
+        totalDurMin=s.filmes.length*80;
+      }
+      if(totalDurMin<20)totalDurMin=20;
+      var hPx=Math.max(30,Math.round(totalDurMin*PX_PER_MIN));
       var blk=document.createElement('div');blk.className='session-block';
       blk.style.top=topPx+'px';blk.style.height=hPx+'px';
       blk.style.background=evtCol.bg;blk.style.color=evtCol.text;
