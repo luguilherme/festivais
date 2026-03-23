@@ -1509,7 +1509,7 @@ function renderEquipe(){
     html+='<td class="eq-contato">'+(p.telefone||'—')+'</td>';
     html+='<td class="eq-contato">'+(p.email||'—')+'</td>';
     html+='<td>'+evBadge+'</td>';
-    html+='<td><button class="form-cancel-btn" style="padding:3px 10px;font-size:9px;" onclick="openEquipeForm('+origIdx+')">Editar</button></td>';
+    html+='<td><button class="form-cancel-btn" style="padding:3px 10px;font-size:9px;" onclick="openEquipeForm('+origIdx+')">Editar</button> <button class="form-cancel-btn" style="padding:3px 10px;font-size:9px;" onclick="duplicateEquipeMembro('+origIdx+')">Duplicar</button></td>';
     html+='</tr>';
   });
   html+='</tbody></table>';
@@ -2165,7 +2165,34 @@ function applyRole(role, skipEventosReset){
   applyEventoFilter();
 }
 
-// ── EQUIPE FORM ──
+async function ghReadFile(filename){
+  var r=await fetch('https://api.github.com/repos/'+GH.user+'/'+GH.repo+'/contents/data/'+filename,
+    {headers:{Authorization:'token '+currentUser.token}});
+  if(!r.ok)throw new Error('Erro ao ler '+filename+' ('+r.status+')');
+  var meta=await r.json();
+  var content;
+  if(meta.content){
+    content=JSON.parse(atob(meta.content.replace(/\n/g,'')));
+  } else if(meta.download_url){
+    var dr=await fetch(meta.download_url,{headers:{Authorization:'token '+currentUser.token}});
+    content=await dr.json();
+  } else {
+    throw new Error('Não foi possível ler '+filename);
+  }
+  return{sha:meta.sha,content:content};
+}
+
+async function ghWriteFile(filename,content,sha,message){
+  var encoded=btoa(unescape(encodeURIComponent(JSON.stringify(content,null,2))));
+  var w=await fetch('https://api.github.com/repos/'+GH.user+'/'+GH.repo+'/contents/data/'+filename,{
+    method:'PUT',
+    headers:{Authorization:'token '+currentUser.token,'Content-Type':'application/json'},
+    body:JSON.stringify({message:message,content:encoded,sha:sha})
+  });
+  if(w.status===409)throw new Error('Dados desatualizados — clique em ↻ e tente novamente.');
+  if(!w.ok)throw new Error('Erro ao salvar ('+w.status+')');
+  return w;
+}
 var _equipeEditIdx=null; // null = new, number = edit index in equipeArr
 
 function openEquipeForm(idx){
@@ -2227,6 +2254,24 @@ function equipeEventoChanged(){
   }
 }
 
+function duplicateEquipeMembro(idx){
+  // open as new entry pre-filled with existing data
+  openEquipeForm(null);
+  var p=equipeArr[idx];
+  setTimeout(function(){
+    document.getElementById('efEvento').value=p.evento||'';
+    equipeEventoChanged();
+    setTimeout(function(){
+      document.getElementById('efNome').value=p.nome||'';
+      document.getElementById('efFuncao').value=p.funcao||'';
+      document.getElementById('efCinema').value=p.cinema||'';
+      document.getElementById('efTelefone').value=p.telefone||'';
+      document.getElementById('efEmail').value=p.email||'';
+      document.getElementById('equipeFormTitle').textContent='Duplicar membro';
+    },80);
+  },30);
+}
+
 async function saveEquipeMembro(){
   var btn=document.getElementById('equipeFormSaveBtn');
   var status=document.getElementById('equipeFormStatus');
@@ -2249,29 +2294,15 @@ async function saveEquipeMembro(){
   status.textContent='Salvando…';
   status.className='form-status';
   try{
-    // read current file + SHA
-    var r=await fetch('https://api.github.com/repos/'+GH.user+'/'+GH.repo+'/contents/data/equipe.json',
-      {headers:{Authorization:'token '+currentUser.token}});
-    if(!r.ok)throw new Error('Erro ao ler equipe.json ('+r.status+')');
-    var meta=await r.json();
-    var current=JSON.parse(atob(meta.content.replace(/\n/g,'')));
-    // apply edit or add
+    var file=await ghReadFile('equipe.json');
     if(_equipeEditIdx!==null){
-      current[_equipeEditIdx]=membro;
+      file.content[_equipeEditIdx]=membro;
     } else {
-      current.push(membro);
+      file.content.push(membro);
     }
-    // write back
     var msg=(_equipeEditIdx!==null?'Atualiza ':'Insere ')+nome+' — '+evento+' ['+currentUser.email+']';
-    var w=await fetch('https://api.github.com/repos/'+GH.user+'/'+GH.repo+'/contents/data/equipe.json',{
-      method:'PUT',
-      headers:{Authorization:'token '+currentUser.token,'Content-Type':'application/json'},
-      body:JSON.stringify({message:msg,content:btoa(unescape(encodeURIComponent(JSON.stringify(current,null,2)))),sha:meta.sha})
-    });
-    if(w.status===409)throw new Error('Dados desatualizados — clique em ↻ e tente novamente.');
-    if(!w.ok)throw new Error('Erro ao salvar ('+w.status+')');
-    // update local array
-    equipeArr=current;
+    await ghWriteFile('equipe.json',file.content,file.sha,msg);
+    equipeArr=file.content;
     status.textContent='✓ Salvo';
     status.className='form-status ok';
     setTimeout(closeEquipeForm,800);
