@@ -2167,30 +2167,34 @@ function applyRole(role, skipEventosReset){
 }
 
 async function ghReadFile(filename){
+  // Step 1: get file metadata (SHA + download_url) from API
   var r=await fetch(
     'https://api.github.com/repos/'+GH.user+'/'+GH.repo+'/contents/data/'+filename,
     {headers:{Authorization:'token '+currentUser.token}}
   );
   if(!r.ok)throw new Error('Erro ao ler '+filename+' (HTTP '+r.status+')');
   var meta=await r.json();
-  // decode base64 → Uint8Array → UTF-8 string (handles accented chars correctly)
-  var b64=(meta.content||'').replace(/\s/g,'');
-  var binary=atob(b64);
-  var bytes=new Uint8Array(binary.length);
-  for(var i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);
-  var json=new TextDecoder('utf-8').decode(bytes);
-  return{sha:meta.sha,content:JSON.parse(json)};
+  // Step 2: fetch raw content from download_url — public repo, no auth needed, no CORS
+  var r2=await fetch(meta.download_url+'?t='+Date.now());
+  if(!r2.ok)throw new Error('Erro ao baixar '+filename+' (HTTP '+r2.status+')');
+  var content=await r2.json();
+  return{sha:meta.sha,content:content};
 }
 
 async function ghWriteFile(filename,content,sha,message){
-  var encoded=btoa(unescape(encodeURIComponent(JSON.stringify(content,null,2))));
+  // encode JSON as UTF-8 bytes then base64
+  var jsonStr=JSON.stringify(content,null,2);
+  var bytes=new TextEncoder().encode(jsonStr);
+  var binary='';
+  bytes.forEach(function(b){binary+=String.fromCharCode(b);});
+  var encoded=btoa(binary);
   var w=await fetch('https://api.github.com/repos/'+GH.user+'/'+GH.repo+'/contents/data/'+filename,{
     method:'PUT',
     headers:{Authorization:'token '+currentUser.token,'Content-Type':'application/json'},
     body:JSON.stringify({message:message,content:encoded,sha:sha})
   });
   if(w.status===409)throw new Error('Dados desatualizados — clique em ↻ e tente novamente.');
-  if(!w.ok)throw new Error('Erro ao salvar ('+w.status+')');
+  if(!w.ok){var e=await w.json().catch(function(){return{};});throw new Error('Erro ao salvar: '+(e.message||w.status));}
   return w;
 }
 var _equipeEditIdx=null; // null = new, number = edit index in equipeArr
