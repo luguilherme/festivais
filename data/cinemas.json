@@ -1043,5 +1043,24 @@
     "monitoresNomes": "Beatriz",
     "monitoresContatos": "21 98142-6764",
     "obs": "conta com gaveta CRU"
+  },
+  {
+    "evento": "Paula Gaitan CC",
+    "nome": "ODEON",
+    "complexo": "ODEON",
+    "servidor": "Showvault",
+    "projetor": "CP 2220",
+    "serial": "228369",
+    "somSistema": "5.1",
+    "proporcao": "2.18",
+    "capacidade": "504",
+    "acessiveis": "",
+    "cineassist": true,
+    "horario": "",
+    "datas": "",
+    "contatos": "",
+    "monitoresNomes": "",
+    "monitoresContatos": "",
+    "obs": "só USB 2.0"
   }
 ]
