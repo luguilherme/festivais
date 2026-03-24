@@ -791,16 +791,16 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
           <!-- ADMIN only: HD -->
           <div class="form-field" id="ffHdField">
             <label class="form-label">HD</label>
-            <input class="form-input" id="ffHd" type="text" placeholder="ex: CANCELADO">
+            <input class="form-input" id="ffHd" type="text" placeholder="ex: HD001">
           </div>
           <!-- EVERYONE: idioma, legDCP, mostra, vf, linkDCP, legTrans, kdm -->
           <div class="form-field" id="ffIdiomaField">
             <label class="form-label">Idioma</label>
-            <input class="form-input" id="ffIdioma" type="text" placeholder="ex: Português">
+            <input class="form-input" id="ffIdioma" type="text" placeholder="ex: pt, en, QBP">
           </div>
           <div class="form-field" id="ffLegDCPField">
             <label class="form-label">Leg DCP</label>
-            <input class="form-input" id="ffLegDCP" type="text" placeholder="ex: Português">
+            <input class="form-input" id="ffLegDCP" type="text" placeholder="ex: pt, en, QBP">
           </div>
           <div class="form-field" id="ffMostraField">
             <label class="form-label">Mostra</label>
@@ -808,7 +808,7 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
           </div>
           <div class="form-field" id="ffVfField">
             <label class="form-label">VF</label>
-            <input class="form-input" id="ffVf" type="text" placeholder="ex: Espanhol">
+            <input class="form-input" id="ffVf" type="text" placeholder="ex: en, QBP">
           </div>
           <div class="form-field" id="ffKdmField">
             <label class="form-label">KDM</label>
@@ -866,7 +866,7 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
           </div>
           <div class="form-field" id="ffDuracaoField">
             <label class="form-label">Duração</label>
-            <input class="form-input" id="ffDuracao" type="text" placeholder="ex: 1:45">
+            <input class="form-input" id="ffDuracao" type="text" placeholder="hh:mm:ss">
           </div>
           <div class="form-field" id="ffGbField">
             <label class="form-label">Tamanho (GB)</label>
@@ -878,16 +878,30 @@ mark{background:rgba(232,160,32,0.28);color:var(--accent);border-radius:2px;padd
           </div>
           <div class="form-field wide" id="ffCplField">
             <label class="form-label">CPL</label>
-            <input class="form-input" id="ffCpl" type="text" placeholder="Nome do CPL">
+            <input class="form-input" id="ffCpl" type="text" placeholder="Content title text">
           </div>
           <div class="form-field wide" id="ffCplOVField">
             <label class="form-label">CPL OV</label>
-            <input class="form-input" id="ffCplOV" type="text" placeholder="Nome do CPL OV">
+            <input class="form-input" id="ffCplOV" type="text" placeholder="Content title text">
           </div>
           <div class="form-field wide" id="ffObsField">
             <label class="form-label">Observações</label>
             <input class="form-input" id="ffObs" type="text" placeholder="Informações adicionais">
           </div>
+        </div>
+        <!-- DCP FOLDER INGEST -->
+        <div style="margin:16px 0;padding:14px 16px;border:1px dashed rgba(232,160,32,0.35);background:var(--accent-glow);">
+          <div style="font-family:var(--mono);font-size:8px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;">Ingestão DCP — preencher campos automaticamente</div>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+            <button class="form-cancel-btn" type="button" onclick="dcpSelectFolder()" style="white-space:nowrap;">📁 Selecionar pasta DCP</button>
+            <span id="dcpFolderName" style="font-family:var(--mono);font-size:10px;color:var(--text-dim);"></span>
+          </div>
+          <div id="dcpCplSelector" style="display:none;margin-top:12px;">
+            <div style="font-family:var(--mono);font-size:8px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;">CPLs encontrados — defina destino de cada um:</div>
+            <div id="dcpCplList" style="display:flex;flex-direction:column;gap:8px;"></div>
+            <button class="form-save-btn" type="button" onclick="dcpApplySelected()" style="margin-top:12px;font-size:9px;padding:5px 16px;">↓ Preencher campos</button>
+          </div>
+          <div id="dcpStatus" style="font-family:var(--mono);font-size:10px;color:var(--text-muted);margin-top:8px;"></div>
         </div>
         <div class="form-actions">
           <button class="form-save-btn" id="filmeFormSaveBtn" onclick="saveFilme()">Salvar</button>
@@ -2483,7 +2497,210 @@ function applyRole(role, skipEventosReset){
   applyEventoFilter();
 }
 
-// ── FILME FORM ──
+// ── DCP FOLDER INGEST ──
+var _dcpCplData=[]; // array of parsed CPL objects
+
+async function dcpSelectFolder(){
+  var status=document.getElementById('dcpStatus');
+  var nameEl=document.getElementById('dcpFolderName');
+  var selectorEl=document.getElementById('dcpCplSelector');
+  status.textContent='';
+  selectorEl.style.display='none';
+  nameEl.textContent='';
+
+  if(!window.showDirectoryPicker){
+    status.textContent='⚠ Seu navegador não suporta seleção de pasta. Use Chrome ou Edge.';
+    return;
+  }
+
+  var dirHandle;
+  try{dirHandle=await window.showDirectoryPicker({mode:'read'});}
+  catch(e){return;} // user cancelled
+
+  status.textContent='Lendo pasta…';
+  nameEl.textContent=dirHandle.name;
+
+  try{
+    var result=await dcpReadFolder(dirHandle);
+    if(!result.cpls.length){
+      status.textContent='Nenhum CPL encontrado nesta pasta.';
+      return;
+    }
+    _dcpCplData=result.cpls;
+    document.getElementById('ffGb').value=result.totalGB;
+    dcpRenderCplSelector(result.cpls);
+    selectorEl.style.display='block';
+    status.textContent='✓ '+result.cpls.length+' CPL'+(result.cpls.length>1?'s':'')+' encontrado'+(result.cpls.length>1?'s':'')+' · '+result.totalGB+' GB no total';
+  }catch(e){
+    status.textContent='Erro: '+e.message;
+  }
+}
+
+async function dcpReadFolder(dirHandle){
+  var cpls=[];
+  var totalBytes=0;
+
+  async function scanDir(handle,depth){
+    var subDirs=[];
+    for await(var entry of handle.values()){
+      if(entry.kind==='file'){
+        var file=await entry.getFile();
+        totalBytes+=file.size;
+        // detect CPL by name pattern (case insensitive, contains CPL and ends .xml)
+        if(/CPL/i.test(entry.name)&&entry.name.toLowerCase().endsWith('.xml')&&!entry.name.startsWith('.')){
+          try{
+            var text=await file.text();
+            var parser=new DOMParser();
+            var xml=parser.parseFromString(text,'application/xml');
+            var cplData=dcpParseCPL(xml,entry.name);
+            cpls.push(cplData);
+          }catch(e){}
+        }
+      } else if(entry.kind==='directory'){
+        subDirs.push(entry);
+      }
+    }
+    // recurse into subdirs (but not too deep)
+    if(depth<3){
+      for(var sd of subDirs){await scanDir(sd,depth+1);}
+    }
+  }
+
+  await scanDir(dirHandle,0);
+  var totalGB=Math.ceil(totalBytes/(1024*1024*1024));
+  if(totalGB<1&&totalBytes>0)totalGB=1;
+  return{cpls:cpls,totalGB:totalGB};
+}
+
+function dcpGetNode(xml,localName){
+  // try with namespace then without
+  var nodes=xml.getElementsByTagNameNS('*',localName);
+  if(nodes.length)return nodes[0];
+  var nodes2=xml.getElementsByTagName(localName);
+  return nodes2.length?nodes2[0]:null;
+}
+
+function dcpParseCPL(xml,filename){
+  var get=function(name){var n=dcpGetNode(xml,name);return n?n.textContent.trim():'';};
+
+  var contentTitle=get('ContentTitleText');
+  var creator=get('Creator');
+  var editRateStr=get('EditRate');
+  var hasKdm=!!dcpGetNode(xml,'KeyId');
+
+  // resolution
+  var resolucao='';
+  var widthTags=['FrameWidth','StoredWidth','PictureWidth'];
+  for(var i=0;i<widthTags.length;i++){
+    var n=dcpGetNode(xml,widthTags[i]);
+    if(n&&/^\d+$/.test(n.textContent.trim())){
+      var w=parseInt(n.textContent.trim());
+      resolucao=w>=3840?'4K':w>=1920?'2K':'';
+      if(resolucao)break;
+    }
+  }
+  // fallback ScreenAspectRatio as "W H"
+  if(!resolucao){
+    var sar=dcpGetNode(xml,'ScreenAspectRatio');
+    if(sar){var parts=sar.textContent.trim().split(/\s+/);if(parts.length===2&&/^\d+$/.test(parts[0])){var w2=parseInt(parts[0]);resolucao=w2>=3840?'4K':w2>=1920?'2K':'';}}
+  }
+
+  // FPS from EditRate
+  var fps='';
+  if(editRateStr){
+    var erParts=editRateStr.split(/\s+/);
+    if(erParts.length===2){var er=parseFloat(erParts[0])/parseFloat(erParts[1]);fps=Math.round(er)+'';}
+    else if(erParts.length===1){fps=erParts[0];}
+  }
+
+  // duration: sum reels MainPicture Duration - EntryPoint, divide by editRate
+  var totalFrames=0;
+  var er2=fps?parseFloat(fps):24;
+  var reels=xml.getElementsByTagNameNS?xml.getElementsByTagNameNS('*','Reel'):xml.getElementsByTagName('Reel');
+  for(var r=0;r<reels.length;r++){
+    var reel=reels[r];
+    var picNodes=reel.getElementsByTagNameNS?reel.getElementsByTagNameNS('*','MainPicture'):reel.getElementsByTagName('MainPicture');
+    if(!picNodes.length)continue;
+    var pic=picNodes[0];
+    var durN=pic.getElementsByTagNameNS?pic.getElementsByTagNameNS('*','Duration'):pic.getElementsByTagName('Duration');
+    var entN=pic.getElementsByTagNameNS?pic.getElementsByTagNameNS('*','EntryPoint'):pic.getElementsByTagName('EntryPoint');
+    var dur=durN.length?parseInt(durN[0].textContent)||0:0;
+    var ent=entN.length?parseInt(entN[0].textContent)||0:0;
+    totalFrames+=(dur-ent);
+  }
+  var duracao='';
+  if(totalFrames>0&&er2>0){
+    var totalSecs=Math.round(totalFrames/er2);
+    var hh=Math.floor(totalSecs/3600);
+    var mm=Math.floor((totalSecs%3600)/60);
+    var ss=totalSecs%60;
+    duracao=String(hh).padStart(2,'0')+':'+String(mm).padStart(2,'0')+':'+String(ss).padStart(2,'0');
+  }
+
+  // detect OV/VF from ContentTitleText suffix
+  var suffix=(contentTitle||filename).toUpperCase().replace(/[\s_\-\.]/g,'');
+  var isOV=suffix.endsWith('OV')||suffix.includes('_OV')||/OV\d*$/.test(suffix);
+  var isVF=suffix.endsWith('VF')||suffix.includes('_VF')||/VF\d*$/.test(suffix);
+  var suggestedDest=isOV?'cplOV':isVF?'vfLang':'cpl';
+
+  return{filename:filename,contentTitle:contentTitle,creator:creator,kdm:hasKdm?'sim':'não',resolucao:resolucao,fps:fps,duracao:duracao,suggestedDest:suggestedDest};
+}
+
+function dcpRenderCplSelector(cpls){
+  var list=document.getElementById('dcpCplList');
+  list.innerHTML='';
+  cpls.forEach(function(cpl,i){
+    var div=document.createElement('div');
+    div.style.cssText='display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;background:var(--surface);border:1px solid var(--border);padding:8px 10px;';
+    var info=document.createElement('div');
+    info.innerHTML='<div style="font-family:var(--mono);font-size:10px;color:var(--text);">'+(cpl.contentTitle||cpl.filename)+'</div>'
+      +'<div style="font-family:var(--mono);font-size:9px;color:var(--text-muted);margin-top:2px;">'
+      +(cpl.resolucao?cpl.resolucao+' · ':'')+(cpl.fps?cpl.fps+'fps · ':'')+(cpl.duracao?cpl.duracao+' · ':'')+(cpl.kdm==='sim'?'KDM · ':'')
+      +(cpl.creator||'')+'</div>';
+    var sel=document.createElement('select');
+    sel.className='form-select';
+    sel.style.cssText='min-width:110px;font-size:10px;';
+    sel.dataset.idx=i;
+    sel.innerHTML='<option value="none">— ignorar —</option>'
+      +'<option value="cpl">→ CPL</option>'
+      +'<option value="cplOV">→ CPL OV</option>';
+    sel.value=cpl.suggestedDest==='cplOV'?'cplOV':'cpl';
+    div.appendChild(info);
+    div.appendChild(sel);
+    list.appendChild(div);
+  });
+}
+
+function dcpApplySelected(){
+  // collect user's routing choices
+  var selects=document.getElementById('dcpCplList').querySelectorAll('select');
+  var chosen={cpl:null,cplOV:null};
+  selects.forEach(function(sel){
+    var idx=parseInt(sel.dataset.idx);
+    var dest=sel.value;
+    if(dest!=='none')chosen[dest]=_dcpCplData[idx];
+  });
+
+  // apply first CPL (if chosen)
+  function applyToCpl(cpl,suffix){
+    var idSuffix=suffix||'';
+    document.getElementById('ffCpl'+idSuffix).value=cpl.contentTitle||cpl.filename;
+    if(!suffix){
+      // only apply these metadata fields from the first/main CPL
+      if(cpl.creator)document.getElementById('ffCreator').value=cpl.creator;
+      if(cpl.kdm)document.getElementById('ffKdm').value=cpl.kdm;
+      if(cpl.resolucao)document.getElementById('ffResolucao').value=cpl.resolucao;
+      if(cpl.fps)document.getElementById('ffFps').value=cpl.fps;
+      if(cpl.duracao)document.getElementById('ffDuracao').value=cpl.duracao;
+    }
+  }
+
+  if(chosen.cpl)applyToCpl(chosen.cpl,'');
+  if(chosen.cplOV)document.getElementById('ffCplOV').value=chosen.cplOV.contentTitle||chosen.cplOV.filename;
+
+  document.getElementById('dcpStatus').textContent='✓ Campos preenchidos';
+  document.getElementById('dcpStatus').style.color='var(--ok)';
+}
 var _filmeEditCodigo=null; // null = new
 
 // campos editáveis por papel na EDIÇÃO
@@ -2530,9 +2747,10 @@ function openFilmeForm(codigo){
   document.getElementById('filmeFormStatus').textContent='';
   document.getElementById('filmeFormStatus').className='form-status';
 
-  // populate evento dropdown
+  // populate evento dropdown — authorized AND currently enabled via pills
   var sel=document.getElementById('ffEvento');
-  var evts=currentUser.papel==='admin'||!currentUser.eventos.length?Object.keys(eventColors):currentUser.eventos.filter(function(e){return eventColors[e];});
+  var allAuthorized=currentUser.papel==='admin'||!currentUser.eventos.length?Object.keys(eventColors):currentUser.eventos.filter(function(e){return eventColors[e];});
+  var evts=allAuthorized.filter(function(e){return eventoVisible(e);});
   sel.innerHTML='<option value="">— selecionar —</option>';
   evts.forEach(function(e){sel.innerHTML+='<option value="'+e+'">'+e+'</option>';});
 
@@ -2588,7 +2806,11 @@ async function saveFilme(){
   var isNew=(_filmeEditCodigo===null);
   var codigo=(isNew?document.getElementById('ffCodigo').value:_filmeEditCodigo).trim().toUpperCase();
   if(!codigo){status.textContent='Código é obrigatório.';status.className='form-status err';return;}
-  if(isNew&&filmesMap[codigo]){status.textContent='Código "'+codigo+'" já existe.';status.className='form-status err';return;}
+  if(isNew){
+    var eventoNovo=document.getElementById('ffEvento').value.trim();
+    var dup=filmesArr.find(function(f){return f.codigo===codigo&&f.evento===eventoNovo;});
+    if(dup){status.textContent='Código "'+codigo+'" já existe no evento '+eventoNovo+'.';status.className='form-status err';return;}
+  }
 
   // build updated film — start from existing if editing
   var base=isNew?{}:Object.assign({},filmesMap[codigo]);
