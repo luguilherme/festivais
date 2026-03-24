@@ -24798,5 +24798,30 @@
     "cplOV": "",
     "linkDCP": "",
     "legTrans": ""
+  },
+  {
+    "evento": "CC2025",
+    "codigo": "PBB08",
+    "hd": "",
+    "titulo": "TESTE!",
+    "idioma": "",
+    "legDCP": "",
+    "mostra": "",
+    "vf": "",
+    "lente": "",
+    "somDCP": "",
+    "creator": "",
+    "kdm": "",
+    "status": "",
+    "statusLeg": "",
+    "obs": "",
+    "cpl": "",
+    "resolucao": "",
+    "duracao": "",
+    "dcpsize": "",
+    "fps": "",
+    "cplOV": "",
+    "linkDCP": "",
+    "legTrans": ""
   }
 ]
