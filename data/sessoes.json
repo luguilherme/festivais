@@ -5048,5 +5048,20 @@
     ],
     "evento": "CC2025",
     "mostra": "Nacional"
+  },
+  {
+    "codigo": "VDSDSFD",
+    "nome": "",
+    "cinema": "Estação Net Botafogo 2",
+    "dia": "03/03/2026",
+    "hora": "12:34",
+    "filmes": [
+      "CI12",
+      "CI26",
+      "MR7",
+      "PB13"
+    ],
+    "evento": "CC2025",
+    "mostra": "Nacional"
   }
 ]
